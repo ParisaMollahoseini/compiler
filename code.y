@@ -186,12 +186,23 @@ else
 }IDS;
 
 ASSIGN_STMT: ID EQ EXP '$' {
-	struct var v1 ;
-	strcpy(v1.current_func,current_func);
-	v1.name = $2;
-	v1.type = $1;
-	v1.value_int = $3;
-	variables[count++] = v1;//define var in simbol table
+	if(findvar(&first,$1,curr_func)){
+	struct var *newvar = findvar(&first,$1,curr_func);
+	if(strcmp(newvar -> type ,"char")==0)
+	{
+		newvar -> intchar_union.value_char = $3;
+	}
+	else
+	{
+		newvar -> intchar_union.value_int = $3;
+	}
+}
+else
+{
+	char error[30] = "no such variable exists ...";
+				strcat(error, $1);
+				yyerror(error);
+				YYERROR;
 
 } STMTS;
 
