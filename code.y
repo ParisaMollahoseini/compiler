@@ -11,7 +11,7 @@ float ans=0;
 struct var
 {
 	char name[10];
-	float num;
+	int num;
 };
 
  int count = 0 ;
