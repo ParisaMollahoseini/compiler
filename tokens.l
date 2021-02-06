@@ -8,7 +8,6 @@
 
 %}
 
-floats ([0-9])+[.]([0-9])+
 ints ([1-9])+([0-9])*
 
 
@@ -30,16 +29,31 @@ ints ([1-9])+([0-9])*
 "#".*"\n" {return COMMENT;}
 "#*".*"*#" {   return MULTI_COMMENT}
 "#*" {return MULTI_COMMENT}
-{floats} {yylval.fval = atof(yytext); return FLOAT;}
 {ints} {yylval.ival = atoi(yytext); return INT;}
 "*" {return '*';}
 "+" {return '+';}
 "-" {return '-';}
 "/" {return '/';}
+
+"<" {return ISLOWER;}
+"<=" {return ISLOWERANDEQ;}
+">" {return ISHIGHER;}
+">=" {return ISHIGHERANDEQ;}
 "=" {return EQ;}
+"!=" {return ISNOTEQ}
+"==" {return ISEQ;}
 \n {return ENTER;}
+"||" {return COND_OR;}
+"&&" {return COND_AND;}
+"|" {return LOG_OR;}
+"&" {return LOG_AND;}
+"^" {return LOG_XOR;}
 "(" {return '(';}
 ")" {return ')';}
+"$" {return '$';}
+"[" {return '[';}
+"]" {return ']';}
+"," {return ',';}
 [ ] {}
 %%
 
