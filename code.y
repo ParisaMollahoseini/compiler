@@ -149,7 +149,10 @@ DECLARE_STMT: VTYPE ID {
 		strcpy(currtype,$1);
 	struct var *newvar = addvar(&first, &last,$2, $1);
 	newvar -> current_func = current_func;
-	newvar -> which_reg = strcat("t",itos(GetFreeRegister('t'));
+	newvar -> which_reg = strcat("$t",itos(GetFreeRegister('t'));
+	datafile = fopen("mips.txt", "a+");
+	fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,0);
+	fclose(datafile);
 }
 else
 {
@@ -164,8 +167,11 @@ INT ID EQ EXP {
 	if(!findvar(&first,$2,curr_func)){
 	struct var *newvar = addvar(&first, &last,$2, $1);
 	newvar -> current_func = current_func;
-	newvar -> which_reg = strcat("t",itos(GetFreeRegister('t'));
+	newvar -> which_reg = strcat("$t",itos(GetFreeRegister('t'));
 	newvar -> intchar_union.value_int = $4;
+	datafile = fopen("mips.txt", "a+");
+	fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,0);
+	fclose(datafile);
 }
 else
 {
@@ -179,8 +185,11 @@ CHAR ID EQ char_val {
 	if(!findvar(&first,$2,curr_func)){
 	struct var *newvar = addvar(&first, &last,$2, $1);
 	newvar -> current_func = current_func;
-	newvar -> which_reg = strcat("t",itos(GetFreeRegister('t'));
+	newvar -> which_reg = strcat("$t",itos(GetFreeRegister('t'));
 	newvar -> intchar_union.value_char = $4;
+	datafile = fopen("mips.txt", "a+");
+	fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,0);
+	fclose(datafile);
 }
 else
 {
@@ -194,7 +203,10 @@ IDS: '$' | ',' ID {
 	if(!findvar(&first,$2,curr_func)){
 	struct var *newvar = addvar(&first, &last,$2, currtype);
 	newvar -> current_func = current_func;
-	newvar -> which_reg = strcat("t",itos(GetFreeRegister('t'));
+	newvar -> which_reg = strcat("$t",itos(GetFreeRegister('t'));
+	datafile = fopen("mips.txt", "a+");
+	fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,0);
+	fclose(datafile);
 }
 else
 {
@@ -208,14 +220,21 @@ else
 ASSIGN_STMT: ID EQ EXP '$' {
 	if(findvar(&first,$1,curr_func)){
 	struct var *newvar = findvar(&first,$1,curr_func);
+		datafile = fopen("mips.txt", "a+");
 	if(strcmp(newvar -> type ,"char")==0)
 	{
 		newvar -> intchar_union.value_char = $3;
+		fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,newvar -> intchar_union.value_int);
+
 	}
 	else
 	{
 		newvar -> intchar_union.value_int = $3;
+		fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,newvar -> intchar_union.value_int);
+
 	}
+
+	fclose(datafile);
 }
 else
 {
@@ -253,42 +272,42 @@ EXP BGE EXP |
 EXP ISNOTEQ EXP
 {
 	if($1 != $3)
-		$$ = 1; // condition true	
-	else 
+		$$ = 1; // condition true
+	else
 		$$ = 0; // condition false
-		
+
 	datafile = fopen("mips.txt", "a+");
 
 	// Save the names of the rigesters that EXPs are stored in
 	char* srctreg1 = (char*)malloc(sizeof(char)*8);
 	char* srctreg2 = (char*)malloc(sizeof(char)*8);
-			
+
 	strcpy(srctreg2, popStack());
 	strcpy(srctreg1, popStack());
 
 
-	// Get two temporal registers 
+	// Get two temporal registers
 	int no = GetFreeRegister('t');
 	char treg1[4] = "$t";
 	strcat(treg1, itos(no));
 	no = GetFreeRegister('t');
 	char treg2[4] = "$t";
 	strcat(treg2, itos(no));
-			
+
 	// Compare the two EXPs and save the equality result in treg1
 	fprintf(datafile, "\tslt %s, %s , %s \n", treg1, srctreg1, srctreg2);
 	fprintf(datafile, "\tslt %s, %s , %s \n", treg2, srctreg2, srctreg1);
 	fprintf(datafile, "\tor %s , %s , %s\n", treg1, treg1, treg2);
-	
+
 	// Free useless registers
-	SetFreeRegister(treg2);	
+	SetFreeRegister(treg2);
 	if(srctreg1[1] == 't')
 			SetFreeRegister(srctreg1);
 	if(srctreg2[1] == 't')
 			SetFreeRegister(srctreg2);
-					
+
 	fclose(datafile);
-			
+
 	// Push the name of the register containing the conditional expression's result
 	pushStack(treg1);
 
