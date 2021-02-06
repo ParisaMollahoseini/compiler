@@ -13,10 +13,16 @@ FILE* datafile;
 struct var
 {
 	char name[10];
-	int num;
+	char current_func[20] ;
+	int value;
+	char type[5];//char or int
 };
 
-vector<var> variables;
+struct var variables[100];
+int count = 0 ;
+
+char current_func;
+
 int yyparse();
 int findvar(char vname[10]);
 void yyerror(const char *s);
@@ -54,7 +60,7 @@ char a_registers[4][4] = {"$a0","$a1","$a2","$a3"};
 %left <cval> '*' '/'
 %token '(' ')' '[' ']'
 %token ENTER
-
+%token VALUE_ID
 %token <cval> EQ
 
 //%token <ival> p
@@ -68,6 +74,7 @@ PROGRAM: FTYPE ID
 	 datafile = fopen("mips.txt", "a+");
 	 fprintf(datafile, "%s:\n", $2);
 	 fclose(datafile);
+	 strcpy(current_func,$2);
 		}
 '(' PARAMS ')' '{' STMTS '}'  PROGRAM | ENTER
 
@@ -88,15 +95,31 @@ FUNC_CALL |
 RETURN_STMT |
 ENTER;
 
-DECLARE_STMT: VTYPE ID IDS STMTS | 
-INT ID EQ EXP '$' STMTS | 
-CHAR ID EQ char_val '$' STMTS;
+DECLARE_STMT: VTYPE ID {
+	struct var v1 ;
+	strcpy(v1.current_func,current_func);
+	v1.name = $2;
+	v1.type = $1;
+	variables[count++] = v1;//define var in simbol table
+
+}
+IDS STMTS |
+INT ID {
+	struct var v1 ;
+	strcpy(v1.current_func,current_func);
+	v1.name = $2;
+	v1.type = $1;
+	variables[count++] = v1;//define var in simbol table
+
+}
+EQ EXP '$' STMTS |
+CHAR ID EQ VALUE_ID '$' STMTS;
 
 IDS: '$' | ',' ID IDS;
 
 ASSIGN_STMT: ID VAR_VALUE '$' STMTS;
 
-VAR_VALUE: EXP | char_val;
+VAR_VALUE: EXP | VALUE_ID;
 
 WHILE_STMT: WHILE '(' EXP  ')' '{' STMTS '}' STMTS;
 
@@ -109,34 +132,34 @@ ELSE_STMT: ELSE '{' STMTS  '}' | ENTER;
 FUNC_CALL: ID '(' ARGS_IN ')' '$' STMTS;
 
 ARGS_IN: |
-EXP ',' EXP ',' EXP ',' EXP {$$ =4;} | 
-EXP ',' EXP ',' EXP {$$ =3;} | 
-EXP ',' EXP {$$ =2;} | 
+EXP ',' EXP ',' EXP ',' EXP {$$ =4;} |
+EXP ',' EXP ',' EXP {$$ =3;} |
+EXP ',' EXP {$$ =2;} |
 EXP;
 
 RETURN_STMT: RETURN EXP '$' STMTS;
 
-EXP: EXP BLT EXP | 
-EXP BLE EXP | 
-EXP BGT EXP | 
-EXP BGE EXP | 
-EXP ISNOTEQ EXP	| 
-EXP ISEQ EXP | 
-EXP '+' EXP | 
-EXP '-' EXP | 
-EXP '*' EXP | 
-EXP '/' EXP | 
-EXP COND_AND EXP | 
-EXP COND_OR EXP | 
-EXP LOG_OR EXP | 
-EXP LOG_AND EXP | 
-EXP LOG_XOR EXP | 
-NOT EXP	| 
-'(' EXP ')' | 
-ints | 
-char_val | 
-'-' EXP | 
-identif |  
+EXP: EXP BLT EXP |
+EXP BLE EXP |
+EXP BGT EXP |
+EXP BGE EXP |
+EXP ISNOTEQ EXP	|
+EXP ISEQ EXP |
+EXP '+' EXP |
+EXP '-' EXP |
+EXP '*' EXP |
+EXP '/' EXP |
+EXP COND_AND EXP |
+EXP COND_OR EXP |
+EXP LOG_OR EXP |
+EXP LOG_AND EXP |
+EXP LOG_XOR EXP |
+NOT EXP	|
+'(' EXP ')' |
+ints |
+char_val |
+'-' EXP |
+identif |
 FUNC_CALL;
 
 ident:	ID;
@@ -161,9 +184,9 @@ int findvar(char vname[10])
 {
 	for(int i =0;i<count;i++)
 	{
-		if(strcmp(vname,var_arr[i].name)==0)
+		if(strcmp(vname,variables[i].name)==0)
 		{
-			find_var = var_arr[i].num;
+			find_var = variables[i].value;
 			return i;
 		}
 	}
