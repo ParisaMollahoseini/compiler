@@ -113,13 +113,13 @@ INT ID {
 
 }
 EQ EXP '$' STMTS |
-CHAR ID EQ VALUE_ID '$' STMTS;
+CHAR ID EQ char_val '$' STMTS;
 
 IDS: '$' | ',' ID IDS;
 
 ASSIGN_STMT: ID VAR_VALUE '$' STMTS;
 
-VAR_VALUE: EXP | VALUE_ID;
+VAR_VALUE: EXP | char_val;
 
 WHILE_STMT: WHILE '(' EXP  ')' '{' STMTS '}' STMTS;
 
