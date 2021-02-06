@@ -14,7 +14,8 @@ struct var
 {
 	char name[10];
 	char current_func[20] ;
-	int value;
+	int value_int;
+	char value_char;
 	char type[5];//char or int
 };
 
@@ -100,22 +101,38 @@ DECLARE_STMT: VTYPE ID {
 	strcpy(v1.current_func,current_func);
 	v1.name = $2;
 	v1.type = $1;
+
 	variables[count++] = v1;//define var in simbol table
 
 }
 IDS STMTS |
-INT ID {
+INT ID EQ EXP {
+	struct var v1 ;
+	strcpy(v1.current_func,current_func);
+	v1.name = $2;
+	v1.type = $1;
+	v1.value_int = $4;
+	variables[count++] = v1;//define var in simbol table
+
+}'$' STMTS |
+CHAR ID EQ char_val {
+	struct var v1 ;
+	strcpy(v1.current_func,current_func);
+	v1.name = $2;
+	v1.type = $1;
+	v1.value_char = $4;
+	variables[count++] = v1;//define var in simbol table
+
+}'$' STMTS;
+
+IDS: '$' | ',' ID  {
 	struct var v1 ;
 	strcpy(v1.current_func,current_func);
 	v1.name = $2;
 	v1.type = $1;
 	variables[count++] = v1;//define var in simbol table
 
-}
-EQ EXP '$' STMTS |
-CHAR ID EQ char_val '$' STMTS;
-
-IDS: '$' | ',' ID IDS;
+}IDS;
 
 ASSIGN_STMT: ID VAR_VALUE '$' STMTS;
 
