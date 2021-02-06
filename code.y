@@ -44,6 +44,12 @@ void yyerror(const char *s);
 %token <ival> INT
 %token <fval> FLOAT
 %token <sval> ID
+%token ','
+%token COND_OR
+%token COND_AND
+%token LOG_OR
+%token LOG_XOR
+%token LOG_AND
 %token ISEQ ISNOTEQ
 %token ISLOWER ISLOWERANDEQ ISHIGHER ISHIGHERANDEQ
 %left <cval> '+' '-'
