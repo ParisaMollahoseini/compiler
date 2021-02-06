@@ -144,7 +144,15 @@ IDS: '$' | ',' ID  {
 
 }IDS;
 
-ASSIGN_STMT: ID VAR_VALUE '$' STMTS;
+ASSIGN_STMT: ID EQ EXP '$' {
+	struct var v1 ;
+	strcpy(v1.current_func,current_func);
+	v1.name = $2;
+	v1.type = $1;
+	v1.value_int = $3;
+	variables[count++] = v1;//define var in simbol table
+
+} STMTS;
 
 VAR_VALUE: EXP | char_val;
 
