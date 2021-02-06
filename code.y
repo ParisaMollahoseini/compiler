@@ -44,13 +44,15 @@ void yyerror(const char *s);
 %token <ival> INT
 %token <fval> FLOAT
 %token <sval> ID
-%token SQRT LOG
+%token ISEQ ISNOTEQ
+%token ISLOWER ISLOWERANDEQ ISHIGHER ISHIGHERANDEQ
 %left <cval> '+' '-'
 %left <cval> '*' '/'
-%token '(' ')'
+%token '(' ')' '[' ']'
 %token ENTER
 
 %token <cval> EQ
+
 //%token <ival> p
 %type <fval> a
 
