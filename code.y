@@ -14,13 +14,7 @@ struct var
 	int num;
 };
 
- int count = 0 ;
- struct var var_arr[100];
- float find_var ;
 
-//for sqrt=1,log=2
-int whichone ;
-//for sqrt,log
 int yyparse();
 int findvar(char vname[10]);
 void yyerror(const char *s);
@@ -33,7 +27,6 @@ void yyerror(const char *s);
 
 %union{
 	  int ival;
-		float fval;
 		char cval;
 		char sval[10];
 		//char plus,min,multi;
@@ -42,7 +35,6 @@ void yyerror(const char *s);
 
 
 %token <ival> INT
-%token <fval> FLOAT
 %token <sval> ID
 %token ','
 %token COND_OR
