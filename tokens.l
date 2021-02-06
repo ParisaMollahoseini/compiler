@@ -27,6 +27,9 @@ ints ([1-9])+([0-9])*
 "char" {return CHAR;}
 "elseif" {return ELSEIF;}
 [A-Za-z"_"]+[0-9A-Za-z"_"]* {strcpy(yylval.sval,yytext); return ID; }
+"#".*"\n" {return COMMENT;}
+"#*".*"*#" {   return MULTI_COMMENT}
+"#*" {return MULTI_COMMENT}
 {floats} {yylval.fval = atof(yytext); return FLOAT;}
 {ints} {yylval.ival = atoi(yytext); return INT;}
 "*" {return '*';}
