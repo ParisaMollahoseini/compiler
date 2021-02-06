@@ -33,7 +33,7 @@ ints ([1-9])+([0-9])*
 "-" {return '-';}
 "/" {return '/';}
 
-["'"][a-zA-Z]["'"] {return VALUE_ID;}
+["'"][a-zA-Z]["'"] {return char_val;}
 
 "<" {return ISLOWER;}
 "<=" {return ISLOWERANDEQ;}
@@ -49,6 +49,7 @@ ints ([1-9])+([0-9])*
 "|" {return LOG_OR;}
 "&" {return LOG_AND;}
 "^" {return LOG_XOR;}
+"!" {return NOT;}
 "(" {return '(';}
 ")" {return ')';}
 "$" {return '$';}
