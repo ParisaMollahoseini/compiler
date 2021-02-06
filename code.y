@@ -8,6 +8,26 @@ extern int yylex();
 extern FILE* yyin;
 FILE* datafile;
 
+// Stack used to save the name of the register
+// that th variable is stored in
+char stack[30][8];
+int stackSize;
+
+// pushStack saves the register's name
+void pushStack(char* reg)
+{
+	strcpy(stack[stackSize++], reg);
+}
+
+// popStack returns the register's name
+char* popStack()
+{
+	char* a = (char*)malloc(sizeof(char)*8);
+	strcpy(a , stack[stackSize-1]);
+	stackSize--;
+	return a;
+}
+
 struct function_names
 {
 	char name[10];
@@ -230,7 +250,52 @@ EXP: EXP BLT EXP |
 EXP BLE EXP |
 EXP BGT EXP |
 EXP BGE EXP |
-EXP ISNOTEQ EXP	|
+EXP ISNOTEQ EXP
+{
+	if($1 != $3)
+		$$ = 1; // condition true	
+	else 
+		$$ = 0; // condition false
+		
+	datafile = fopen("mips.txt", "a+");
+
+	// Save the names of the rigesters that EXPs are stored in
+	char* srctreg1 = (char*)malloc(sizeof(char)*8);
+	char* srctreg2 = (char*)malloc(sizeof(char)*8);
+			
+	strcpy(srctreg2, popStack());
+	strcpy(srctreg1, popStack());
+
+
+	// Get two temporal registers 
+	int no = GetFreeRegister('t');
+	char treg1[4] = "$t";
+	strcat(treg1, itos(no));
+	no = GetFreeRegister('t');
+	char treg2[4] = "$t";
+	strcat(treg2, itos(no));
+			
+	// Compare the two EXPs and save the equality result in treg1
+	fprintf(datafile, "\tslt %s, %s , %s \n", treg1, srctreg1, srctreg2);
+	fprintf(datafile, "\tslt %s, %s , %s \n", treg2, srctreg2, srctreg1);
+	fprintf(datafile, "\tor %s , %s , %s\n", treg1, treg1, treg2);
+	
+	// Free useless registers
+	SetFreeRegister(treg2);	
+	if(srctreg1[1] == 't')
+			SetFreeRegister(srctreg1);
+	if(srctreg2[1] == 't')
+			SetFreeRegister(srctreg2);
+					
+	fclose(datafile);
+			
+	// Push the name of the register containing the conditional expression's result
+	pushStack(treg1);
+
+	free(srctreg1);
+	free(srctreg2);
+}
+|
 EXP ISEQ EXP |
 EXP '+' EXP |
 EXP '-' EXP |
