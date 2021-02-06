@@ -1,206 +1,27 @@
-
-
-%union{
-	int ival;
-	char* sval;
-}
-
-%left OPENA CLOSEA 
-%left ASSIGN
-%left BLE BGE BLT BGT
-%left EQUAL NOTEQUAL
-%left MINUS PLUS
-%left MUL DIV
-%left AND OR
-%left BITAND BITOR
-%left NOT
-%left OPENP CLOSEP
-%left OPENB CLOSEB
-
-%token SEMICOLON COMMA PRINT BACKN NEWLINE SPACE
-%token VOID INT IF RETURN WHILE GLOBAL ELSE 
-
-%nterm <ival> exp
-%token <ival> NUM
-%token <sval> ID
-%nterm <ival> ident
-%nterm <ival> farg
-%nterm <ival> agrumans
-%nterm <sval> type
-%start program
-%%
-program : globalvar;
-		
-	
-globalvar:
-
-		 NEWLINE {*} GLOBAL SPACE INT SPACE ID ASSIGN exp SEMICOLON {*} globalvar { *} | function ;
-		
-	
-		
-function: 
-		| NEWLINE
-		| NEWLINE type SPACE ID
-		{ } OPENP farg
-		{ } CLOSEP OPENA stmt
-		{ }
-		CLOSEA{ } function ;
-		
-array_var : OPENB CLOSEB | ;
-type : 	  VOID {$$ = "void";} | INT {$$ = "int";};
-
-
-
-farg:	  {$$ = 0;}
-		| INT SPACE ID array_var{ }
-		| INT SPACE ID array_var COMMA INT SPACE ID array_var{ }
-		| INT SPACE ID array_var COMMA INT SPACE ID array_var COMMA INT SPACE ID array_var { }
-		| INT SPACE ID array_var COMMA INT SPACE ID array_var COMMA INT SPACE ID array_var COMMA INT SPACE ID array_var  {	};
-
-agrumans:
-		  {$$ = 0;}
-		| exp COMMA exp COMMA exp COMMA exp {$$ =4;}
-		| exp COMMA exp COMMA exp {$$ =3;}
-		| exp COMMA exp {$$ =2;}
-		| exp {$$ =1;};
-		
-stmt :	
-		| NEWLINE
-		| loop
-		| condition
-		| var_declaration
-		| function_return
-		| function_call
-		| assign_value
-		| array_declaration
-		| array_assign_value
-		| print;
-
-print:	
-		NEWLINE PRINT OPENP exp CLOSEP SEMICOLON
-		{ }stmt;
-		| NEWLINE PRINT OPENP BACKN CLOSEP SEMICOLON
-		{ }stmt;
-		
-		
-array_assign_value:
-		NEWLINE ID OPENB exp CLOSEB ASSIGN exp SEMICOLON
-		{ } stmt ;
-		
-array_declaration:
-
-		NEWLINE INT SPACE ID OPENB exp CLOSEB SEMICOLON
-		{} stmt;		
-		
-assign_value:
-	
-		NEWLINE ID ASSIGN exp SEMICOLON
-		{	}stmt ;
-		
-var_declaration:
-	
-		NEWLINE INT SPACE ID ASSIGN exp SEMICOLON 
-		{}stmt ;
-		
-function_call:	
-		
-		NEWLINE ID OPENP agrumans
-		{ } CLOSEP SEMICOLON stmt 
-		
-		| NEWLINE ID ASSIGN ID OPENP agrumans
-		{
-		} CLOSEP SEMICOLON stmt 
-		
-		| NEWLINE INT SPACE ID ASSIGN ID OPENP agrumans
-		{
-		} CLOSEP SEMICOLON stmt ;
-		
-function_return:		
-		NEWLINE RETURN SPACE exp 
-		{}
-		} SEMICOLON stmt ;
-loop:								
-		NEWLINE WHILE
-		{	
-		} OPENP exp 
-		{	
-		} 
-		CLOSEP OPENA stmt CLOSEA
-		{}stmt ;
-		
-condition:	
-		NEWLINE IF OPENP exp
-		{} CLOSEP scope
-	
-
-scope :
-
-		OPENA stmt CLOSEA
-		{
-		} {}stmt
-
-		| OPENA stmt CLOSEA 
-		{	}SPACE ELSE 
-		{} OPENA stmt
-		{} CLOSEA {}stmt;
-
-
-exp :	  exp BLT exp		
-		{free(srctreg2);
-		}
-		| exp BLE exp		
-		{	
-		}
-		| exp BGT exp	
-		{
-		}
-		| exp BGE exp
-		{	
-		
-		}
-		| exp NOTEQUAL exp	
-		{	
-		
-		}
-		| exp EQUAL exp		
-		{
-
-		}
-		| exp PLUS exp
-		{ 
-		}
-
-		| exp MINUS exp
-		{ 
-		}
-				  
-		| exp MUL exp
-        {
-		}
-				  
-		| exp DIV exp{}
-							
-		| exp AND exp
-		{ 	
-			
-		}
-		| exp OR exp
-		{ 	
-		}
-		| exp BITOR exp
-		{ 
-		}
-		| exp BITAND exp
-		{ 
-		}
-		| NOT exp			
-		{
-		
-		}
-		| OPENP exp CLOSEP	{$$ = $2;}
-		| NUM				{$$ = $1; pushStack(itos($1));}
-		| MINUS exp	{} | ID OPENB exp CLOSEB { } | ident	;		
-		
-ident:	ID	{ };
-
-%%
+PROGRAM -> STMT_DECLARE PGM
+PGM → TYPE ID ‘(’ ‘)’ ‘{’ STMTS ‘}’ PGM | epsilon
+STMTS → STMT STMTS | epsilon
+STMT → STMT_DECLARE | STMT_ASSIGN | STMT_RETURN | ‘$’
+EXP → EXP ‘<’ EXP
+EXP → EXP ‘<=’ EXP
+EXP → EXP ‘>’ EXP
+EXP → EXP ‘>=’ EXP
+EXP → EXP ‘==’ EXP
+EXP → EXP ‘+’ EXP
+EXP → EXP ‘-’ EXP
+EXP → EXP ‘*’ EXP
+EXP → EXP ‘&&’ EXP
+EXP → EXP ‘||’ EXP
+EXP → EXP ‘|’ EXP
+EXP → EXP ‘&’ EXP
+EXP → EXP ‘^’ EXP
+EXP → EXP ‘!=’ EXP
+EXP → ‘!’ EXP
+EXP → ‘-’ EXPEXP → ‘(’ EXP ‘)’
+EXP → ID
+EXP → NUM
+STMT_DECLARE → TYPE ID IDS
+IDS → ‘$’ | ‘,’ ID IDS
+STMT_ASSIGN → ID ‘=’ EXP ‘$’
+STMT_RETURN → RETURN EXP ‘$’
+TYPE → INT | VOID
