@@ -69,11 +69,11 @@ PROGRAM: FTYPE ID
 	 fprintf(datafile, "%s:\n", $2);
 	 fclose(datafile);
 		}
-'(' ARGS ')' '{' STMTS '}'  PROGRAM | ENTER
+'(' PARAMS ')' '{' STMTS '}'  PROGRAM | ENTER
 
 FTYPE: VOID | INT;
 
-ARGS: VTYPE ID |
+PARAMS: VTYPE ID |
 VTYPE ID ',' VTYPE ID |
 VTYPE ID ',' VTYPE ID ',' VTYPE ID |
 VTYPE ID ',' VTYPE ID ',' VTYPE ID ',' VTYPE ID;
@@ -87,6 +87,59 @@ IF_STMT |
 FUNC_CALL |
 RETURN_STMT |
 ENTER;
+
+DECLARE_STMT: VTYPE ID IDS STMTS | 
+INT ID EQ EXP '$' STMTS | 
+CHAR ID EQ char_val '$' STMTS;
+
+IDS: '$' | ',' ID IDS;
+
+ASSIGN_STMT: ID VAR_VALUE '$' STMTS;
+
+VAR_VALUE: EXP | char_val;
+
+WHILE_STMT: WHILE '(' EXP  ')' '{' STMTS '}' STMTS;
+
+IF_STMT: IF '(' EXP ')' '{' STMTS  '}' ELSEIF_STMT ELSE_STMT STMTS;
+
+ELSEIF_STMT: ELSEIF '(' EXP ')' '{' STMTS '}' ELSEIF | ENTER;
+
+ELSE_STMT: ELSE '{' STMTS  '}' | ENTER;
+
+FUNC_CALL: ID '(' ARGS_IN ')' '$' STMTS;
+
+ARGS_IN: |
+EXP ',' EXP ',' EXP ',' EXP {$$ =4;} | 
+EXP ',' EXP ',' EXP {$$ =3;} | 
+EXP ',' EXP {$$ =2;} | 
+EXP;
+
+RETURN_STMT: RETURN EXP '$' STMTS;
+
+EXP: EXP BLT EXP | 
+EXP BLE EXP | 
+EXP BGT EXP | 
+EXP BGE EXP | 
+EXP ISNOTEQ EXP	| 
+EXP ISEQ EXP | 
+EXP '+' EXP | 
+EXP '-' EXP | 
+EXP '*' EXP | 
+EXP '/' EXP | 
+EXP COND_AND EXP | 
+EXP COND_OR EXP | 
+EXP LOG_OR EXP | 
+EXP LOG_AND EXP | 
+EXP LOG_XOR EXP | 
+NOT EXP	| 
+'(' EXP ')' | 
+ints | 
+char_val | 
+'-' EXP | 
+identif |  
+FUNC_CALL;
+
+ident:	ID;
 %%
 
 
