@@ -19,6 +19,10 @@ int yyparse();
 int findvar(char vname[10]);
 void yyerror(const char *s);
 
+char t_registers[10][4] = {"$t0","$t1","$t2","$t3","$t4","$t5","$t6","$t7","$t8","$t9"};
+char s_registers[8][4] = {"$s0","$s1","$s2","$s3","$s4","$s5","$s6","$s7"};
+char a_registers[4][4] = {"$a0","$a1","$a2","$a3"};
+
 
 %}
 
