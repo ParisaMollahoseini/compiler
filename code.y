@@ -60,23 +60,24 @@ char a_registers[4][4] = {"$a0","$a1","$a2","$a3"};
 %type <fval> a
 
 %%
-s : s p | p;
-p : a ENTER {char str[10]; if ($1 == atoi(itoa($1,str,10))) printf("%d\n",atoi(itoa($1,str,10))); else printf("%.2f\n",$1);}
-| ID EQ a ENTER {char str[10]; int c =findvar($1); if(c!=-1){var_arr[c].num=$3;}     else{ strcpy(var_arr[count].name,$1); var_arr[count].num= $3; count = count + 1; }}//printf("new var is defined : %s",$1);
-| ID ENTER { if(findvar($1)!=-1) {char str[10]; if (find_var== atoi(itoa(find_var,str,10))) printf("%d\n",atoi(itoa(find_var,str,10))); else printf("%f\n",find_var);} else printf("var not find...\n");}
-;
-a :  a  '*' a {$$ = $1 * $3;}
-| a  '/' a {$$ = $1 / $3; }
-| a '+' a {$$ = $1 + $3; }
-| a '-' a {$$ = $1 - $3; }
-| FLOAT { $$ = $1;}
-| '-' FLOAT {$$ = -1*$2;}
-| INT {$$ = $1;}
-| '-' INT {$$ = -1*$2;}
-| ID {if(findvar($1)!=-1) $$=find_var;}
-| function '(' a ')' { if(whichone==2) $$= log($3); else if(whichone==1) $$= sqrt($3);}
-;
-function : SQRT {whichone=1;}| LOG {whichone=2;};
+PROGRAM: FTYPE ID '(' ARGS ')' '{' STMTS '}'  PROGRAM | ENTER
+
+FTYPE: VOID | INT;
+
+ARGS: VTYPE ID | 
+VTYPE ID ',' VTYPE ID | 
+VTYPE ID ',' VTYPE ID ',' VTYPE ID | 
+VTYPE ID ',' VTYPE ID ',' VTYPE ID ',' VTYPE ID;
+
+VTYPE: CHAR | INT;
+
+STMTS: DECLARE_STMT | 
+ASSIGN_STMT | 
+WHILE_STMT | 
+IF_STMT | 
+FUNC_CALL | 
+RETURN_STMT | 
+ENTER; 
 %%
 
 
