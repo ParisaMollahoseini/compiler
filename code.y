@@ -8,7 +8,12 @@ extern int yylex();
 extern FILE* yyin;
 FILE* datafile;
 
-
+struct function_names
+{
+	char name[10];
+	int num = 0 ;//arg nums
+}
+struct function_names fun_names[100];
 
 struct var
 {
@@ -20,9 +25,10 @@ struct var
 };
 
 struct var variables[100];
-int count = 0 ;
+int count = 0 ,func_count = 0;
 
 char current_func;
+
 
 int yyparse();
 int findvar(char vname[10]);
@@ -76,6 +82,8 @@ PROGRAM: FTYPE ID
 	 fprintf(datafile, "%s:\n", $2);
 	 fclose(datafile);
 	 strcpy(current_func,$2);
+	 fun_names[func_count].num = $3;
+	 strcpy(fun_names[func_count++].name,current_func);
 		}
 '(' PARAMS ')' '{' STMTS '}' {
 	int k = count;
