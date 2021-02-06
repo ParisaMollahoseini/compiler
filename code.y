@@ -77,7 +77,16 @@ PROGRAM: FTYPE ID
 	 fclose(datafile);
 	 strcpy(current_func,$2);
 		}
-'(' PARAMS ')' '{' STMTS '}'  PROGRAM | ENTER
+'(' PARAMS ')' '{' STMTS '}' {
+	int k = count;
+	for(int i=k-1;i>=0;i--)
+	{
+		if(strcmp(variables[i].current_func),current_func)==0)
+		{
+			count-- ;
+		}
+	}
+	} PROGRAM | ENTER
 
 FTYPE: VOID | INT;
 
