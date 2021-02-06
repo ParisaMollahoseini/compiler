@@ -67,13 +67,8 @@ PROGRAM: FTYPE ID '(' ARGS ')' '{' STMTS '}'  PROGRAM | ENTER
 
 FTYPE: VOID | INT;
 
-ARGS: VTYPE ID
- {
-	 datafile = fopen("mips.txt", "a+");
-	 fprintf(datafile, "%s:\n", $2);
-	 fclose(datafile);
-		}
-| VTYPE ID ',' VTYPE ID |
+ARGS: VTYPE ID |
+VTYPE ID ',' VTYPE ID |
 VTYPE ID ',' VTYPE ID ',' VTYPE ID |
 VTYPE ID ',' VTYPE ID ',' VTYPE ID ',' VTYPE ID;
 
