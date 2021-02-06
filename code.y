@@ -5,7 +5,8 @@
 #include <stdlib.h>
 extern int yylex();
 extern FILE* yyin;
-float ans=0;
+FILE* datafile;
+
 
 
 struct var
