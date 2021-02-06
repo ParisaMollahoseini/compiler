@@ -35,7 +35,7 @@ struct var variables[100];
 int count = 0 ,func_count = 0;
 
 char current_func;
-
+char currtype[4] ;
 
 int yyparse();
 void yyerror(const char *s);
@@ -124,7 +124,9 @@ RETURN_STMT |
 ENTER;
 
 DECLARE_STMT: VTYPE ID {
+
 	if(!findvar(&first,$2,curr_func)){
+		strcpy(currtype,$1);
 	struct var *newvar = addvar(&first, &last,$2, $1);
 	newvar -> current_func = current_func;
 	newvar -> which_reg = strcat("t",itos(GetFreeRegister('t'));
@@ -168,12 +170,11 @@ else
 				YYERROR;
 }}'$' STMTS;
 
-IDS: '$' | ',' ID  {
+IDS: '$' | ',' ID {
 	if(!findvar(&first,$2,curr_func)){
-	struct var *newvar = addvar(&first, &last,$2, $1);
+	struct var *newvar = addvar(&first, &last,$2, currtype);
 	newvar -> current_func = current_func;
 	newvar -> which_reg = strcat("t",itos(GetFreeRegister('t'));
-	newvar -> intchar_union.value_char = $4;
 }
 else
 {
