@@ -63,7 +63,13 @@ char a_registers[4][4] = {"$a0","$a1","$a2","$a3"};
 
 
 %%
-PROGRAM: FTYPE ID '(' ARGS ')' '{' STMTS '}'  PROGRAM | ENTER
+PROGRAM: FTYPE ID
+{
+	 datafile = fopen("mips.txt", "a+");
+	 fprintf(datafile, "%s:\n", $2);
+	 fclose(datafile);
+		}
+'(' ARGS ')' '{' STMTS '}'  PROGRAM | ENTER
 
 FTYPE: VOID | INT;
 
