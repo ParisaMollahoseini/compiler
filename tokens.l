@@ -34,6 +34,8 @@ ints ([1-9])+([0-9])*
 "-" {return '-';}
 "/" {return '/';}
 
+["'"[a-zA-Z]"''"] {return VALUE_ID;}
+
 "<" {return ISLOWER;}
 "<=" {return ISLOWERANDEQ;}
 ">" {return ISHIGHER;}
