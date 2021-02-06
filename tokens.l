@@ -14,7 +14,6 @@ ints ([1-9])+([0-9])*
 %%
 "while"  {return WHILE;}
 "void" {return VOID;}
-"int" {return INT;}
 "for" {return FOR;}
 "if" {return IF;}
 "else" {return ELSE;}
@@ -28,7 +27,7 @@ ints ([1-9])+([0-9])*
 [A-Za-z"_"]+[0-9A-Za-z"_"]* {strcpy(yylval.sval,yytext); return ID; }
 "#".*"\n" {return COMMENT;}
 "#*".*"*#" {   return MULTI_COMMENT}
-{ints} {yylval.ival = atoi(yytext); return INT;}
+{ints} {yylval.ival = atoi(yytext); return INTVAL;}
 "*" {return '*';}
 "+" {return '+';}
 "-" {return '-';}

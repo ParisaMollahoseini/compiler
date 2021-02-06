@@ -3,6 +3,7 @@
 #include <string.h>
 #include <math.h>
 #include <stdlib.h>
+#include <vector.h>
 extern int yylex();
 extern FILE* yyin;
 FILE* datafile;
@@ -15,7 +16,7 @@ struct var
 	int num;
 };
 
-
+vector<var> variables;
 int yyparse();
 int findvar(char vname[10]);
 void yyerror(const char *s);
@@ -39,7 +40,7 @@ char a_registers[4][4] = {"$a0","$a1","$a2","$a3"};
 
 
 
-%token <ival> INT
+%token <ival> INTVAL
 %token <sval> ID
 %token ','
 %token COND_OR
@@ -57,27 +58,34 @@ char a_registers[4][4] = {"$a0","$a1","$a2","$a3"};
 %token <cval> EQ
 
 //%token <ival> p
-%type <fval> a
+%token CHAR INT BREAK CONTINUE
+%token IF WHILE ELSEIF ELSE VOID FOR MAIN RETURN
+
 
 %%
 PROGRAM: FTYPE ID '(' ARGS ')' '{' STMTS '}'  PROGRAM | ENTER
 
 FTYPE: VOID | INT;
 
-ARGS: VTYPE ID | 
-VTYPE ID ',' VTYPE ID | 
-VTYPE ID ',' VTYPE ID ',' VTYPE ID | 
+ARGS: VTYPE ID
+ {
+	 datafile = fopen("mips.txt", "a+");
+	 fprintf(datafile, "%s:\n", $2);
+	 fclose(datafile);
+		}
+| VTYPE ID ',' VTYPE ID |
+VTYPE ID ',' VTYPE ID ',' VTYPE ID |
 VTYPE ID ',' VTYPE ID ',' VTYPE ID ',' VTYPE ID;
 
 VTYPE: CHAR | INT;
 
-STMTS: DECLARE_STMT | 
-ASSIGN_STMT | 
-WHILE_STMT | 
-IF_STMT | 
-FUNC_CALL | 
-RETURN_STMT | 
-ENTER; 
+STMTS: DECLARE_STMT |
+ASSIGN_STMT |
+WHILE_STMT |
+IF_STMT |
+FUNC_CALL |
+RETURN_STMT |
+ENTER;
 %%
 
 
