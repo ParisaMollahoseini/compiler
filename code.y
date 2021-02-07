@@ -90,21 +90,21 @@ _Bool a_state[4] = {0,0,0,0};
 %token <sval> ID
 %token <cval> char_val
 %token ','
-%token COND_OR
-%token COND_AND
-%token LOG_OR
-%token LOG_XOR
-%token LOG_AND
-%token ISEQ ISNOTEQ
-%token ISLOWER ISLOWERANDEQ ISHIGHER ISHIGHERANDEQ
+%left COND_OR
+%left COND_AND
+%left LOG_OR
+%left LOG_XOR
+%left LOG_AND
+%left ISEQ ISNOTEQ
+%left ISLOWER ISLOWERANDEQ ISHIGHER ISHIGHERANDEQ
 %left <cval> '+' '-'
 %left <cval> '*' '/'
-%token NOT
-%token '(' ')' '[' ']'
-%token '$'
+%left NOT
+%left '(' ')' '[' ']'
+%left '$'
 %token ENTER
 %token VALUE_ID
-%token <cval> EQ
+%left <cval> EQ
 %token COMMENT MULTI_COMMENT
 %token <sval> CHAR INT
 %type <ival> EXP PARAMS ARGS_IN
