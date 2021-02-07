@@ -88,7 +88,7 @@ _Bool a_state[4] = {0,0,0,0};
 
 %left <ival> INTVAL
 %left <cval> char_val
-%left ','
+%left <cval> ','
 %left COND_OR
 %left COND_AND
 %left LOG_OR
@@ -192,7 +192,7 @@ VTYPE   ID {
 }
 ',' VTYPE  ID {
 
-	struct var *newvar = addvar(&first, &last,$3, $2);
+	struct var *newvar = addvar(&first, &last,$2, $1);
 	strcpy(newvar -> current_func ,current_func);
 
 	if(strcmp(newvar->type,"int")==0)
@@ -237,7 +237,7 @@ VTYPE   ID  {
 }
 ','   VTYPE   ID {
 
-	struct var *newvar = addvar(&first, &last,$3, $2);
+	struct var *newvar = addvar(&first, &last,$2, $1);
 	strcpy(newvar -> current_func ,current_func);
 
 	if(strcmp(newvar->type,"int")==0)
@@ -259,7 +259,7 @@ VTYPE   ID  {
 }
 ','   VTYPE   ID {
 
-	struct var *newvar = addvar(&first, &last,$3, $2);
+	struct var *newvar = addvar(&first, &last,$2, $1);
 	strcpy(newvar -> current_func ,current_func);
 
 	if(strcmp(newvar->type,"int")==0)
@@ -304,7 +304,7 @@ VTYPE   ID  {
 }
 ','   VTYPE   ID   {
 
-	struct var *newvar = addvar(&first, &last,$3, $2);
+	struct var *newvar = addvar(&first, &last,$2, $1);
 	strcpy(newvar -> current_func ,current_func);
 
 	if(strcmp(newvar->type,"int")==0)
@@ -326,7 +326,7 @@ VTYPE   ID  {
 }
 ','   VTYPE   ID  {
 
-	struct var *newvar = addvar(&first, &last,$3, $2);
+	struct var *newvar = addvar(&first, &last,$2, $1);
 	strcpy(newvar -> current_func ,current_func);
 
 	if(strcmp(newvar->type,"int")==0)
@@ -348,7 +348,7 @@ VTYPE   ID  {
 }
  ','   VTYPE   ID {
 
- 	struct var *newvar = addvar(&first, &last,$3, $2);
+ 	struct var *newvar = addvar(&first, &last,$2, $1);
  	strcpy(newvar -> current_func ,current_func);
 
  	if(strcmp(newvar->type,"int")==0)

@@ -1,4 +1,4 @@
-void func1( int a , char b )
+void func1( int a )
 {
 char f = 'k' $
 f = 'a' $
