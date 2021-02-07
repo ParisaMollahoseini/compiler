@@ -554,14 +554,14 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   125,   125,   128,   137,   125,   142,   144,   144,   146,
-     147,   170,   194,   218,   243,   243,   247,   271,   294,   295,
-     296,   297,   298,   299,   299,   302,   302,   359,   359,   414,
-     414,   467,   467,   520,   520,   520,   570,   570,   613,   613,
-     613,   615,   615,   615,   617,   617,   617,   617,   619,   619,
-     619,   621,   623,   624,   625,   626,   627,   629,   631,   632,
-     633,   634,   635,   636,   637,   638,   639,   640,   641,   642,
-     643,   644,   645,   646,   678
+       0,   125,   125,   128,   139,   125,   144,   146,   146,   148,
+     149,   174,   198,   222,   247,   247,   251,   275,   298,   299,
+     300,   301,   302,   303,   303,   306,   306,   363,   363,   418,
+     418,   471,   471,   524,   524,   524,   574,   574,   617,   617,
+     617,   619,   619,   619,   621,   621,   621,   621,   623,   623,
+     623,   625,   627,   628,   629,   630,   631,   633,   635,   636,
+     637,   638,   639,   640,   641,   642,   643,   644,   645,   646,
+     647,   648,   649,   650,   682
 };
 #endif
 
@@ -1611,7 +1611,9 @@ yyreduce:
 	 fprintf(datafile, "%s:\n", current_func);
 	 fclose(datafile);
 
-	 fun_names[func_count].num = (yyvsp[(2) - (5)].sval);
+	 printf("Param value : %d\n",(yyvsp[(5) - (5)].ival));
+
+	 fun_names[func_count].num = (yyvsp[(5) - (5)].ival);
 	 strcpy(fun_names[func_count++].name,current_func);
 		;}
     break;
@@ -1619,7 +1621,7 @@ yyreduce:
   case 4:
 
 /* Line 1455 of yacc.c  */
-#line 137 "code.y"
+#line 139 "code.y"
     {
 
 		vardelete(&first,&last,current_func);
@@ -1630,17 +1632,17 @@ yyreduce:
   case 9:
 
 /* Line 1455 of yacc.c  */
-#line 146 "code.y"
+#line 148 "code.y"
     {(yyval.ival) = 0; printf("no parameters\n");;}
     break;
 
   case 10:
 
 /* Line 1455 of yacc.c  */
-#line 147 "code.y"
+#line 149 "code.y"
     {
-	(yyval.ival) = 1;
-	printf("1 parameters\n");
+
+
 	struct var *newvar = addvar(&first, &last,(yyvsp[(2) - (2)].sval), (yyvsp[(1) - (2)].sval));
 	strcpy(newvar -> current_func ,current_func);
 
@@ -1660,13 +1662,15 @@ yyreduce:
 	datafile = fopen("mips.txt", "a+");
 	fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,0);
 	fclose(datafile);
+		(yyval.ival) = 1;
+		printf("1 parameters %d\n",(yyval.ival));
 ;}
     break;
 
   case 11:
 
 /* Line 1455 of yacc.c  */
-#line 170 "code.y"
+#line 174 "code.y"
     {
 
 	struct var *newvar = addvar(&first, &last,(yyvsp[(4) - (4)].sval), (yyvsp[(3) - (4)].sval));
@@ -1696,7 +1700,7 @@ yyreduce:
   case 12:
 
 /* Line 1455 of yacc.c  */
-#line 194 "code.y"
+#line 198 "code.y"
     {
 
 	struct var *newvar = addvar(&first, &last,(yyvsp[(5) - (5)].sval), (yyvsp[(4) - (5)].sval));
@@ -1726,7 +1730,7 @@ yyreduce:
   case 13:
 
 /* Line 1455 of yacc.c  */
-#line 218 "code.y"
+#line 222 "code.y"
     {
 
  	struct var *newvar = addvar(&first, &last,(yyvsp[(6) - (6)].sval), (yyvsp[(5) - (6)].sval));
@@ -1756,7 +1760,7 @@ yyreduce:
   case 16:
 
 /* Line 1455 of yacc.c  */
-#line 247 "code.y"
+#line 251 "code.y"
     {
 
  struct var *newvar = addvar(&first, &last,(yyvsp[(2) - (2)].sval), (yyvsp[(1) - (2)].sval));
@@ -1784,7 +1788,7 @@ yyreduce:
   case 17:
 
 /* Line 1455 of yacc.c  */
-#line 271 "code.y"
+#line 275 "code.y"
     {
 
 	struct var *newvar = addvar(&first, &last,(yyvsp[(3) - (3)].sval), (yyvsp[(2) - (3)].sval));
@@ -1812,7 +1816,7 @@ yyreduce:
   case 25:
 
 /* Line 1455 of yacc.c  */
-#line 302 "code.y"
+#line 306 "code.y"
     {
 	if(first != NULL){
 	if(!findvar(first,(yyvsp[(2) - (2)].sval),current_func)){
@@ -1874,7 +1878,7 @@ fclose(datafile);
   case 27:
 
 /* Line 1455 of yacc.c  */
-#line 359 "code.y"
+#line 363 "code.y"
     {
 	if(first != NULL){
 
@@ -1935,7 +1939,7 @@ fclose(datafile);
   case 29:
 
 /* Line 1455 of yacc.c  */
-#line 414 "code.y"
+#line 418 "code.y"
     {
 	if(first != NULL){
 	if(!findvar(first,(yyvsp[(2) - (2)].sval),current_func)){
@@ -1993,7 +1997,7 @@ fclose(datafile);
   case 31:
 
 /* Line 1455 of yacc.c  */
-#line 467 "code.y"
+#line 471 "code.y"
     {
 	if(first != NULL){
 		if(!findvar(first,(yyvsp[(2) - (4)].sval),current_func)){
@@ -2051,7 +2055,7 @@ fclose(datafile);
   case 34:
 
 /* Line 1455 of yacc.c  */
-#line 520 "code.y"
+#line 524 "code.y"
     {
 		if(first != NULL){
 	if(!findvar(first,(yyvsp[(2) - (2)].sval),current_func)){
@@ -2106,7 +2110,7 @@ fclose(datafile);
   case 36:
 
 /* Line 1455 of yacc.c  */
-#line 570 "code.y"
+#line 574 "code.y"
     {
 		if(first != NULL){
 	if(findvar(first,(yyvsp[(1) - (4)].sval),current_func)){
@@ -2152,203 +2156,203 @@ else
   case 38:
 
 /* Line 1455 of yacc.c  */
-#line 613 "code.y"
+#line 617 "code.y"
     {printf("while begin\n");;}
     break;
 
   case 39:
 
 /* Line 1455 of yacc.c  */
-#line 613 "code.y"
+#line 617 "code.y"
     {printf("while end\n");;}
     break;
 
   case 41:
 
 /* Line 1455 of yacc.c  */
-#line 615 "code.y"
+#line 619 "code.y"
     {printf("if begin\n");;}
     break;
 
   case 42:
 
 /* Line 1455 of yacc.c  */
-#line 615 "code.y"
+#line 619 "code.y"
     {printf("if end\n");;}
     break;
 
   case 44:
 
 /* Line 1455 of yacc.c  */
-#line 617 "code.y"
+#line 621 "code.y"
     {printf("elseif begin\n");;}
     break;
 
   case 45:
 
 /* Line 1455 of yacc.c  */
-#line 617 "code.y"
+#line 621 "code.y"
     {printf("elseif end\n");;}
     break;
 
   case 48:
 
 /* Line 1455 of yacc.c  */
-#line 619 "code.y"
+#line 623 "code.y"
     {printf("else begin\n");;}
     break;
 
   case 49:
 
 /* Line 1455 of yacc.c  */
-#line 619 "code.y"
+#line 623 "code.y"
     {printf("else end\n");;}
     break;
 
   case 52:
 
 /* Line 1455 of yacc.c  */
-#line 623 "code.y"
+#line 627 "code.y"
     {printf("no args passed\n");;}
     break;
 
   case 53:
 
 /* Line 1455 of yacc.c  */
-#line 624 "code.y"
+#line 628 "code.y"
     {(yyval.ival) =4; printf("4 args passed\n");;}
     break;
 
   case 54:
 
 /* Line 1455 of yacc.c  */
-#line 625 "code.y"
+#line 629 "code.y"
     {(yyval.ival) =3; printf("3 args passed\n");;}
     break;
 
   case 55:
 
 /* Line 1455 of yacc.c  */
-#line 626 "code.y"
+#line 630 "code.y"
     {(yyval.ival) =2; printf("2 args passed\n");;}
     break;
 
   case 56:
 
 /* Line 1455 of yacc.c  */
-#line 627 "code.y"
+#line 631 "code.y"
     {printf("1 arg passed\n");;}
     break;
 
   case 58:
 
 /* Line 1455 of yacc.c  */
-#line 631 "code.y"
+#line 635 "code.y"
     {printf("equality\n");  (yyval.ival)= (yyvsp[(1) - (3)].ival) == (yyvsp[(3) - (3)].ival);;}
     break;
 
   case 59:
 
 /* Line 1455 of yacc.c  */
-#line 632 "code.y"
+#line 636 "code.y"
     {printf("notequality\n");  (yyval.ival)= (yyvsp[(1) - (3)].ival) != (yyvsp[(3) - (3)].ival);;}
     break;
 
   case 60:
 
 /* Line 1455 of yacc.c  */
-#line 633 "code.y"
+#line 637 "code.y"
     {printf("addition\n");  (yyval.ival)= (yyvsp[(1) - (3)].ival) + (yyvsp[(3) - (3)].ival);;}
     break;
 
   case 61:
 
 /* Line 1455 of yacc.c  */
-#line 634 "code.y"
+#line 638 "code.y"
     {printf("subtraction\n");  (yyval.ival)= (yyvsp[(1) - (3)].ival) - (yyvsp[(3) - (3)].ival);;}
     break;
 
   case 62:
 
 /* Line 1455 of yacc.c  */
-#line 635 "code.y"
+#line 639 "code.y"
     {printf("multiply\n");  (yyval.ival)= (yyvsp[(1) - (3)].ival) * (yyvsp[(3) - (3)].ival);;}
     break;
 
   case 63:
 
 /* Line 1455 of yacc.c  */
-#line 636 "code.y"
+#line 640 "code.y"
     {printf("division\n");  (yyval.ival)= (yyvsp[(1) - (3)].ival) / (yyvsp[(3) - (3)].ival);;}
     break;
 
   case 64:
 
 /* Line 1455 of yacc.c  */
-#line 637 "code.y"
+#line 641 "code.y"
     {printf("int literal\n"); (yyval.ival)= (yyvsp[(1) - (1)].ival);;}
     break;
 
   case 65:
 
 /* Line 1455 of yacc.c  */
-#line 638 "code.y"
+#line 642 "code.y"
     {printf("conditional and\n");  (yyval.ival)= (yyvsp[(1) - (3)].ival) && (yyvsp[(3) - (3)].ival);;}
     break;
 
   case 66:
 
 /* Line 1455 of yacc.c  */
-#line 639 "code.y"
+#line 643 "code.y"
     {printf("nonditional or\n"); (yyval.ival)= (yyvsp[(1) - (3)].ival) || (yyvsp[(3) - (3)].ival);;}
     break;
 
   case 67:
 
 /* Line 1455 of yacc.c  */
-#line 640 "code.y"
+#line 644 "code.y"
     {printf("logical or\n"); (yyval.ival)= (yyvsp[(1) - (3)].ival) | (yyvsp[(3) - (3)].ival);;}
     break;
 
   case 68:
 
 /* Line 1455 of yacc.c  */
-#line 641 "code.y"
+#line 645 "code.y"
     {printf("logical and\n"); (yyval.ival)= (yyvsp[(1) - (3)].ival) & (yyvsp[(3) - (3)].ival);;}
     break;
 
   case 69:
 
 /* Line 1455 of yacc.c  */
-#line 642 "code.y"
+#line 646 "code.y"
     {printf("logical xor\n"); (yyval.ival)= (yyvsp[(1) - (3)].ival) ^ (yyvsp[(3) - (3)].ival);;}
     break;
 
   case 70:
 
 /* Line 1455 of yacc.c  */
-#line 643 "code.y"
+#line 647 "code.y"
     {printf("logical not\n"); (yyval.ival)= !(yyvsp[(2) - (2)].ival);;}
     break;
 
   case 71:
 
 /* Line 1455 of yacc.c  */
-#line 644 "code.y"
+#line 648 "code.y"
     {printf("parantheses\n");  (yyval.ival)= (yyvsp[(2) - (3)].ival);;}
     break;
 
   case 72:
 
 /* Line 1455 of yacc.c  */
-#line 645 "code.y"
+#line 649 "code.y"
     {printf("character literal\n"); (yyval.ival)= (yyvsp[(1) - (1)].cval);;}
     break;
 
   case 73:
 
 /* Line 1455 of yacc.c  */
-#line 646 "code.y"
+#line 650 "code.y"
     {
 	printf("id literal\n");
 	if(first != NULL){
@@ -2386,14 +2390,14 @@ char error[30] = "no such variable exists ...";
   case 74:
 
 /* Line 1455 of yacc.c  */
-#line 678 "code.y"
+#line 682 "code.y"
     {printf("negative num\n"); (yyval.ival)= -(yyvsp[(2) - (2)].ival);;}
     break;
 
 
 
 /* Line 1455 of yacc.c  */
-#line 2397 "code.tab.c"
+#line 2401 "code.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -2605,7 +2609,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 681 "code.y"
+#line 685 "code.y"
 
 
 

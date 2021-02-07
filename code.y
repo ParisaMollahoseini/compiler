@@ -132,7 +132,9 @@ PROGRAM: FTYPE ID {
 	 fprintf(datafile, "%s:\n", current_func);
 	 fclose(datafile);
 
-	 fun_names[func_count].num = $2;
+	 printf("Param value : %d\n",$5);
+
+	 fun_names[func_count].num = $5;
 	 strcpy(fun_names[func_count++].name,current_func);
 		}')'  '{'  STMTS  '}'  {
 
@@ -145,8 +147,8 @@ FTYPE: VOID | INT;
 
 PARAMS: {$$ = 0; printf("no parameters\n");} |
 VTYPE   ID {
-	$$ = 1;
-	printf("1 parameters\n");
+
+
 	struct var *newvar = addvar(&first, &last,$2, $1);
 	strcpy(newvar -> current_func ,current_func);
 
@@ -166,6 +168,8 @@ VTYPE   ID {
 	datafile = fopen("mips.txt", "a+");
 	fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,0);
 	fclose(datafile);
+		$$ = 1;
+		printf("1 parameters %d\n",$$);
 }
 | THREE_ID ',' VTYPE  ID {
 
