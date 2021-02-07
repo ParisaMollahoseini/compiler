@@ -181,12 +181,36 @@ else
 				YYERROR;
 }
 }
+else{
+	printf("declare %s %s\n",$1,$2);
+
+
+	first = (struct var*)malloc(sizeof(struct var));
+	strcpy(first->name ,$2);
+	strcpy(first->type,"int");
+
+	strcpy(first -> current_func ,current_func);
+
+		first->next = NULL;
+
+		char num[5];
+		itoa(GetFreeRegister('t'), num,10);
+		char buffer[10] = {'$','t'};
+		strcat(buffer, num);
+
+
+strcpy(first -> which_reg , buffer);
+
+datafile = fopen("mips.txt", "a+");
+fprintf(datafile, "\taddi %s, $zero , %d \n", first->which_reg,0);
+fclose(datafile);
+}
 }
 IDS '$' STMTS |
 INT ID EQ EXP {
 	if(first != NULL){
 	if(!findvar(first,$2,current_func)){
-		printf("declare and assign int %s = %s\n",$2,$4);
+		printf("declare and assign int %s = %d\n",$2,$4);
 	struct var *newvar = addvar(&first, &last,$2, $1);
 	strcpy(newvar -> current_func ,current_func);
 
@@ -207,11 +231,35 @@ else
 				YYERROR;
 }
 }
+else{
+	printf("declare and assign int %s = %d\n",$2,$4);
+
+
+	first = (struct var*)malloc(sizeof(struct var));
+	strcpy(first->name ,$2);
+	strcpy(first->type,"int");
+	first->intchar_union.value_int = $4;
+	strcpy(first -> current_func ,current_func);
+
+		first->next = NULL;
+
+		char num[5];
+		itoa(GetFreeRegister('t'), num,10);
+		char buffer[10] = {'$','t'};
+		strcat(buffer, num);
+
+
+strcpy(first -> which_reg , buffer);
+
+datafile = fopen("mips.txt", "a+");
+fprintf(datafile, "\taddi %s, $zero , %d \n", first->which_reg,first -> intchar_union.value_int);
+fclose(datafile);
+}
 }'$' STMTS |
 CHAR ID {
 	if(first != NULL){
 	if(!findvar(first,$2,current_func)){
-		printf("declare %s %s\n",$1,$2);
+		printf("declare %s %s\n","char",$2);
 
 		strcpy(currtype,$1);
 	struct var *newvar = addvar(&first, &last,$2, $1);
@@ -233,6 +281,29 @@ else
 				YYERROR;
 }
 }
+else{
+	printf("declare char %s\n","char",$2);
+
+
+	first = (struct var*)malloc(sizeof(struct var));
+	strcpy(first->name ,$2);
+	strcpy(first->type,"char");
+	strcpy(first -> current_func ,current_func);
+
+		first->next = NULL;
+
+		char num[5];
+		itoa(GetFreeRegister('t'), num,10);
+		char buffer[10] = {'$','t'};
+		strcat(buffer, num);
+
+
+strcpy(first -> which_reg , buffer);
+
+datafile = fopen("mips.txt", "a+");
+fprintf(datafile, "\taddi %s, $zero , %d \n", first->which_reg,0);
+fclose(datafile);
+}
 }
 IDS '$' STMTS |
 CHAR ID EQ char_val {
@@ -249,7 +320,7 @@ CHAR ID EQ char_val {
 
 		newvar -> intchar_union.value_char = $4;
 		datafile = fopen("mips.txt", "a+");
-		fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,0);
+		fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,newvar -> intchar_union.value_char);
 		fclose(datafile);
 	}
 	else
@@ -264,7 +335,6 @@ CHAR ID EQ char_val {
 		printf("declare and assign char %s = %c\n",$2,$4);
 
 
-		//struct var* _new = (struct var*)malloc(sizeof(struct var));
 		first = (struct var*)malloc(sizeof(struct var));
 		strcpy(first->name ,$2);
 		first->intchar_union.value_char = $4;
@@ -282,12 +352,13 @@ CHAR ID EQ char_val {
 	strcpy(first -> which_reg , buffer);
 
 	datafile = fopen("mips.txt", "a+");
-	fprintf(datafile, "\taddi %s, $zero , %d \n", first->which_reg,0);
+	fprintf(datafile, "\taddi %s, $zero , %d \n", first->which_reg,first -> intchar_union.value_char);
 	fclose(datafile);
 	}
 	}'$' STMTS;
 
 IDS: | ',' ID {
+		if(first != NULL){
 	if(!findvar(first,$2,current_func)){
 		printf("declare more id %s %s\n",currtype,$2);
 	struct var *newvar = addvar(&first, &last,$2, currtype);
@@ -307,6 +378,30 @@ else
 				yyerror(error);
 				YYERROR;
 
+}}
+else{
+	printf("declare more id %s %s\n",currtype,$2);
+
+
+	first = (struct var*)malloc(sizeof(struct var));
+	strcpy(first->name ,$2);
+	strcpy(first->type,currtype);
+
+	strcpy(first -> current_func ,current_func);
+
+		first->next = NULL;
+
+		char num[5];
+		itoa(GetFreeRegister('t'), num,10);
+		char buffer[10] = {'$','t'};
+		strcat(buffer, num);
+
+
+strcpy(first -> which_reg , buffer);
+
+datafile = fopen("mips.txt", "a+");
+fprintf(datafile, "\taddi %s, $zero , %d \n", first->which_reg,0);
+fclose(datafile);
 }}IDS;
 
 ASSIGN_STMT: ID EQ EXP '$' {
