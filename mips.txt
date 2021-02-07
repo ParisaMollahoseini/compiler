@@ -1,2 +1,3 @@
 func1:
-	addi $t0, $zero , 0 
+	addi $t0, $zero , 107 
+	addi $t0, $zero , 97 

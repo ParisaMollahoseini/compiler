@@ -35,7 +35,7 @@ ints ([1-9])+([0-9])*
 "-" {  printf("%s\n",yytext); return '-';  }
 "/" {  printf("%s\n",yytext); return '/'; }
 
-["'"][a-zA-Z]["'"] {  printf("%s\n",yytext); return char_val;  }
+["'"][a-zA-Z]["'"] {  printf("%c\n",yytext[1]); yylval.cval = yytext[1] ; return char_val;  }
 
 "<" {  printf("%s\n",yytext); return ISLOWER; }
 "<=" {  printf("%s\n",yytext); return ISLOWERANDEQ;}

@@ -873,7 +873,7 @@ YY_RULE_SETUP
 case 23:
 YY_RULE_SETUP
 #line 38 "tokens.l"
-{  printf("%s\n",yytext); return char_val;  }
+{  printf("%c\n",yytext[1]); yylval.cval = yytext[1] ; return char_val;  }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP

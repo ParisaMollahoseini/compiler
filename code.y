@@ -332,10 +332,11 @@ CHAR ID EQ char_val {
 	}
 	}
 	else{
-		printf("declare and assign char %s = %c\n",$2,$4);
+		printf("fisrt declare and assign char %s = %c\n",$2,$4);
 
 
 		first = (struct var*)malloc(sizeof(struct var));
+		last = (struct var*)malloc(sizeof(struct var));
 		strcpy(first->name ,$2);
 		first->intchar_union.value_char = $4;
 		strcpy(first->type,"char");
@@ -350,7 +351,7 @@ CHAR ID EQ char_val {
 
 
 	strcpy(first -> which_reg , buffer);
-
+	last = first;
 	datafile = fopen("mips.txt", "a+");
 	fprintf(datafile, "\taddi %s, $zero , %d \n", first->which_reg,first -> intchar_union.value_char);
 	fclose(datafile);
@@ -407,17 +408,20 @@ fclose(datafile);
 ASSIGN_STMT: ID EQ EXP '$' {
 		if(first != NULL){
 	if(findvar(first,$1,current_func)){
-		printf("assign  %s = %s\n",$1,$3);
+
 	struct var *newvar = findvar(first,$1,current_func);
 		datafile = fopen("mips.txt", "a+");
+		printf("type is %s",newvar->type);
 	if(strcmp(newvar -> type ,"char")==0)
 	{
+		printf("assign  %s = %c\n",$1,$3);
 		newvar -> intchar_union.value_char = $3;
 		fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,newvar -> intchar_union.value_int);
 
 	}
 	else
 	{
+		printf("assign  %s = %d\n",$1,$3);
 		newvar -> intchar_union.value_int = $3;
 		fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,newvar -> intchar_union.value_int);
 
