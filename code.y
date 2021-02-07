@@ -64,8 +64,8 @@ void vardelete(struct var** first, struct var** last, char* func_name);
 void freereg(char* reg_name);
 int GetFreeRegister(char register);
 struct var* findvar(struct var* first, char* name,char* curr_func);
-struct var* first = NULL;
-struct var* last = NULL;
+struct var* first = (struct var*)malloc(sizeof(struct var));
+struct var* last = (struct var*)malloc(sizeof(struct var));
 
 char t_reg[10][4] = {"$t0","$t1","$t2","$t3","$t4","$t5","$t6","$t7","$t8","$t9"};
 _Bool t_state[10] = {0,0,0,0,0,0,0,0,0,0};
@@ -230,7 +230,7 @@ else
 }
 IDS '$' STMTS |
 CHAR ID EQ char_val {
-	if(!findvar(first,$2,current_func)){
+	if(!first || !findvar(first,$2,current_func)){
 		printf("declare and assign char %s = %s\n",$2,$4);
 
 	struct var *newvar = addvar(&first, &last,$2, $1);
