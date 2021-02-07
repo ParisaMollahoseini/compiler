@@ -5,6 +5,3 @@ func1:
 	addi $t0, $zero , 107 
 	addi $t0, $zero , 97 
 	addi $t1, $zero , 0 
-	addi $t1, $zero , 5 
-	addi $t2, $zero , 8 
-	addi $t3, $zero , 0 

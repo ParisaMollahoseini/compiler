@@ -52,13 +52,16 @@ struct var
 
 struct var variables[100];
 int count = 0 ,func_count = 0;
+int a_num=0;
 
-char current_func[20];
+char current_func[20],founded_func[20];
+int founded_func_num = 0;
 char currtype[4] ;
 
 int yyparse();
 void yyerror(const char *s);
 
+struct var* findvar_WithFunc(struct var* first, char* funcName);
 struct var* addvar(struct var** first, struct var** last, char* name, char type[5]);
 void vardelete(struct var** first, struct var** last, char* func_name);
 void freereg(char* reg_name);
@@ -124,6 +127,7 @@ _Bool a_state[4] = {0,0,0,0};
 %%
 PROGRAM: FTYPE ID {
 	strcpy(current_func,$2);
+	a_num = 0;
  }
  '('  PARAMS {
 	 printf("see function : %s\n",current_func);
@@ -173,6 +177,7 @@ VTYPE   ID {
 }
 | THREE_ID ',' VTYPE  ID {
 
+
 	struct var *newvar = addvar(&first, &last,$4, $3);
 	strcpy(newvar -> current_func ,current_func);
 
@@ -196,6 +201,7 @@ VTYPE   ID {
 	printf("2 parameters\n");
 } |
 THREE_ID THREE_ID_COMMA ','  VTYPE   ID {
+
 
 	struct var *newvar = addvar(&first, &last,$5, $4);
 	strcpy(newvar -> current_func ,current_func);
@@ -221,7 +227,8 @@ THREE_ID THREE_ID_COMMA ','  VTYPE   ID {
 } |
 THREE_ID THREE_ID_COMMA THREE_ID_COMMA ','   VTYPE   ID {
 
- 	struct var *newvar = addvar(&first, &last,$6, $5);
+
+	struct var *newvar = addvar(&first, &last,$6, $5);
  	strcpy(newvar -> current_func ,current_func);
 
  	if(strcmp(newvar->type,"int")==0)
@@ -622,13 +629,32 @@ ELSEIF_STMT: ELSEIF {printf("elseif begin\n");} '(' EXP ')' '{' STMTS '}' {print
 
 ELSE_STMT: ELSE {printf("else begin\n");} '{' STMTS  '}' {printf("else end\n");} | ;
 
-FUNC_CALL: ID '(' ARGS_IN ')' '$' STMTS;
+FUNC_CALL: ID {
+	int flag = -1 ;
+	for(int i=0;i<func_count;i++)
+	{
+		if(strcmp($1,fun_names[i].name)==0)
+		{
+			flag = i;
+		}
+	}
+	if(flag == -1 )
+	{
+		char error[30] = "no such function exists ...";
+					strcat(error, $1);
+					yyerror(error);
+					YYERROR;
+	}
+	else
+	{
+		strcpy(founded_func,$1);
+		founded_func_num = fun_names[flag].num;
+	}
+}
+'(' ARGS_IN ')' '$' STMTS;
 
 ARGS_IN: {printf("no args passed\n");} |
-EXP ',' EXP ',' EXP ',' EXP {$$ =4; printf("4 args passed\n");} |
-EXP ',' EXP ',' EXP {$$ =3; printf("3 args passed\n");} |
-EXP ',' EXP {$$ =2; printf("2 args passed\n");} |
-EXP {printf("1 arg passed\n");};
+EXP ',' EXP ',' EXP ',' EXP ;
 
 RETURN_STMT: RETURN EXP '$' STMTS;
 
@@ -784,6 +810,18 @@ struct var* findvar(struct var* first, char* name,char* curr_func){
 
 	for(struct var* t = first; t; t = t->next){
 		if(strcmp(t->name, name) == 0 && strcmp(t->current_func,curr_func)==0)
+			return t;
+	}
+
+	return NULL;
+}
+struct var* findvar_WithFunc(struct var* first, char* funcName){
+
+	if(first == NULL)
+		return NULL;
+
+	for(struct var* t = first; t; t = t->next){
+		if(strcmp(t->current_func,funcName)==0)
 			return t;
 	}
 
