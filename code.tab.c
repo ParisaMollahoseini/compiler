@@ -1626,7 +1626,7 @@ yyreduce:
 #line 124 "code.y"
     {
 
-		vardelete(first,last,current_func);
+		vardelete(&first,&last,current_func);
 		printf("delete variables after function\n");
 	;}
     break;
@@ -1671,7 +1671,7 @@ yyreduce:
 /* Line 1455 of yacc.c  */
 #line 149 "code.y"
     {
-	if(!findvar(&first,(yyvsp[(2) - (2)].sval),current_func)){
+	if(!findvar(first,(yyvsp[(2) - (2)].sval),current_func)){
 		printf("declare %s %s\n",(yyvsp[(1) - (2)].sval),(yyvsp[(2) - (2)].sval));
 
 		strcpy(currtype,(yyvsp[(1) - (2)].sval));
@@ -1701,7 +1701,7 @@ else
 /* Line 1455 of yacc.c  */
 #line 174 "code.y"
     {
-	if(!findvar(&first,(yyvsp[(2) - (4)].sval),current_func)){
+	if(!findvar(first,(yyvsp[(2) - (4)].sval),current_func)){
 		printf("declare and assign int %s = %s\n",(yyvsp[(2) - (4)].sval),(yyvsp[(4) - (4)].ival));
 	struct var *newvar = addvar(&first, &last,(yyvsp[(2) - (4)].sval), "INT");
 	strcpy(newvar -> current_func ,current_func);
@@ -1730,7 +1730,7 @@ else
 /* Line 1455 of yacc.c  */
 #line 197 "code.y"
     {
-	if(!findvar(&first,(yyvsp[(2) - (4)].sval),current_func)){
+	if(!findvar(first,(yyvsp[(2) - (4)].sval),current_func)){
 		printf("declare and assign char %s = %s\n",(yyvsp[(2) - (4)].sval),(yyvsp[(4) - (4)].sval));
 
 	struct var *newvar = addvar(&first, &last,(yyvsp[(2) - (4)].sval), "CHAR");

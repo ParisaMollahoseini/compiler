@@ -123,7 +123,7 @@ PROGRAM: FTYPE ID
 	 strcpy(fun_names[func_count++].name,current_func);
 		}')' '{' STMTS '}' {
 
-		vardelete(first,last,current_func);
+		vardelete(&first,&last,current_func);
 		printf("delete variables after function\n");
 	}
 	PROGRAM | ENTER
@@ -147,7 +147,7 @@ RETURN_STMT |
 ENTER;
 
 DECLARE_STMT: VTYPE ID {
-	if(!findvar(&first,$2,current_func)){
+	if(!findvar(first,$2,current_func)){
 		printf("declare %s %s\n",$1,$2);
 
 		strcpy(currtype,$1);
@@ -172,7 +172,7 @@ else
 }
 IDS STMTS |
 INT ID EQ EXP {
-	if(!findvar(&first,$2,current_func)){
+	if(!findvar(first,$2,current_func)){
 		printf("declare and assign int %s = %s\n",$2,$4);
 	struct var *newvar = addvar(&first, &last,$2, "INT");
 	strcpy(newvar -> current_func ,current_func);
@@ -195,7 +195,7 @@ else
 }
 }'$' STMTS |
 CHAR ID EQ char_val {
-	if(!findvar(&first,$2,current_func)){
+	if(!findvar(first,$2,current_func)){
 		printf("declare and assign char %s = %s\n",$2,$4);
 
 	struct var *newvar = addvar(&first, &last,$2, "CHAR");
