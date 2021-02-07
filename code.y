@@ -102,6 +102,7 @@ _Bool a_state[4] = {0,0,0,0};
 %left '(' ')' '[' ']'
 %left '$'
 %left ENTER
+%token SPACE
 %left VALUE_ID
 %left <cval> EQ
 %left COMMENT MULTI_COMMENT
@@ -121,22 +122,22 @@ _Bool a_state[4] = {0,0,0,0};
 %start PROGRAM
 
 %%
-PROGRAM: FTYPE ID
+PROGRAM: FTYPE SPACE ID
 '(' PARAMS {
-	 printf("see function : %s\n",$2);
+	 printf("see function : %s\n",$3);
 
 	 datafile = fopen("mips.txt", "a+");
-	 fprintf(datafile, "%s:\n", $2);
+	 fprintf(datafile, "%s:\n", $3);
 	 fclose(datafile);
-	 strcpy(current_func,$2);
-	 fun_names[func_count].num = $4;
+	 strcpy(current_func,$3);
+	 fun_names[func_count].num = $5;
 	 strcpy(fun_names[func_count++].name,current_func);
 		}')' '{' STMTS '}' {
 
 		vardelete(&first,&last,current_func);
 		printf("delete variables after function\n");
 	}
-	PROGRAM | ENTER
+	PROGRAM | ENTER ;
 
 FTYPE: VOID | INT;
 

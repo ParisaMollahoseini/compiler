@@ -58,7 +58,7 @@ ints ([1-9])+([0-9])*
 "," {  printf("%s\n",yytext); return ','; }
 "{" {  printf("%s\n",yytext); return '{';  }
 "}" {  printf("%s\n",yytext); return '}'; }
-[ ] { printf("space\n");}
+[ \t]+ { printf("newspace\n"); return SPACE;}
 %%
 
 
