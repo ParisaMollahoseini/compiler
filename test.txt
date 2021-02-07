@@ -1,12 +1,5 @@
-int func ( int a , int b)
+int func1 ( int a , int b)
 {
 char c = 'k'$
-a = c$
-}
-
-int main()
-{
-
-func(4,5)$
 
 }

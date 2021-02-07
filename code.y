@@ -31,6 +31,7 @@ struct function_names
 {
 	char name[10];
 	int num ;//arg nums
+	char return_func[5];
 };
 struct function_names fun_names[100];
 
@@ -86,9 +87,7 @@ _Bool a_state[4] = {0,0,0,0};
 
 
 
-%left <ival> INTVAL
-%left <sval> ID
-%left <cval> char_val
+
 %left ','
 %left COND_OR
 %left COND_AND
@@ -107,13 +106,17 @@ _Bool a_state[4] = {0,0,0,0};
 %left <cval> EQ
 %left COMMENT MULTI_COMMENT
 
-%type <ival> EXP PARAMS ARGS_IN FUNC_CALL
-%type <sval> VTYPE
+//%type <ival> EXP PARAMS ARGS_IN FUNC_CALL
+%left <ival> INTVAL
+%left <sval> ID
+%left <cval> char_val
+%type <ival> PARAMS
+%type <sval> VTYPE FTYPE
 
 %left <sval> CHAR
-%left <sval> INT
+%left <sval> INT VOID
 %left BREAK CONTINUE
-%left IF WHILE ELSEIF ELSE VOID FOR MAIN RETURN
+%left IF WHILE ELSEIF ELSE FOR MAIN RETURN
 
 
 %%
@@ -125,6 +128,7 @@ PROGRAM: FTYPE ID
 	 fprintf(datafile, "%s:\n", $2);
 	 fclose(datafile);
 	 strcpy(current_func,$2);
+	 strcpy(fun_names[func_count].return_func , $1);
 	 fun_names[func_count].num = $4;
 	 strcpy(fun_names[func_count++].name,current_func);
 		}')' '{' STMTS '}' {
@@ -144,13 +148,7 @@ VTYPE ID ',' VTYPE ID ',' VTYPE ID ',' VTYPE ID {$$ = 4; printf("4 parameters\n"
 
 VTYPE: CHAR | INT;
 
-STMTS: DECLARE_STMT |
-ASSIGN_STMT |
-WHILE_STMT |
-IF_STMT |
-FUNC_CALL |
-RETURN_STMT |
-ENTER;
+STMTS: DECLARE_STMT;
 
 DECLARE_STMT: VTYPE ID {
 	if(!findvar(first,$2,current_func)){
@@ -177,29 +175,6 @@ else
 }
 }
 IDS '$' STMTS |
-INT ID EQ EXP {
-	if(!findvar(first,$2,current_func)){
-		printf("declare and assign int %s = %s\n",$2,$4);
-	struct var *newvar = addvar(&first, &last,$2, $1);
-	strcpy(newvar -> current_func ,current_func);
-
-	char buffer[10];
-	itoa(GetFreeRegister('t'),buffer,10);
-	strcpy(newvar -> which_reg , strcat("$t",buffer));
-
-	newvar -> intchar_union.value_int = $4;
-	datafile = fopen("mips.txt", "a+");
-	fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,0);
-	fclose(datafile);
-}
-else
-{
-	char error[30] = "replicate variable ";
-				strcat(error, $2);
-				yyerror(error);
-				YYERROR;
-}
-}'$' STMTS |
 CHAR ID EQ char_val {
 	if(!findvar(first,$2,current_func)){
 		printf("declare and assign char %s = %s\n",$2,$4);
@@ -245,126 +220,6 @@ else
 				YYERROR;
 
 }}IDS;
-
-ASSIGN_STMT: ID EQ EXP '$' {
-	if(findvar(first,$1,current_func)){
-		printf("assign  %s = %s\n",$1,$3);
-	struct var *newvar = findvar(first,$1,current_func);
-		datafile = fopen("mips.txt", "a+");
-	if(strcmp(newvar -> type ,"char")==0)
-	{
-		newvar -> intchar_union.value_char = $3;
-		fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,newvar -> intchar_union.value_int);
-
-	}
-	else
-	{
-		newvar -> intchar_union.value_int = $3;
-		fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,newvar -> intchar_union.value_int);
-
-	}
-
-	fclose(datafile);
-}
-else
-{
-	char error[30] = "no such variable exists ...";
-				strcat(error, $1);
-				yyerror(error);
-				YYERROR;
-
-}} STMTS;
-
-//VAR_VALUE: EXP | char_val;
-
-WHILE_STMT: WHILE {printf("while begin\n");} '(' EXP  ')' '{' STMTS '}' {printf("while end\n");} STMTS;
-
-IF_STMT: IF {printf("if begin\n");} '(' EXP ')' '{' STMTS  '}' ELSEIF_STMT ELSE_STMT {printf("if end\n");} STMTS;
-
-ELSEIF_STMT: ELSEIF {printf("elseif begin\n");} '(' EXP ')' '{' STMTS '}' {printf("elseif end\n");} ELSEIF | ENTER;
-
-ELSE_STMT: ELSE {printf("else begin\n");} '{' STMTS  '}' {printf("else end\n");} | ENTER;
-
-FUNC_CALL: ID '(' ARGS_IN ')' '$' STMTS;
-
-ARGS_IN: {printf("no args passed\n");} |
-EXP ',' EXP ',' EXP ',' EXP {$$ =4; printf("4 args passed\n");} |
-EXP ',' EXP ',' EXP {$$ =3; printf("3 args passed\n");} |
-EXP ',' EXP {$$ =2; printf("2 args passed\n");} |
-EXP {printf("1 arg passed\n");};
-
-RETURN_STMT: RETURN EXP '$' STMTS;
-
-EXP: EXP ISLOWER EXP {printf(" < \n"); $$= $1 < $3;} |
-EXP ISLOWERANDEQ EXP {printf(" <= \n"); $$= $1 <= $3;} |
-EXP ISHIGHER EXP {printf(" > \n"); $$= $1 > $3;} |
-EXP ISHIGHERANDEQ EXP {printf(" >= \n"); $$= $1 >= $3;} |
-EXP ISNOTEQ EXP {printf("inequality\n");}
-{
-	if($1 != $3)
-		$$ = 1; // condition true
-	else
-		$$ = 0; // condition false
-
-	datafile = fopen("mips.txt", "a+");
-
-	// Save the names of the rigesters that EXPs are stored in
-	char* srctreg1 = (char*)malloc(sizeof(char)*8);
-	char* srctreg2 = (char*)malloc(sizeof(char)*8);
-
-	strcpy(srctreg2, popStack());
-	strcpy(srctreg1, popStack());
-
-
-	// Get two temporal registers
-	char buffer[10];
-	int no = GetFreeRegister('t');
-	itoa(no,buffer,10);
-	char treg1[4] = "$t";
-	strcat(treg1,buffer);
-
-	no = GetFreeRegister('t');
-	itoa(no,buffer,10);
-	char treg2[4] = "$t";
-	strcat(treg2, buffer);
-
-	// Compare the two EXPs and save the equality result in treg1
-	fprintf(datafile, "\tslt %s, %s , %s \n", treg1, srctreg1, srctreg2);
-	fprintf(datafile, "\tslt %s, %s , %s \n", treg2, srctreg2, srctreg1);
-	fprintf(datafile, "\tor %s , %s , %s\n", treg1, treg1, treg2);
-
-	// Free useless registers
-	freereg(treg2);
-	if(srctreg1[1] == 't')
-			freereg(srctreg1);
-	if(srctreg2[1] == 't')
-			freereg(srctreg2);
-
-	fclose(datafile);
-
-	// Push the name of the register containing the conditional expression's result
-	pushStack(treg1);
-
-	free(srctreg1);
-	free(srctreg2);
-}
-|
-EXP ISEQ EXP {printf("equality\n");  $$= $1 == $3;} |
-EXP '+' EXP {printf("addition\n");  $$= $1 + $3;} |
-EXP '-' EXP {printf("subtraction\n");  $$= $1 - $3;} |
-EXP '*' EXP {printf("multiply\n");  $$= $1 * $3;} |
-EXP '/' EXP {printf("division\n");  $$= $1 / $3;} |
-EXP COND_AND EXP {printf("conditional and\n");  $$= $1 && $3;} |
-EXP COND_OR EXP {printf("nonditional or\n"); $$= $1 || $3;} |
-EXP LOG_OR EXP {printf("logical or\n"); $$= $1 | $3;} |
-EXP LOG_AND EXP {printf("logical and\n"); $$= $1 & $3;} |
-EXP LOG_XOR EXP {printf("logical xor\n"); $$= $1 ^ $3;} |
-NOT EXP {printf("logical not\n"); $$= !$2;} |
-'(' EXP ')' {printf("parantheses\n");  $$= $2;} |
-INTVAL {printf("int literal\n"); $$= $1;} |
-char_val {printf("character literal\n"); $$= $1;} |
-'-' EXP {printf("negative num\n"); $$= -$2;} |
-| FUNC_CALL { printf("func call\n");  $$= $1;} ;
 
 
 %%
