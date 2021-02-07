@@ -252,7 +252,7 @@ else
 				yyerror(error);
 				YYERROR;
 
-} STMTS;
+}} STMTS;
 
 VAR_VALUE: EXP | char_val;
 
