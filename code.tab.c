@@ -124,7 +124,7 @@ struct var
 struct var variables[100];
 int count = 0 ,func_count = 0;
 
-char current_func;
+char current_func[20];
 char currtype[4] ;
 
 int yyparse();
@@ -1676,7 +1676,7 @@ yyreduce:
 
 		strcpy(currtype,(yyvsp[(1) - (2)].sval));
 	struct var *newvar = addvar(&first, &last,(yyvsp[(2) - (2)].sval), (yyvsp[(1) - (2)].sval));
-	newvar -> current_func = current_func;
+  strcpy(newvar -> current_func , current_func);
 
 	char buffer[10];
 	itoa(GetFreeRegister('t'),buffer,10);

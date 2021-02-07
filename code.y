@@ -53,7 +53,7 @@ struct var
 struct var variables[100];
 int count = 0 ,func_count = 0;
 
-char current_func;
+char current_func[20];
 char currtype[4] ;
 
 int yyparse();
@@ -152,7 +152,7 @@ DECLARE_STMT: VTYPE ID {
 
 		strcpy(currtype,$1);
 	struct var *newvar = addvar(&first, &last,$2, $1);
-	newvar -> current_func = current_func;
+  strcpy(newvar -> current_func , current_func);
 
 	char buffer[10];
 	itoa(GetFreeRegister('t'),buffer,10);
