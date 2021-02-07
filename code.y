@@ -167,9 +167,207 @@ VTYPE   ID {
 	fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,0);
 	fclose(datafile);
 }
-| VTYPE   ID   ','   VTYPE   ID {$$ = 2; printf("2 parameters\n");}|
-VTYPE   ID   ','   VTYPE   ID   ','   VTYPE   ID {$$ = 3; printf("3 parameters\n");}|
-VTYPE   ID ','   VTYPE   ID   ','   VTYPE   ID   ','   VTYPE   ID {$$ = 4; printf("4 parameters\n");};
+| VTYPE   ID  {
+	$$ = 2;
+	printf("2 parameters\n");
+	struct var *newvar = addvar(&first, &last,$2, $1);
+	strcpy(newvar -> current_func ,current_func);
+
+	if(strcmp(newvar->type,"int")==0)
+	{
+			newvar->intchar_union.value_int = 0;
+	}
+	else
+	{
+			newvar->intchar_union.value_char = 0;
+	}
+
+	char num[5];
+	itoa(GetFreeRegister('a'),num,5);
+	char buffer[10] = {'$', 'a'};
+	strcpy(newvar -> which_reg , strcat(buffer,num));
+	datafile = fopen("mips.txt", "a+");
+	fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,0);
+	fclose(datafile);
+}
+',' VTYPE  ID {
+
+	struct var *newvar = addvar(&first, &last,$3, $2);
+	strcpy(newvar -> current_func ,current_func);
+
+	if(strcmp(newvar->type,"int")==0)
+	{
+			newvar->intchar_union.value_int = 0;
+	}
+	else
+	{
+			newvar->intchar_union.value_char = 0;
+	}
+
+	char num[5];
+	itoa(GetFreeRegister('a'),num,5);
+	char buffer[10] = {'$', 'a'};
+	strcpy(newvar -> which_reg , strcat(buffer,num));
+	datafile = fopen("mips.txt", "a+");
+	fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,0);
+	fclose(datafile);
+} |
+VTYPE   ID  {
+	$$ = 3;
+	printf("3 parameters\n");
+	struct var *newvar = addvar(&first, &last,$2, $1);
+	strcpy(newvar -> current_func ,current_func);
+
+	if(strcmp(newvar->type,"int")==0)
+	{
+			newvar->intchar_union.value_int = 0;
+	}
+	else
+	{
+			newvar->intchar_union.value_char = 0;
+	}
+
+	char num[5];
+	itoa(GetFreeRegister('a'),num,5);
+	char buffer[10] = {'$', 'a'};
+	strcpy(newvar -> which_reg , strcat(buffer,num));
+	datafile = fopen("mips.txt", "a+");
+	fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,0);
+	fclose(datafile);
+}
+','   VTYPE   ID {
+
+	struct var *newvar = addvar(&first, &last,$3, $2);
+	strcpy(newvar -> current_func ,current_func);
+
+	if(strcmp(newvar->type,"int")==0)
+	{
+			newvar->intchar_union.value_int = 0;
+	}
+	else
+	{
+			newvar->intchar_union.value_char = 0;
+	}
+
+	char num[5];
+	itoa(GetFreeRegister('a'),num,5);
+	char buffer[10] = {'$', 'a'};
+	strcpy(newvar -> which_reg , strcat(buffer,num));
+	datafile = fopen("mips.txt", "a+");
+	fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,0);
+	fclose(datafile);
+}
+','   VTYPE   ID {
+
+	struct var *newvar = addvar(&first, &last,$3, $2);
+	strcpy(newvar -> current_func ,current_func);
+
+	if(strcmp(newvar->type,"int")==0)
+	{
+			newvar->intchar_union.value_int = 0;
+	}
+	else
+	{
+			newvar->intchar_union.value_char = 0;
+	}
+
+	char num[5];
+	itoa(GetFreeRegister('a'),num,5);
+	char buffer[10] = {'$', 'a'};
+	strcpy(newvar -> which_reg , strcat(buffer,num));
+	datafile = fopen("mips.txt", "a+");
+	fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,0);
+	fclose(datafile);
+} |
+VTYPE   ID  {
+	$$ = 4;
+	printf("4 parameters\n");
+	struct var *newvar = addvar(&first, &last,$2, $1);
+	strcpy(newvar -> current_func ,current_func);
+
+	if(strcmp(newvar->type,"int")==0)
+	{
+			newvar->intchar_union.value_int = 0;
+	}
+	else
+	{
+			newvar->intchar_union.value_char = 0;
+	}
+
+	char num[5];
+	itoa(GetFreeRegister('a'),num,5);
+	char buffer[10] = {'$', 'a'};
+	strcpy(newvar -> which_reg , strcat(buffer,num));
+	datafile = fopen("mips.txt", "a+");
+	fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,0);
+	fclose(datafile);
+}
+','   VTYPE   ID   {
+
+	struct var *newvar = addvar(&first, &last,$3, $2);
+	strcpy(newvar -> current_func ,current_func);
+
+	if(strcmp(newvar->type,"int")==0)
+	{
+			newvar->intchar_union.value_int = 0;
+	}
+	else
+	{
+			newvar->intchar_union.value_char = 0;
+	}
+
+	char num[5];
+	itoa(GetFreeRegister('a'),num,5);
+	char buffer[10] = {'$', 'a'};
+	strcpy(newvar -> which_reg , strcat(buffer,num));
+	datafile = fopen("mips.txt", "a+");
+	fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,0);
+	fclose(datafile);
+}
+','   VTYPE   ID  {
+
+	struct var *newvar = addvar(&first, &last,$3, $2);
+	strcpy(newvar -> current_func ,current_func);
+
+	if(strcmp(newvar->type,"int")==0)
+	{
+			newvar->intchar_union.value_int = 0;
+	}
+	else
+	{
+			newvar->intchar_union.value_char = 0;
+	}
+
+	char num[5];
+	itoa(GetFreeRegister('a'),num,5);
+	char buffer[10] = {'$', 'a'};
+	strcpy(newvar -> which_reg , strcat(buffer,num));
+	datafile = fopen("mips.txt", "a+");
+	fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,0);
+	fclose(datafile);
+}
+ ','   VTYPE   ID {
+
+ 	struct var *newvar = addvar(&first, &last,$3, $2);
+ 	strcpy(newvar -> current_func ,current_func);
+
+ 	if(strcmp(newvar->type,"int")==0)
+ 	{
+ 			newvar->intchar_union.value_int = 0;
+ 	}
+ 	else
+ 	{
+ 			newvar->intchar_union.value_char = 0;
+ 	}
+
+ 	char num[5];
+ 	itoa(GetFreeRegister('a'),num,5);
+ 	char buffer[10] = {'$', 'a'};
+ 	strcpy(newvar -> which_reg , strcat(buffer,num));
+ 	datafile = fopen("mips.txt", "a+");
+ 	fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,0);
+ 	fclose(datafile);
+ } ;
 
 VTYPE: CHAR | INT;
 
