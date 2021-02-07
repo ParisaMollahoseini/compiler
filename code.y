@@ -59,7 +59,7 @@ char currtype[4] ;
 int yyparse();
 void yyerror(const char *s);
 
-struct var* addvar(struct var** first, struct var** last, char* name, char type);
+struct var* addvar(struct var** first, struct var** last, char* name, char type[5]);
 void vardelete(struct var** first, struct var** last, char* func_name);
 void freereg(char* reg_name);
 int GetFreeRegister(char register);
@@ -103,7 +103,7 @@ _Bool a_state[4] = {0,0,0,0};
 %token ENTER
 %token VALUE_ID
 %token <cval> EQ
-
+%token COMMENT MULTI_COMMENT
 %type <ival> EXP PARAMS ARGS_IN
 %type <sval> VTYPE
 %token CHAR INT BREAK CONTINUE
@@ -422,7 +422,6 @@ int GetFreeRegister(char register){
 struct var* addvar(struct var** first, struct var** last, char* name, char type[5]){
 
 	struct var* _new = (struct var*)malloc(sizeof(struct var));
-	_new->name = (char*)malloc(sizeof(char)* (strlen(name)+1));
 	strcpy(_new->name ,name);
 	if(strcmp(type,"INT"))
 		strcpy(_new->type,"int");

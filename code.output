@@ -8,6 +8,8 @@ Terminals unused in grammar
    '['
    ']'
    VALUE_ID
+   COMMENT
+   MULTI_COMMENT
    BREAK
    CONTINUE
    FOR
@@ -189,88 +191,90 @@ NOT (272) 68
 ENTER (273) 4 20 41 44
 VALUE_ID (274)
 EQ (275) 24 26 31
-CHAR (276) 12 26
-INT (277) 6 13 24
-BREAK (278)
-CONTINUE (279)
-IF (280) 37
-WHILE (281) 34
-ELSEIF (282) 40
-ELSE (283) 43
-VOID (284) 5
-FOR (285)
-MAIN (286)
-RETURN (287) 51
+COMMENT (276)
+MULTI_COMMENT (277)
+CHAR (278) 12 26
+INT (279) 6 13 24
+BREAK (280)
+CONTINUE (281)
+IF (282) 37
+WHILE (283) 34
+ELSEIF (284) 40
+ELSE (285) 43
+VOID (286) 5
+FOR (287)
+MAIN (288)
+RETURN (289) 51
 
 
 Nonterminals, with rules where they appear
 
-$accept (45)
+$accept (47)
     on left: 0
-PROGRAM (46)
+PROGRAM (48)
     on left: 3 4, on right: 0 3
-$@1 (47)
+$@1 (49)
     on left: 1, on right: 3
-$@2 (48)
+$@2 (50)
     on left: 2, on right: 3
-FTYPE (49)
+FTYPE (51)
     on left: 5 6, on right: 3
-PARAMS (50)
+PARAMS (52)
     on left: 7 8 9 10 11, on right: 3
-VTYPE (51)
+VTYPE (53)
     on left: 12 13, on right: 8 9 10 11 22
-STMTS (52)
+STMTS (54)
     on left: 14 15 16 17 18 19 20, on right: 3 22 24 26 31 34 37 40
     43 45 51
-DECLARE_STMT (53)
+DECLARE_STMT (55)
     on left: 22 24 26, on right: 14
-$@3 (54)
+$@3 (56)
     on left: 21, on right: 22
-$@4 (55)
+$@4 (57)
     on left: 23, on right: 24
-$@5 (56)
+$@5 (58)
     on left: 25, on right: 26
-IDS (57)
+IDS (59)
     on left: 27 29, on right: 22 29
-$@6 (58)
+$@6 (60)
     on left: 28, on right: 29
-ASSIGN_STMT (59)
+ASSIGN_STMT (61)
     on left: 31, on right: 15
-$@7 (60)
+$@7 (62)
     on left: 30, on right: 31
-WHILE_STMT (61)
+WHILE_STMT (63)
     on left: 34, on right: 16
-$@8 (62)
+$@8 (64)
     on left: 32, on right: 34
-$@9 (63)
+$@9 (65)
     on left: 33, on right: 34
-IF_STMT (64)
+IF_STMT (66)
     on left: 37, on right: 17
-$@10 (65)
+$@10 (67)
     on left: 35, on right: 37
-$@11 (66)
+$@11 (68)
     on left: 36, on right: 37
-ELSEIF_STMT (67)
+ELSEIF_STMT (69)
     on left: 40 41, on right: 37
-$@12 (68)
+$@12 (70)
     on left: 38, on right: 40
-$@13 (69)
+$@13 (71)
     on left: 39, on right: 40
-ELSE_STMT (70)
+ELSE_STMT (72)
     on left: 43 44, on right: 37
-$@14 (71)
+$@14 (73)
     on left: 42, on right: 43
-FUNC_CALL (72)
+FUNC_CALL (74)
     on left: 45, on right: 18 74
-ARGS_IN (73)
+ARGS_IN (75)
     on left: 46 47 48 49 50, on right: 45
-RETURN_STMT (74)
+RETURN_STMT (76)
     on left: 51, on right: 19
-EXP (75)
+EXP (77)
     on left: 52 53 54 55 57 58 59 60 61 62 63 64 65 66 67 68 69 70
     71 72 73 74, on right: 24 31 34 37 40 47 48 49 50 51 52 53 54 55
     57 58 59 60 61 62 63 64 65 66 67 68 69 72
-$@15 (76)
+$@15 (78)
     on left: 56, on right: 57
 
 

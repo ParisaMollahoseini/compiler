@@ -57,18 +57,20 @@
      ENTER = 273,
      VALUE_ID = 274,
      EQ = 275,
-     CHAR = 276,
-     INT = 277,
-     BREAK = 278,
-     CONTINUE = 279,
-     IF = 280,
-     WHILE = 281,
-     ELSEIF = 282,
-     ELSE = 283,
-     VOID = 284,
-     FOR = 285,
-     MAIN = 286,
-     RETURN = 287
+     COMMENT = 276,
+     MULTI_COMMENT = 277,
+     CHAR = 278,
+     INT = 279,
+     BREAK = 280,
+     CONTINUE = 281,
+     IF = 282,
+     WHILE = 283,
+     ELSEIF = 284,
+     ELSE = 285,
+     VOID = 286,
+     FOR = 287,
+     MAIN = 288,
+     RETURN = 289
    };
 #endif
 
@@ -89,7 +91,7 @@ typedef union YYSTYPE
 
 
 /* Line 1676 of yacc.c  */
-#line 93 "code.tab.h"
+#line 95 "code.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

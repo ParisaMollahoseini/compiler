@@ -831,7 +831,7 @@ YY_RULE_SETUP
 case 15:
 YY_RULE_SETUP
 #line 29 "tokens.l"
-{   return MULTI_COMMENT}
+{   return MULTI_COMMENT;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
@@ -891,7 +891,7 @@ YY_RULE_SETUP
 case 27:
 YY_RULE_SETUP
 #line 44 "tokens.l"
-{return ISNOTEQ}
+{return ISNOTEQ;}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP

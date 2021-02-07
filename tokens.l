@@ -26,7 +26,7 @@ ints ([1-9])+([0-9])*
 "elseif" {return ELSEIF;}
 [A-Za-z"_"]+[0-9A-Za-z"_"]* {strcpy(yylval.sval,yytext); return ID; }
 "#".*"\n" {return COMMENT;}
-"#*".*"*#" {   return MULTI_COMMENT}
+"#*".*"*#" {   return MULTI_COMMENT;}
 {ints} {yylval.ival = atoi(yytext); return INTVAL;}
 "*" {return '*';}
 "+" {return '+';}
@@ -41,7 +41,7 @@ ints ([1-9])+([0-9])*
 ">=" {return ISHIGHERANDEQ;}
 
 "=" {return EQ;}
-"!=" {return ISNOTEQ}
+"!=" {return ISNOTEQ;}
 "==" {return ISEQ;}
 \n {return ENTER;}
 "||" {return COND_OR;}
