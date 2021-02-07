@@ -153,7 +153,11 @@ DECLARE_STMT: VTYPE ID {
 		strcpy(currtype,$1);
 	struct var *newvar = addvar(&first, &last,$2, $1);
 	newvar -> current_func = current_func;
-	newvar -> which_reg = strcat("$t",itos(GetFreeRegister('t'));
+
+	char buffer[10];
+	itoa(GetFreeRegister('t'),buffer,10);
+	strcpy(newvar -> which_reg , strcat("$t",buffer));
+
 	datafile = fopen("mips.txt", "a+");
 	fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,0);
 	fclose(datafile);
@@ -171,8 +175,12 @@ INT ID EQ EXP {
 	if(!findvar(&first,$2,curr_func)){
 		printf("declare and assign int %s = %s\n",$2,$4);
 	struct var *newvar = addvar(&first, &last,$2, "INT");
-	newvar -> current_func = current_func;
-	newvar -> which_reg = strcat("$t",itos(GetFreeRegister('t'));
+	strcpy(newvar -> current_func ,current_func);
+
+	char buffer[10];
+	itoa(GetFreeRegister('t'),buffer,10);
+	strcpy(newvar -> which_reg , strcat("$t",buffer));
+
 	newvar -> intchar_union.value_int = $4;
 	datafile = fopen("mips.txt", "a+");
 	fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,0);
@@ -191,8 +199,12 @@ CHAR ID EQ char_val {
 		printf("declare and assign char %s = %s\n",$2,$4);
 
 	struct var *newvar = addvar(&first, &last,$2, "CHAR");
-	newvar -> current_func = current_func;
-	newvar -> which_reg = strcat("$t",itos(GetFreeRegister('t'));
+	strcpy(newvar -> current_func ,current_func);
+
+	char buffer[10];
+	itoa(GetFreeRegister('t'),buffer,10);
+	strcpy(newvar -> which_reg , strcat("$t",buffer));
+
 	newvar -> intchar_union.value_char = $4;
 	datafile = fopen("mips.txt", "a+");
 	fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,0);
@@ -207,11 +219,14 @@ else
 }}'$' STMTS;
 
 IDS: '$' | ',' ID {
-	if(!findvar(&first,$2,curr_func)){
+	if(!findvar(first,$2,curr_func)){
 		printf("declare more id %s %s\n",currtype,$2);
 	struct var *newvar = addvar(&first, &last,$2, currtype);
-	newvar -> current_func = current_func;
-	strcpy(newvar -> which_reg , strcat("$t",itos(GetFreeRegister('t')));
+	strcpy(newvar -> current_func ,current_func);
+
+	char buffer[10];
+	itoa(GetFreeRegister('t'),buffer,10);
+	strcpy(newvar -> which_reg , strcat("$t",buffer));
 	datafile = fopen("mips.txt", "a+");
 	fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,0);
 	fclose(datafile);
