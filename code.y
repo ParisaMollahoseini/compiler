@@ -263,17 +263,23 @@ CHAR ID EQ char_val {
 	else{
 		printf("declare and assign char %s = %c\n",$2,$4);
 
-	/* struct var *newvar = addvar(&first, &last,$2, $1);
-	strcpy(newvar -> current_func ,current_func);
+		//struct var* _new = (struct var*)malloc(sizeof(struct var));
+		first = (struct var*)malloc(sizeof(struct var));
+		strcpy(first->name ,$2);
+		first->intchar_union.value_char = $4;
+		strcpy(first->type,"char");
+		strcpy(first -> current_func ,current_func);
+
+			first->next = NULL;
+
 
 	char buffer[10];
 	itoa(GetFreeRegister('t'),buffer,10);
-	strcpy(newvar -> which_reg , strcat("$t",buffer));
+	strcpy(first -> which_reg , strcat("$t",buffer));
 
-	newvar -> intchar_union.value_char = $4;
 	datafile = fopen("mips.txt", "a+");
-	fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,0);
-	fclose(datafile); */
+	fprintf(datafile, "\taddi %s, $zero , %d \n", first->which_reg,0);
+	fclose(datafile);
 	}
 	}'$' STMTS;
 
