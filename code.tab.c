@@ -560,9 +560,9 @@ static const yytype_uint16 yyrline[] =
      146,   147,   149,   149,   170,   170,   189,   189,   209,   209,
      209,   228,   228,   259,   259,   259,   261,   261,   261,   263,
      263,   263,   263,   265,   265,   265,   267,   269,   270,   271,
-     272,   273,   275,   277,   278,   279,   280,   281,   281,   327,
-     328,   329,   330,   331,   332,   333,   334,   335,   336,   337,
-     338,   339,   340,   341,   342,   343
+     272,   273,   275,   277,   278,   279,   280,   281,   281,   331,
+     332,   333,   334,   335,   336,   337,   338,   339,   340,   341,
+     342,   343,   344,   345,   346,   347
 };
 #endif
 
@@ -1947,12 +1947,16 @@ else
 
 
 	// Get two temporal registers
+	char buffer[10];
 	int no = GetFreeRegister('t');
+	itoa(no,buffer,10);
 	char treg1[4] = "$t";
-	strcat(treg1, itos(no));
+	strcat(treg1,buffer);
+	
 	no = GetFreeRegister('t');
+	itoa(no,buffer,10);
 	char treg2[4] = "$t";
-	strcat(treg2, itos(no));
+	strcat(treg2, buffer);
 
 	// Compare the two EXPs and save the equality result in treg1
 	fprintf(datafile, "\tslt %s, %s , %s \n", treg1, srctreg1, srctreg2);
@@ -1960,11 +1964,11 @@ else
 	fprintf(datafile, "\tor %s , %s , %s\n", treg1, treg1, treg2);
 
 	// Free useless registers
-	SetFreeRegister(treg2);
+	freereg(treg2);
 	if(srctreg1[1] == 't')
-			SetFreeRegister(srctreg1);
+			freereg(srctreg1);
 	if(srctreg2[1] == 't')
-			SetFreeRegister(srctreg2);
+			freereg(srctreg2);
 
 	fclose(datafile);
 
@@ -1979,126 +1983,126 @@ else
   case 59:
 
 /* Line 1455 of yacc.c  */
-#line 327 "code.y"
+#line 331 "code.y"
     {printf("equality\n");;}
     break;
 
   case 60:
 
 /* Line 1455 of yacc.c  */
-#line 328 "code.y"
+#line 332 "code.y"
     {printf("addition\n");;}
     break;
 
   case 61:
 
 /* Line 1455 of yacc.c  */
-#line 329 "code.y"
+#line 333 "code.y"
     {printf("subtraction\n");;}
     break;
 
   case 62:
 
 /* Line 1455 of yacc.c  */
-#line 330 "code.y"
+#line 334 "code.y"
     {printf("multiply\n");;}
     break;
 
   case 63:
 
 /* Line 1455 of yacc.c  */
-#line 331 "code.y"
+#line 335 "code.y"
     {printf("division\n");;}
     break;
 
   case 64:
 
 /* Line 1455 of yacc.c  */
-#line 332 "code.y"
+#line 336 "code.y"
     {printf("conditional and\n");;}
     break;
 
   case 65:
 
 /* Line 1455 of yacc.c  */
-#line 333 "code.y"
+#line 337 "code.y"
     {printf("nonditional or\n");;}
     break;
 
   case 66:
 
 /* Line 1455 of yacc.c  */
-#line 334 "code.y"
+#line 338 "code.y"
     {printf("logical or\n");;}
     break;
 
   case 67:
 
 /* Line 1455 of yacc.c  */
-#line 335 "code.y"
+#line 339 "code.y"
     {printf("logical and\n");;}
     break;
 
   case 68:
 
 /* Line 1455 of yacc.c  */
-#line 336 "code.y"
+#line 340 "code.y"
     {printf("logical xor\n");;}
     break;
 
   case 69:
 
 /* Line 1455 of yacc.c  */
-#line 337 "code.y"
+#line 341 "code.y"
     {printf("logical not\n");;}
     break;
 
   case 70:
 
 /* Line 1455 of yacc.c  */
-#line 338 "code.y"
+#line 342 "code.y"
     {printf("parantheses\n");;}
     break;
 
   case 71:
 
 /* Line 1455 of yacc.c  */
-#line 339 "code.y"
+#line 343 "code.y"
     {printf("int literal\n");;}
     break;
 
   case 72:
 
 /* Line 1455 of yacc.c  */
-#line 340 "code.y"
+#line 344 "code.y"
     {printf("character literal\n");;}
     break;
 
   case 73:
 
 /* Line 1455 of yacc.c  */
-#line 341 "code.y"
+#line 345 "code.y"
     {printf("negative num\n");;}
     break;
 
   case 74:
 
 /* Line 1455 of yacc.c  */
-#line 342 "code.y"
+#line 346 "code.y"
     {printf("id\n");;}
     break;
 
   case 75:
 
 /* Line 1455 of yacc.c  */
-#line 343 "code.y"
+#line 347 "code.y"
     { printf("func call\n"); ;}
     break;
 
 
 
 /* Line 1455 of yacc.c  */
-#line 2102 "code.tab.c"
+#line 2106 "code.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -2310,7 +2314,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 346 "code.y"
+#line 350 "code.y"
 
 
 
@@ -2334,7 +2338,7 @@ void vardelete(struct var** first, struct var** last, char* func_name){
 	for(struct var* t = *first; t; t = t->next){
 
 		if(strcmp(t->current_func, func_name) == 0){
-			freereg(t->which_reg)
+			freereg(t->which_reg);
 			if(t == *first && t == *last){
 				*first = *last = NULL;
 			}
@@ -2368,7 +2372,7 @@ void freereg(char* reg_name){
 	}
 }
 int GetFreeRegister(char register){
-	switch(register){
+	switch (register){
 		case 't':
 				for(int i=0; i<=9; i++){
 					if(t_state[i] == 0){

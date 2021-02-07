@@ -296,12 +296,16 @@ EXP ISNOTEQ EXP {printf("inequality\n");}
 
 
 	// Get two temporal registers
+	char buffer[10];
 	int no = GetFreeRegister('t');
+	itoa(no,buffer,10);
 	char treg1[4] = "$t";
-	strcat(treg1, itos(no));
+	strcat(treg1,buffer);
+	
 	no = GetFreeRegister('t');
+	itoa(no,buffer,10);
 	char treg2[4] = "$t";
-	strcat(treg2, itos(no));
+	strcat(treg2, buffer);
 
 	// Compare the two EXPs and save the equality result in treg1
 	fprintf(datafile, "\tslt %s, %s , %s \n", treg1, srctreg1, srctreg2);
@@ -309,11 +313,11 @@ EXP ISNOTEQ EXP {printf("inequality\n");}
 	fprintf(datafile, "\tor %s , %s , %s\n", treg1, treg1, treg2);
 
 	// Free useless registers
-	SetFreeRegister(treg2);
+	freereg(treg2);
 	if(srctreg1[1] == 't')
-			SetFreeRegister(srctreg1);
+			freereg(srctreg1);
 	if(srctreg2[1] == 't')
-			SetFreeRegister(srctreg2);
+			freereg(srctreg2);
 
 	fclose(datafile);
 
@@ -366,7 +370,7 @@ void vardelete(struct var** first, struct var** last, char* func_name){
 	for(struct var* t = *first; t; t = t->next){
 
 		if(strcmp(t->current_func, func_name) == 0){
-			freereg(t->which_reg)
+			freereg(t->which_reg);
 			if(t == *first && t == *last){
 				*first = *last = NULL;
 			}
@@ -400,7 +404,7 @@ void freereg(char* reg_name){
 	}
 }
 int GetFreeRegister(char register){
-	switch(register){
+	switch (register){
 		case 't':
 				for(int i=0; i<=9; i++){
 					if(t_state[i] == 0){
