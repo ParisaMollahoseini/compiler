@@ -116,20 +116,23 @@ _Bool a_state[4] = {0,0,0,0};
 %nterm <ival> EXP
 %token <ival> NUM
 %token <sval> ID
+%nterm <sval> VTYPE
 %nterm <ival> PARAMS
 %nterm <ival> ARGS_IN
 %start PROGRAM
 
 %%
-PROGRAM: FTYPE ID
-'('  PARAMS {
-	 printf("see function : %s\n",$2);
+PROGRAM: FTYPE ID {
+	strcpy(current_func,$2);
+ }
+ '('  PARAMS {
+	 printf("see function : %s\n",current_func);
 
 	 datafile = fopen("mips.txt", "a+");
-	 fprintf(datafile, "%s:\n", $2);
+	 fprintf(datafile, "%s:\n", current_func);
 	 fclose(datafile);
-	 strcpy(current_func,$2);
-	 fun_names[func_count].num = $4;
+
+	 fun_names[func_count].num = $2;
 	 strcpy(fun_names[func_count++].name,current_func);
 		}')'  '{'  STMTS  '}'  {
 
@@ -140,9 +143,22 @@ PROGRAM: FTYPE ID
 
 FTYPE: VOID | INT;
 
-PARAMS:{$$ = 0; printf("no parameters\n");}|
-VTYPE   ID {$$ = 1; printf("1 parameters\n");}|
-VTYPE   ID   ','   VTYPE   ID {$$ = 2; printf("2 parameters\n");}|
+PARAMS: {$$ = 0; printf("no parameters\n");} |
+VTYPE   ID {
+	$$ = 1;
+	printf("1 parameters\n");
+	struct var *newvar = addvar(&first, &last,$2, $1);
+	strcpy(newvar -> current_func ,current_func);
+
+	char num[5];
+	itoa(GetFreeRegister('a'),num,5);
+	char buffer[10] = {'$', 'a'};
+	strcpy(newvar -> which_reg , strcat(buffer,num));
+	datafile = fopen("mips.txt", "a+");
+	fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,0);
+	fclose(datafile);
+}
+| VTYPE   ID   ','   VTYPE   ID {$$ = 2; printf("2 parameters\n");}|
 VTYPE   ID   ','   VTYPE   ID   ','   VTYPE   ID {$$ = 3; printf("3 parameters\n");}|
 VTYPE   ID ','   VTYPE   ID   ','   VTYPE   ID   ','   VTYPE   ID {$$ = 4; printf("4 parameters\n");};
 

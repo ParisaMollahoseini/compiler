@@ -1,9 +1,9 @@
-void func1( int a , int b)
+void func1( int a )
 {
 char f = 'k' $
 f = 'a' $
 int s $
-s = 4 + 5 $
-int f = 8 $
+s = a + 5 $
+int o = 8 $
 
 }
