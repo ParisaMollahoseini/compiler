@@ -64,8 +64,8 @@ void vardelete(struct var** first, struct var** last, char* func_name);
 void freereg(char* reg_name);
 int GetFreeRegister(char register);
 struct var* findvar(struct var* first, char* name,char* curr_func);
-struct var* first;
-struct var* last;
+struct var* first = NULL;
+struct var* last = NULL;
 
 char t_reg[10][4] = {"$t0","$t1","$t2","$t3","$t4","$t5","$t6","$t7","$t8","$t9"};
 _Bool t_state[10] = {0,0,0,0,0,0,0,0,0,0};
@@ -438,6 +438,8 @@ struct var* addvar(struct var** first, struct var** last, char* name, char type[
 	return _new;
 }
 struct var* findvar(struct var* first, char* name,char* curr_func){
+	if(first == NULL)
+		return NULL;
 	for(struct var* t = first; t; t = t->next){
 		if(strcmp(t->name, name) == 0 && strcmp(t->current_func,curr_func)==0)
 			return t;
