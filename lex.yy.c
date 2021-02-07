@@ -512,7 +512,7 @@ char *yytext_ptr;
 #include <string.h>
 #include <math.h>
 #include <stdlib.h>
-#include "cal.tab.h"
+#include "code.tab.h"
 
 #line 518 "lex.yy.c"
 

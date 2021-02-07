@@ -3,7 +3,6 @@
 #include <string.h>
 #include <math.h>
 #include <stdlib.h>
-#include <vector.h>
 extern int yylex();
 extern FILE* yyin;
 FILE* datafile;
@@ -105,7 +104,8 @@ _Bool a_state[4] = {0,0,0,0};
 %token VALUE_ID
 %token <cval> EQ
 
-%type <ival> EXP PARAMS ARGS_IN 
+%type <ival> EXP PARAMS ARGS_IN
+%type <sval> VTYPE
 %token CHAR INT BREAK CONTINUE
 %token IF WHILE ELSEIF ELSE VOID FOR MAIN RETURN
 
@@ -170,7 +170,7 @@ IDS STMTS |
 INT ID EQ EXP {
 	if(!findvar(&first,$2,curr_func)){
 		printf("declare and assign int %s = %s\n",$2,$4);
-	struct var *newvar = addvar(&first, &last,$2, $1);
+	struct var *newvar = addvar(&first, &last,$2, "INT");
 	newvar -> current_func = current_func;
 	newvar -> which_reg = strcat("$t",itos(GetFreeRegister('t'));
 	newvar -> intchar_union.value_int = $4;
@@ -190,7 +190,7 @@ CHAR ID EQ char_val {
 	if(!findvar(&first,$2,curr_func)){
 		printf("declare and assign char %s = %s\n",$2,$4);
 
-	struct var *newvar = addvar(&first, &last,$2, $1);
+	struct var *newvar = addvar(&first, &last,$2, "CHAR");
 	newvar -> current_func = current_func;
 	newvar -> which_reg = strcat("$t",itos(GetFreeRegister('t'));
 	newvar -> intchar_union.value_char = $4;
