@@ -274,11 +274,11 @@ EXP;
 
 RETURN_STMT: RETURN EXP '$' STMTS;
 
-EXP: EXP BLT EXP |
-EXP BLE EXP |
-EXP BGT EXP |
-EXP BGE EXP |
-EXP ISNOTEQ EXP
+EXP: EXP ISLOWER EXP {printf(" < \n");} |
+EXP ISLOWERANDEQ EXP {printf(" <= \n");} |
+EXP ISHIGHER EXP {printf(" > \n");} |
+EXP ISHIGHERANDEQ EXP {printf(" >= \n");} |
+EXP ISNOTEQ EXP {printf("inequality\n");}
 {
 	if($1 != $3)
 		$$ = 1; // condition true
@@ -324,23 +324,23 @@ EXP ISNOTEQ EXP
 	free(srctreg2);
 }
 |
-EXP ISEQ EXP |
-EXP '+' EXP |
-EXP '-' EXP |
-EXP '*' EXP |
-EXP '/' EXP |
-EXP COND_AND EXP |
-EXP COND_OR EXP |
-EXP LOG_OR EXP |
-EXP LOG_AND EXP |
-EXP LOG_XOR EXP |
-NOT EXP	|
-'(' EXP ')' |
-ints |
-char_val |
-'-' EXP |
-identif |
-FUNC_CALL;
+EXP ISEQ EXP {printf("equality\n");} |
+EXP '+' EXP {printf("addition\n");} |
+EXP '-' EXP {printf("subtraction\n");} |
+EXP '*' EXP {printf("multiply\n");} |
+EXP '/' EXP {printf("division\n");} |
+EXP COND_AND EXP {printf("conditional and\n");} |
+EXP COND_OR EXP {printf("nonditional or\n");} |
+EXP LOG_OR EXP {printf("logical or\n");} |
+EXP LOG_AND EXP {printf("logical and\n");} |
+EXP LOG_XOR EXP {printf("logical xor\n");} |
+NOT EXP {printf("logical not\n");} |
+'(' EXP ')' {printf("parantheses\n");} |
+ints {printf("int literal\n");} |
+char_val {printf("character literal\n");} |
+'-' EXP {printf("negative num\n");} |
+identif {printf("id\n");} |
+FUNC_CALL { printf("func call\n"); } ;
 
 ident:	ID;
 %%
