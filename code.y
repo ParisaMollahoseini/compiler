@@ -64,8 +64,8 @@ void vardelete(struct var** first, struct var** last, char* func_name);
 void freereg(char* reg_name);
 int GetFreeRegister(char register);
 struct var* findvar(struct var* first, char* name,char* curr_func);
-struct var* first = (struct var*)malloc(sizeof(struct var));
-struct var* last = (struct var*)malloc(sizeof(struct var));
+struct var* first ;
+struct var* last;
 
 char t_reg[10][4] = {"$t0","$t1","$t2","$t3","$t4","$t5","$t6","$t7","$t8","$t9"};
 _Bool t_state[10] = {0,0,0,0,0,0,0,0,0,0};
@@ -230,28 +230,31 @@ else
 }
 IDS '$' STMTS |
 CHAR ID EQ char_val {
-	if(!first || !findvar(first,$2,current_func)){
-		printf("declare and assign char %s = %s\n",$2,$4);
+	if(first != NULL){
+		if(!first->name || !findvar(first,$2,current_func)){
+			printf("declare and assign char %s = %s\n",$2,$4);
 
-	struct var *newvar = addvar(&first, &last,$2, $1);
-	strcpy(newvar -> current_func ,current_func);
+		struct var *newvar = addvar(&first, &last,$2, $1);
+		strcpy(newvar -> current_func ,current_func);
 
-	char buffer[10];
-	itoa(GetFreeRegister('t'),buffer,10);
-	strcpy(newvar -> which_reg , strcat("$t",buffer));
+		char buffer[10];
+		itoa(GetFreeRegister('t'),buffer,10);
+		strcpy(newvar -> which_reg , strcat("$t",buffer));
 
-	newvar -> intchar_union.value_char = $4;
-	datafile = fopen("mips.txt", "a+");
-	fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,0);
-	fclose(datafile);
-}
-else
-{
-	char error[30] = "replicate variable ";
-				strcat(error, $2);
-				yyerror(error);
-				YYERROR;
-}}'$' STMTS;
+		newvar -> intchar_union.value_char = $4;
+		datafile = fopen("mips.txt", "a+");
+		fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,0);
+		fclose(datafile);
+	}
+	else
+	{
+		char error[30] = "replicate variable ";
+					strcat(error, $2);
+					yyerror(error);
+					YYERROR;
+	}
+	}
+	}'$' STMTS;
 
 IDS: | ',' ID {
 	if(!findvar(first,$2,current_func)){
