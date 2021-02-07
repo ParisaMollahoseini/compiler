@@ -263,6 +263,7 @@ CHAR ID EQ char_val {
 	else{
 		printf("declare and assign char %s = %c\n",$2,$4);
 
+
 		//struct var* _new = (struct var*)malloc(sizeof(struct var));
 		first = (struct var*)malloc(sizeof(struct var));
 		strcpy(first->name ,$2);
@@ -272,10 +273,13 @@ CHAR ID EQ char_val {
 
 			first->next = NULL;
 
+			char num[5];
+			itoa(GetFreeRegister('t'), num,10);
+			char buffer[10] = {'$','t'};
+			strcat(buffer, num);
 
-	char buffer[10];
-	itoa(GetFreeRegister('t'),buffer,10);
-	strcpy(first -> which_reg , strcat("$t",buffer));
+
+	strcpy(first -> which_reg , buffer);
 
 	datafile = fopen("mips.txt", "a+");
 	fprintf(datafile, "\taddi %s, $zero , %d \n", first->which_reg,0);

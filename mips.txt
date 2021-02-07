@@ -1,1 +1,2 @@
 func1:
+	addi $t0, $zero , 0 
