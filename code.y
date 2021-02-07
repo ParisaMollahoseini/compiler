@@ -157,6 +157,7 @@ RETURN_STMT |
 ;
 
 DECLARE_STMT: INT ID {
+	if(first != NULL){
 	if(!findvar(first,$2,current_func)){
 		printf("declare %s %s\n",$1,$2);
 
@@ -180,8 +181,10 @@ else
 				YYERROR;
 }
 }
+}
 IDS '$' STMTS |
 INT ID EQ EXP {
+	if(first != NULL){
 	if(!findvar(first,$2,current_func)){
 		printf("declare and assign int %s = %s\n",$2,$4);
 	struct var *newvar = addvar(&first, &last,$2, $1);
@@ -203,8 +206,10 @@ else
 				yyerror(error);
 				YYERROR;
 }
+}
 }'$' STMTS |
 CHAR ID {
+	if(first != NULL){
 	if(!findvar(first,$2,current_func)){
 		printf("declare %s %s\n",$1,$2);
 
@@ -226,6 +231,7 @@ else
 				strcat(error, $2);
 				yyerror(error);
 				YYERROR;
+}
 }
 }
 IDS '$' STMTS |
