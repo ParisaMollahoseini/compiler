@@ -324,7 +324,20 @@ EXP {printf("1 arg passed\n");};
 
 RETURN_STMT: RETURN EXP '$' STMTS;
 
-EXP: INTVAL {printf("int literal\n"); $$= $1;}  |
+EXP: EXP ISEQ EXP {printf("equality\n");  $$= $1 == $3;} |
+EXP '+' EXP {printf("addition\n");  $$= $1 + $3;} |
+EXP '-' EXP {printf("subtraction\n");  $$= $1 - $3;} |
+EXP '*' EXP {printf("multiply\n");  $$= $1 * $3;} |
+EXP '/' EXP {printf("division\n");  $$= $1 / $3;} |
+INTVAL {printf("int literal\n"); $$= $1;}  |
+EXP COND_AND EXP {printf("conditional and\n");  $$= $1 && $3;} |
+EXP COND_OR EXP {printf("nonditional or\n"); $$= $1 || $3;} |
+EXP LOG_OR EXP {printf("logical or\n"); $$= $1 | $3;} |
+EXP LOG_AND EXP {printf("logical and\n"); $$= $1 & $3;} |
+EXP LOG_XOR EXP {printf("logical xor\n"); $$= $1 ^ $3;} |
+NOT EXP {printf("logical not\n"); $$= !$2;} |
+'(' EXP ')' {printf("parantheses\n");  $$= $2;} |
+char_val {printf("character literal\n"); $$= $1;} |
 '-' EXP {printf("negative num\n"); $$= -$2;} ;
 
 
