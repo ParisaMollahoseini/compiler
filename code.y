@@ -405,6 +405,7 @@ fclose(datafile);
 }}IDS;
 
 ASSIGN_STMT: ID EQ EXP '$' {
+		if(first != NULL){
 	if(findvar(first,$1,current_func)){
 		printf("assign  %s = %s\n",$1,$3);
 	struct var *newvar = findvar(first,$1,current_func);
@@ -431,7 +432,15 @@ else
 				yyerror(error);
 				YYERROR;
 
-}} STMTS;
+}
+}
+else
+{
+	char error[30] = "no such variable exists ...";
+				strcat(error, $1);
+				yyerror(error);
+				YYERROR;
+	}} STMTS;
 
 //VAR_VALUE: EXP | char_val;
 
