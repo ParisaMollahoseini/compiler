@@ -102,7 +102,7 @@ _Bool a_state[4] = {0,0,0,0};
 %left '(' ')' '[' ']'
 %left '$'
 %left ENTER
-%token SPACE
+%token SPC
 %left VALUE_ID
 %left <cval> EQ
 %left COMMENT MULTI_COMMENT
@@ -122,17 +122,17 @@ _Bool a_state[4] = {0,0,0,0};
 %start PROGRAM
 
 %%
-PROGRAM: FTYPE SPACE ID
-'(' PARAMS {
+PROGRAM: FTYPE SPC ID SPC
+'(' SPC PARAMS {
 	 printf("see function : %s\n",$3);
 
 	 datafile = fopen("mips.txt", "a+");
 	 fprintf(datafile, "%s:\n", $3);
 	 fclose(datafile);
 	 strcpy(current_func,$3);
-	 fun_names[func_count].num = $5;
+	 fun_names[func_count].num = $7;
 	 strcpy(fun_names[func_count++].name,current_func);
-		}')' '{' STMTS '}' {
+		}')' SPC '{' SPC STMTS SPC '}' SPC {
 
 		vardelete(&first,&last,current_func);
 		printf("delete variables after function\n");
@@ -142,10 +142,10 @@ PROGRAM: FTYPE SPACE ID
 FTYPE: VOID | INT;
 
 PARAMS:{$$ = 0; printf("no parameters\n");}|
-VTYPE ID {$$ = 1; printf("1 parameters\n");}|
-VTYPE ID ',' VTYPE ID {$$ = 2; printf("2 parameters\n");}|
-VTYPE ID ',' VTYPE ID ',' VTYPE ID {$$ = 3; printf("3 parameters\n");}|
-VTYPE ID ',' VTYPE ID ',' VTYPE ID ',' VTYPE ID {$$ = 4; printf("4 parameters\n");};
+VTYPE SPC ID {$$ = 1; printf("1 parameters\n");}|
+VTYPE SPC ID SPC ',' SPC VTYPE SPC ID {$$ = 2; printf("2 parameters\n");}|
+VTYPE SPC ID SPC ',' SPC VTYPE SPC ID SPC ',' SPC VTYPE SPC ID {$$ = 3; printf("3 parameters\n");}|
+VTYPE SPC ID ',' SPC VTYPE SPC ID SPC ',' SPC VTYPE SPC ID SPC ',' SPC VTYPE SPC ID {$$ = 4; printf("4 parameters\n");};
 
 VTYPE: CHAR | INT;
 
@@ -326,6 +326,7 @@ EXP {printf("1 arg passed\n");};
 RETURN_STMT: RETURN EXP '$' STMTS;
 
 EXP: EXP ISEQ EXP {printf("equality\n");  $$= $1 == $3;} |
+EXP ISNOTEQ EXP {printf("notequality\n");  $$= $1 != $3;} |
 EXP '+' EXP {printf("addition\n");  $$= $1 + $3;} |
 EXP '-' EXP {printf("subtraction\n");  $$= $1 - $3;} |
 EXP '*' EXP {printf("multiply\n");  $$= $1 * $3;} |
@@ -347,7 +348,7 @@ char_val {printf("character literal\n"); $$= $1;} |
 
 int main()
 {
-		FILE* file = fopen("test.txt","r");
+		FILE* file = fopen("input.txt","r");
 		yyin = file;
     yyparse();
     return 0;

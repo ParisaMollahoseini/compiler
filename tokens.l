@@ -12,6 +12,7 @@ ints ([1-9])+([0-9])*
 
 
 %%
+[ \t]* {  return SPC;}
 "while"  {  printf("%s\n",yytext); return WHILE;}
 "void" {  printf("%s\n",yytext); return VOID; }
 "for" {  printf("%s\n",yytext); return FOR; }
@@ -58,7 +59,7 @@ ints ([1-9])+([0-9])*
 "," {  printf("%s\n",yytext); return ','; }
 "{" {  printf("%s\n",yytext); return '{';  }
 "}" {  printf("%s\n",yytext); return '}'; }
-[ \t]+ { printf("newspace\n"); return SPACE;}
+
 %%
 
 

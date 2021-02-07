@@ -40,37 +40,39 @@
       know about them.  */
    enum yytokentype {
      INTVAL = 258,
-     ID = 259,
-     char_val = 260,
-     COND_OR = 261,
-     COND_AND = 262,
-     LOG_OR = 263,
-     LOG_XOR = 264,
-     LOG_AND = 265,
+     char_val = 259,
+     COND_OR = 260,
+     COND_AND = 261,
+     LOG_OR = 262,
+     LOG_XOR = 263,
+     LOG_AND = 264,
+     ISNOTEQ = 265,
      ISEQ = 266,
-     ISNOTEQ = 267,
-     ISLOWER = 268,
+     ISHIGHERANDEQ = 267,
+     ISHIGHER = 268,
      ISLOWERANDEQ = 269,
-     ISHIGHER = 270,
-     ISHIGHERANDEQ = 271,
-     NOT = 272,
-     ENTER = 273,
+     ISLOWER = 270,
+     NOT = 271,
+     ENTER = 272,
+     SPC = 273,
      VALUE_ID = 274,
      EQ = 275,
-     COMMENT = 276,
-     MULTI_COMMENT = 277,
+     MULTI_COMMENT = 276,
+     COMMENT = 277,
      CHAR = 278,
      INT = 279,
-     BREAK = 280,
-     CONTINUE = 281,
-     IF = 282,
-     WHILE = 283,
-     ELSEIF = 284,
-     ELSE = 285,
-     VOID = 286,
-     FOR = 287,
-     MAIN = 288,
-     RETURN = 289
+     CONTINUE = 280,
+     BREAK = 281,
+     RETURN = 282,
+     MAIN = 283,
+     FOR = 284,
+     VOID = 285,
+     ELSE = 286,
+     ELSEIF = 287,
+     WHILE = 288,
+     IF = 289,
+     NUM = 290,
+     ID = 291
    };
 #endif
 
@@ -91,7 +93,7 @@ typedef union YYSTYPE
 
 
 /* Line 1676 of yacc.c  */
-#line 95 "code.tab.h"
+#line 97 "code.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

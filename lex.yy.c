@@ -295,39 +295,39 @@ static void yy_fatal_error YY_PROTO(( yyconst char msg[] ));
 
 #define YY_NUM_RULES 45
 #define YY_END_OF_BUFFER 46
-static yyconst short int yy_acclist[139] =
+static yyconst short int yy_acclist[141] =
     {   0,
-       46,   45,   44,   45,   29,   45,   35,   45,   13,   45,
-       45,   38,   45,   33,   45,   45,   36,   45,   37,   45,
-       17,   45,   18,   45,   41,   45,   19,   45,   20,   45,
-       16,   45,   22,   45,   26,   45,   24,   45,   13,   45,
-       39,   45,   40,   45,   34,   45,   13,   45,   13,   45,
-       13,   45,   13,   45,   13,   45,   13,   45,   13,   45,
-       13,   45,   13,   45,   42,   45,   32,   45,   43,   45,
-       44,   27,   13,   13,   13,   14,   31,   16,   16,   23,
-       28,   25,   13,   13,   13,   13,   13,    4,   13,   13,
-       13,   13,   13,   13,   30,   13,   21,   21,   13,   13,
+        1,    1,   46,   45,    1,   45,   30,   45,   36,   45,
+       14,   45,   45,   39,   45,   34,   45,   45,   37,   45,
+       38,   45,   18,   45,   19,   45,   42,   45,   20,   45,
+       21,   45,   17,   45,   23,   45,   27,   45,   25,   45,
+       14,   45,   40,   45,   41,   45,   35,   45,   14,   45,
+       14,   45,   14,   45,   14,   45,   14,   45,   14,   45,
+       14,   45,   14,   45,   14,   45,   43,   45,   33,   45,
+       44,   45,    1,   28,   14,   14,   14,   15,   32,   17,
+       17,   24,   29,   26,   14,   14,   14,   14,   14,    5,
+       14,   14,   14,   14,   14,   14,   31,   14,   22,   22,
 
-       13,   13,    3,   13,    6,   13,   13,   13,   13,   13,
-       15,   13,   11,   13,   13,    5,   13,   10,   13,   13,
-        2,   13,   13,    7,   13,   13,   13,   13,    1,   13,
-       13,   12,   13,    9,   13,   13,    8,   13
+       14,   14,   14,   14,    4,   14,    7,   14,   14,   14,
+       14,   14,   16,   14,   12,   14,   14,    6,   14,   11,
+       14,   14,    3,   14,   14,    8,   14,   14,   14,   14,
+        2,   14,   14,   13,   14,   10,   14,   14,    9,   14
     } ;
 
 static yyconst short int yy_accept[102] =
     {   0,
-        1,    1,    1,    2,    3,    5,    7,    9,   11,   12,
-       14,   16,   17,   19,   21,   23,   25,   27,   29,   31,
-       33,   35,   37,   39,   41,   43,   45,   47,   49,   51,
-       53,   55,   57,   59,   61,   63,   65,   67,   69,   71,
-       72,   73,   74,   75,   76,   76,   77,   77,   78,   78,
-       79,   80,   81,   82,   83,   84,   85,   86,   87,   88,
-       90,   91,   92,   93,   94,   95,   96,   98,   99,   99,
-       99,  100,  101,  102,  103,  105,  107,  108,  109,  110,
-      111,  112,  113,  115,  116,  118,  120,  121,  123,  124,
-      126,  127,  128,  129,  131,  132,  134,  136,  137,  139,
+        1,    2,    3,    4,    5,    7,    9,   11,   13,   14,
+       16,   18,   19,   21,   23,   25,   27,   29,   31,   33,
+       35,   37,   39,   41,   43,   45,   47,   49,   51,   53,
+       55,   57,   59,   61,   63,   65,   67,   69,   71,   73,
+       74,   75,   76,   77,   78,   78,   79,   79,   80,   80,
+       81,   82,   83,   84,   85,   86,   87,   88,   89,   90,
+       92,   93,   94,   95,   96,   97,   98,  100,  101,  101,
+      101,  102,  103,  104,  105,  107,  109,  110,  111,  112,
+      113,  114,  115,  117,  118,  120,  122,  123,  125,  126,
+      128,  129,  130,  131,  133,  134,  136,  138,  139,  141,
 
-      139
+      141
     } ;
 
 static yyconst int yy_ec[256] =
@@ -762,226 +762,226 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 YY_RULE_SETUP
 #line 15 "tokens.l"
-{  printf("%s\n",yytext); return WHILE;}
+{  return SPC;}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
 #line 16 "tokens.l"
-{  printf("%s\n",yytext); return VOID; }
+{  printf("%s\n",yytext); return WHILE;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
 #line 17 "tokens.l"
-{  printf("%s\n",yytext); return FOR; }
+{  printf("%s\n",yytext); return VOID; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
 #line 18 "tokens.l"
-{  printf("%s\n",yytext); return IF; }
+{  printf("%s\n",yytext); return FOR; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
 #line 19 "tokens.l"
-{  printf("%s\n",yytext); return ELSE; }
+{  printf("%s\n",yytext); return IF; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
 #line 20 "tokens.l"
-{strcpy(yylval.sval,yytext); printf("int\n"); return INT;}
+{  printf("%s\n",yytext); return ELSE; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
 #line 21 "tokens.l"
-{  printf("%s\n",yytext); return BREAK;  }
+{strcpy(yylval.sval,yytext); printf("int\n"); return INT;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
 #line 22 "tokens.l"
-{  printf("%s\n",yytext); return CONTINUE; }
+{  printf("%s\n",yytext); return BREAK;  }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
 #line 23 "tokens.l"
-{  printf("%s\n",yytext); return RETURN;  }
+{  printf("%s\n",yytext); return CONTINUE; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
 #line 24 "tokens.l"
-{  printf("%s\n",yytext); return MAIN;  }
+{  printf("%s\n",yytext); return RETURN;  }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
 #line 25 "tokens.l"
-{strcpy(yylval.sval,yytext);  printf("%s\n",yytext);  return CHAR; }
+{  printf("%s\n",yytext); return MAIN;  }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
 #line 26 "tokens.l"
-{  printf("%s\n",yytext); return ELSEIF;  }
+{strcpy(yylval.sval,yytext);  printf("%s\n",yytext);  return CHAR; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
 #line 27 "tokens.l"
-{ printf("%s\n",yytext);strcpy(yylval.sval,yytext);   return ID; }
+{  printf("%s\n",yytext); return ELSEIF;  }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
 #line 28 "tokens.l"
-{  printf("%s\n",yytext); return COMMENT; }
+{ printf("%s\n",yytext);strcpy(yylval.sval,yytext);   return ID; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
 #line 29 "tokens.l"
-{   printf("%s\n",yytext);   return MULTI_COMMENT;  }
+{  printf("%s\n",yytext); return COMMENT; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
 #line 30 "tokens.l"
-{yylval.ival = atoi(yytext);  printf("%s\n",yytext);  return INTVAL; }
+{   printf("%s\n",yytext);   return MULTI_COMMENT;  }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
 #line 31 "tokens.l"
-{  printf("%s\n",yytext); return '*'; }
+{yylval.ival = atoi(yytext);  printf("%s\n",yytext);  return INTVAL; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
 #line 32 "tokens.l"
-{  printf("%s\n",yytext); return '+';  }
+{  printf("%s\n",yytext); return '*'; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
 #line 33 "tokens.l"
-{  printf("%s\n",yytext); return '-';  }
+{  printf("%s\n",yytext); return '+';  }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
 #line 34 "tokens.l"
-{  printf("%s\n",yytext); return '/'; }
+{  printf("%s\n",yytext); return '-';  }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 36 "tokens.l"
-{  printf("%s\n",yytext); return char_val;  }
+#line 35 "tokens.l"
+{  printf("%s\n",yytext); return '/'; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 38 "tokens.l"
-{  printf("%s\n",yytext); return ISLOWER; }
+#line 37 "tokens.l"
+{  printf("%s\n",yytext); return char_val;  }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
 #line 39 "tokens.l"
-{  printf("%s\n",yytext); return ISLOWERANDEQ;}
+{  printf("%s\n",yytext); return ISLOWER; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
 #line 40 "tokens.l"
-{  printf("%s\n",yytext); return ISHIGHER;  }
+{  printf("%s\n",yytext); return ISLOWERANDEQ;}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
 #line 41 "tokens.l"
-{  printf("%s\n",yytext); return ISHIGHERANDEQ;  }
+{  printf("%s\n",yytext); return ISHIGHER;  }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 43 "tokens.l"
-{  printf("%s\n",yytext); return EQ; }
+#line 42 "tokens.l"
+{  printf("%s\n",yytext); return ISHIGHERANDEQ;  }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
 #line 44 "tokens.l"
-{  printf("%s\n",yytext); return ISNOTEQ; }
+{  printf("%s\n",yytext); return EQ; }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
 #line 45 "tokens.l"
-{  printf("%s\n",yytext); return ISEQ; }
+{  printf("%s\n",yytext); return ISNOTEQ; }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
 #line 46 "tokens.l"
-{  printf("%s\n",yytext); return ENTER;  }
+{  printf("%s\n",yytext); return ISEQ; }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
 #line 47 "tokens.l"
-{  printf("%s\n",yytext); return COND_OR;}
+{  printf("%s\n",yytext); return ENTER;  }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
 #line 48 "tokens.l"
-{  printf("%s\n",yytext); return COND_AND; }
+{  printf("%s\n",yytext); return COND_OR;}
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
 #line 49 "tokens.l"
-{  printf("%s\n",yytext); return LOG_OR; }
+{  printf("%s\n",yytext); return COND_AND; }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
 #line 50 "tokens.l"
-{  printf("%s\n",yytext); return LOG_AND;  }
+{  printf("%s\n",yytext); return LOG_OR; }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
 #line 51 "tokens.l"
-{  printf("%s\n",yytext); return LOG_XOR; }
+{  printf("%s\n",yytext); return LOG_AND;  }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
 #line 52 "tokens.l"
-{  printf("%s\n",yytext); return NOT; }
+{  printf("%s\n",yytext); return LOG_XOR; }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
 #line 53 "tokens.l"
-{  printf("%s\n",yytext); return '('; }
+{  printf("%s\n",yytext); return NOT; }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
 #line 54 "tokens.l"
-{  printf("%s\n",yytext); return ')'; }
+{  printf("%s\n",yytext); return '('; }
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
 #line 55 "tokens.l"
-{  printf("%s\n",yytext); return '$'; }
+{  printf("%s\n",yytext); return ')'; }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
 #line 56 "tokens.l"
-{  printf("%s\n",yytext); return '[';  }
+{  printf("%s\n",yytext); return '$'; }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
 #line 57 "tokens.l"
-{  printf("%s\n",yytext); return ']'; }
+{  printf("%s\n",yytext); return '[';  }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
 #line 58 "tokens.l"
-{  printf("%s\n",yytext); return ','; }
+{  printf("%s\n",yytext); return ']'; }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
 #line 59 "tokens.l"
-{  printf("%s\n",yytext); return '{';  }
+{  printf("%s\n",yytext); return ','; }
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
 #line 60 "tokens.l"
-{  printf("%s\n",yytext); return '}'; }
+{  printf("%s\n",yytext); return '{';  }
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
 #line 61 "tokens.l"
-{ printf("newspace\n"); return SPACE;}
+{  printf("%s\n",yytext); return '}'; }
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 62 "tokens.l"
+#line 63 "tokens.l"
 ECHO;
 	YY_BREAK
 #line 988 "lex.yy.c"
@@ -1868,7 +1868,7 @@ int main()
 	return 0;
 	}
 #endif
-#line 62 "tokens.l"
+#line 63 "tokens.l"
 
 
 

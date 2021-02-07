@@ -1,6 +1,6 @@
 default:
 	cls
 	flex -l tokens.l
-	bison  code.y -v
+	bison -dv code.y 
 	gcc -o code code.tab.c lex.yy.c
 	code.exe
