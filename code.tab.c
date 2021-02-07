@@ -101,7 +101,7 @@ char* popStack()
 struct function_names
 {
 	char name[10];
-	int num = 0 ;//arg nums
+	int num ;//arg nums
 };
 struct function_names fun_names[100];
 
