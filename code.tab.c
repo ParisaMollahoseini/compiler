@@ -1751,7 +1751,7 @@ else
 		printf("declare more id %s %s\n",currtype,(yyvsp[(2) - (2)].sval));
 	struct var *newvar = addvar(&first, &last,(yyvsp[(2) - (2)].sval), currtype);
 	newvar -> current_func = current_func;
-	newvar -> which_reg = strcat("$t",itos(GetFreeRegister('t'));
+	strcpy(newvar -> which_reg , strcat("$t",itos(GetFreeRegister('t')));
 	datafile = fopen("mips.txt", "a+");
 	fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,0);
 	fclose(datafile);
@@ -1771,9 +1771,9 @@ else
 /* Line 1455 of yacc.c  */
 #line 228 "code.y"
     {
-	if(findvar(&first,(yyvsp[(1) - (4)].sval),curr_func)){
+	if(findvar(first,(yyvsp[(1) - (4)].sval),curr_func)){
 		printf("assign  %s = %s\n",(yyvsp[(1) - (4)].sval),(yyvsp[(3) - (4)].ival));
-	struct var *newvar = findvar(&first,(yyvsp[(1) - (4)].sval),curr_func);
+	struct var *newvar = findvar(first,(yyvsp[(1) - (4)].sval),curr_func);
 		datafile = fopen("mips.txt", "a+");
 	if(strcmp(newvar -> type ,"char")==0)
 	{
@@ -1952,7 +1952,7 @@ else
 	itoa(no,buffer,10);
 	char treg1[4] = "$t";
 	strcat(treg1,buffer);
-	
+
 	no = GetFreeRegister('t');
 	itoa(no,buffer,10);
 	char treg2[4] = "$t";
@@ -2371,8 +2371,8 @@ void freereg(char* reg_name){
 
 	}
 }
-int GetFreeRegister(char register){
-	switch (register){
+int GetFreeRegister(char reg){
+	switch (reg){
 		case 't':
 				for(int i=0; i<=9; i++){
 					if(t_state[i] == 0){

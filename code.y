@@ -211,7 +211,7 @@ IDS: '$' | ',' ID {
 		printf("declare more id %s %s\n",currtype,$2);
 	struct var *newvar = addvar(&first, &last,$2, currtype);
 	newvar -> current_func = current_func;
-	newvar -> which_reg = strcat("$t",itos(GetFreeRegister('t'));
+	strcpy(newvar -> which_reg , strcat("$t",itos(GetFreeRegister('t')));
 	datafile = fopen("mips.txt", "a+");
 	fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,0);
 	fclose(datafile);
@@ -226,9 +226,9 @@ else
 }}IDS;
 
 ASSIGN_STMT: ID EQ EXP '$' {
-	if(findvar(&first,$1,curr_func)){
+	if(findvar(first,$1,curr_func)){
 		printf("assign  %s = %s\n",$1,$3);
-	struct var *newvar = findvar(&first,$1,curr_func);
+	struct var *newvar = findvar(first,$1,curr_func);
 		datafile = fopen("mips.txt", "a+");
 	if(strcmp(newvar -> type ,"char")==0)
 	{
@@ -301,7 +301,7 @@ EXP ISNOTEQ EXP {printf("inequality\n");}
 	itoa(no,buffer,10);
 	char treg1[4] = "$t";
 	strcat(treg1,buffer);
-	
+
 	no = GetFreeRegister('t');
 	itoa(no,buffer,10);
 	char treg2[4] = "$t";
@@ -403,8 +403,8 @@ void freereg(char* reg_name){
 
 	}
 }
-int GetFreeRegister(char register){
-	switch (register){
+int GetFreeRegister(char reg){
+	switch (reg){
 		case 't':
 				for(int i=0; i<=9; i++){
 					if(t_state[i] == 0){
