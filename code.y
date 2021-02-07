@@ -86,10 +86,10 @@ _Bool a_state[4] = {0,0,0,0};
 
 
 
-%token <ival> INTVAL
-%token <sval> ID
-%token <cval> char_val
-%token ','
+%left <ival> INTVAL
+%left <sval> ID
+%left <cval> char_val
+%left ','
 %left COND_OR
 %left COND_AND
 %left LOG_OR
@@ -102,15 +102,17 @@ _Bool a_state[4] = {0,0,0,0};
 %left NOT
 %left '(' ')' '[' ']'
 %left '$'
-%token ENTER
-%token VALUE_ID
+%left ENTER
+%left VALUE_ID
 %left <cval> EQ
-%token COMMENT MULTI_COMMENT
-%token <sval> CHAR INT
+%left COMMENT MULTI_COMMENT
+
 %type <ival> EXP PARAMS ARGS_IN
 %type <sval> VTYPE
-%token BREAK CONTINUE
-%token IF WHILE ELSEIF ELSE VOID FOR MAIN RETURN
+
+%left <sval> CHAR INT
+%left BREAK CONTINUE
+%left IF WHILE ELSEIF ELSE VOID FOR MAIN RETURN
 
 
 %%
