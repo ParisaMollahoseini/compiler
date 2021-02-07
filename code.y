@@ -88,7 +88,7 @@ _Bool a_state[4] = {0,0,0,0};
 
 
 %token <ival> INTVAL
-%token <sval> ID
+%token <sval> ID char_val
 %token ','
 %token COND_OR
 %token COND_AND
@@ -99,19 +99,20 @@ _Bool a_state[4] = {0,0,0,0};
 %token ISLOWER ISLOWERANDEQ ISHIGHER ISHIGHERANDEQ
 %left <cval> '+' '-'
 %left <cval> '*' '/'
+%token NOT
 %token '(' ')' '[' ']'
 %token ENTER
 %token VALUE_ID
 %token <cval> EQ
 
-//%token <ival> p
+%type <ival> EXP PARAMS ARGS_IN 
 %token CHAR INT BREAK CONTINUE
 %token IF WHILE ELSEIF ELSE VOID FOR MAIN RETURN
 
 
 %%
 PROGRAM: FTYPE ID
-{
+'(' PARAMS {
 	 printf("see function : %s\n",$2);
 
 	 datafile = fopen("mips.txt", "a+");
@@ -120,8 +121,7 @@ PROGRAM: FTYPE ID
 	 strcpy(current_func,$2);
 	 fun_names[func_count].num = $4;
 	 strcpy(fun_names[func_count++].name,current_func);
-		}
-'(' PARAMS ')' '{' STMTS '}' {
+		}')' '{' STMTS '}' {
 
 		vardelete(first,last,current_func);
 		printf("delete variables after function\n");
@@ -336,13 +336,13 @@ EXP LOG_AND EXP {printf("logical and\n");} |
 EXP LOG_XOR EXP {printf("logical xor\n");} |
 NOT EXP {printf("logical not\n");} |
 '(' EXP ')' {printf("parantheses\n");} |
-ints {printf("int literal\n");} |
+INTVAL {printf("int literal\n");} |
 char_val {printf("character literal\n");} |
 '-' EXP {printf("negative num\n");} |
-identif {printf("id\n");} |
+ID {printf("id\n");} |
 FUNC_CALL { printf("func call\n"); } ;
 
-ident:	ID;
+
 %%
 
 
