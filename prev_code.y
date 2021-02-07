@@ -355,6 +355,7 @@ EXP ISNOTEQ EXP {printf("inequality\n");}
 }
 |
 EXP ISEQ EXP {printf("equality\n");  $$= $1 == $3;} |
+EXP ISNOTEQ EXP {printf("equality\n");  $$= $1 != $3;} |
 EXP '+' EXP {printf("addition\n");  $$= $1 + $3;} |
 EXP '-' EXP {printf("subtraction\n");  $$= $1 - $3;} |
 EXP '*' EXP {printf("multiply\n");  $$= $1 * $3;} |
