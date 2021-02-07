@@ -110,7 +110,8 @@ _Bool a_state[4] = {0,0,0,0};
 %type <ival> EXP PARAMS ARGS_IN
 %type <sval> VTYPE
 
-%left <sval> CHAR INT
+%left <sval> CHAR
+%left <sval> INT
 %left BREAK CONTINUE
 %left IF WHILE ELSEIF ELSE VOID FOR MAIN RETURN
 

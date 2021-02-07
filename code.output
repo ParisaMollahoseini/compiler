@@ -175,8 +175,8 @@ VALUE_ID (274)
 EQ (275) 24 26 31
 MULTI_COMMENT (276)
 COMMENT (277)
-INT (278) 6 13 24
-CHAR (279) 12 26
+CHAR (278) 12 26
+INT (279) 6 13 24
 CONTINUE (280)
 BREAK (281)
 RETURN (282) 51
@@ -325,8 +325,8 @@ state 8
 
     3 PROGRAM: FTYPE ID '(' . PARAMS $@1 ')' '{' STMTS '}' $@2 PROGRAM
 
-    INT   shift, and go to state 9
-    CHAR  shift, and go to state 10
+    CHAR  shift, and go to state 9
+    INT   shift, and go to state 10
 
     $default  reduce using rule 7 (PARAMS)
 
@@ -336,16 +336,16 @@ state 8
 
 state 9
 
-   13 VTYPE: INT .
+   12 VTYPE: CHAR .
 
-    $default  reduce using rule 13 (VTYPE)
+    $default  reduce using rule 12 (VTYPE)
 
 
 state 10
 
-   12 VTYPE: CHAR .
+   13 VTYPE: INT .
 
-    $default  reduce using rule 12 (VTYPE)
+    $default  reduce using rule 13 (VTYPE)
 
 
 state 11
@@ -399,8 +399,8 @@ state 16
    10       | VTYPE ID ',' . VTYPE ID ',' VTYPE ID
    11       | VTYPE ID ',' . VTYPE ID ',' VTYPE ID ',' VTYPE ID
 
-    INT   shift, and go to state 9
-    CHAR  shift, and go to state 10
+    CHAR  shift, and go to state 9
+    INT   shift, and go to state 10
 
     VTYPE  go to state 18
 
@@ -411,8 +411,8 @@ state 17
 
     ID      shift, and go to state 19
     ENTER   shift, and go to state 20
-    INT     shift, and go to state 21
-    CHAR    shift, and go to state 22
+    CHAR    shift, and go to state 21
+    INT     shift, and go to state 22
     RETURN  shift, and go to state 23
     WHILE   shift, and go to state 24
     IF      shift, and go to state 25
@@ -454,18 +454,18 @@ state 20
 
 state 21
 
-   13 VTYPE: INT .
-   24 DECLARE_STMT: INT . ID EQ EXP $@4 '$' STMTS
-
-    $default  reduce using rule 13 (VTYPE)
-
-
-state 22
-
    12 VTYPE: CHAR .
    26 DECLARE_STMT: CHAR . ID EQ char_val $@5 '$' STMTS
 
     $default  reduce using rule 12 (VTYPE)
+
+
+state 22
+
+   13 VTYPE: INT .
+   24 DECLARE_STMT: INT . ID EQ EXP $@4 '$' STMTS
+
+    $default  reduce using rule 13 (VTYPE)
 
 
 state 23
@@ -751,8 +751,8 @@ state 49
    10 PARAMS: VTYPE ID ',' VTYPE ID ',' . VTYPE ID
    11       | VTYPE ID ',' VTYPE ID ',' . VTYPE ID ',' VTYPE ID
 
-    INT   shift, and go to state 9
-    CHAR  shift, and go to state 10
+    CHAR  shift, and go to state 9
+    INT   shift, and go to state 10
 
     VTYPE  go to state 76
 
@@ -1158,8 +1158,8 @@ state 71
 
     ID      shift, and go to state 19
     ENTER   shift, and go to state 20
-    INT     shift, and go to state 21
-    CHAR    shift, and go to state 22
+    CHAR    shift, and go to state 21
+    INT     shift, and go to state 22
     RETURN  shift, and go to state 23
     WHILE   shift, and go to state 24
     IF      shift, and go to state 25
@@ -1856,8 +1856,8 @@ state 103
 
     ID      shift, and go to state 19
     ENTER   shift, and go to state 20
-    INT     shift, and go to state 21
-    CHAR    shift, and go to state 22
+    CHAR    shift, and go to state 21
+    INT     shift, and go to state 22
     RETURN  shift, and go to state 23
     WHILE   shift, and go to state 24
     IF      shift, and go to state 25
@@ -1919,8 +1919,8 @@ state 105
 
     ID      shift, and go to state 19
     ENTER   shift, and go to state 20
-    INT     shift, and go to state 21
-    CHAR    shift, and go to state 22
+    CHAR    shift, and go to state 21
+    INT     shift, and go to state 22
     RETURN  shift, and go to state 23
     WHILE   shift, and go to state 24
     IF      shift, and go to state 25
@@ -1971,8 +1971,8 @@ state 110
 
     ID      shift, and go to state 19
     ENTER   shift, and go to state 20
-    INT     shift, and go to state 21
-    CHAR    shift, and go to state 22
+    CHAR    shift, and go to state 21
+    INT     shift, and go to state 22
     RETURN  shift, and go to state 23
     WHILE   shift, and go to state 24
     IF      shift, and go to state 25
@@ -1991,8 +1991,8 @@ state 111
 
    11 PARAMS: VTYPE ID ',' VTYPE ID ',' VTYPE ID ',' . VTYPE ID
 
-    INT   shift, and go to state 9
-    CHAR  shift, and go to state 10
+    CHAR  shift, and go to state 9
+    INT   shift, and go to state 10
 
     VTYPE  go to state 119
 
@@ -2033,8 +2033,8 @@ state 115
 
     ID      shift, and go to state 19
     ENTER   shift, and go to state 20
-    INT     shift, and go to state 21
-    CHAR    shift, and go to state 22
+    CHAR    shift, and go to state 21
+    INT     shift, and go to state 22
     RETURN  shift, and go to state 23
     WHILE   shift, and go to state 24
     IF      shift, and go to state 25
@@ -2055,8 +2055,8 @@ state 116
 
     ID      shift, and go to state 19
     ENTER   shift, and go to state 20
-    INT     shift, and go to state 21
-    CHAR    shift, and go to state 22
+    CHAR    shift, and go to state 21
+    INT     shift, and go to state 22
     RETURN  shift, and go to state 23
     WHILE   shift, and go to state 24
     IF      shift, and go to state 25
@@ -2242,8 +2242,8 @@ state 129
 
     ID      shift, and go to state 19
     ENTER   shift, and go to state 20
-    INT     shift, and go to state 21
-    CHAR    shift, and go to state 22
+    CHAR    shift, and go to state 21
+    INT     shift, and go to state 22
     RETURN  shift, and go to state 23
     WHILE   shift, and go to state 24
     IF      shift, and go to state 25
@@ -2351,8 +2351,8 @@ state 140
 
     ID      shift, and go to state 19
     ENTER   shift, and go to state 20
-    INT     shift, and go to state 21
-    CHAR    shift, and go to state 22
+    CHAR    shift, and go to state 21
+    INT     shift, and go to state 22
     RETURN  shift, and go to state 23
     WHILE   shift, and go to state 24
     IF      shift, and go to state 25
@@ -2410,8 +2410,8 @@ state 142
 
     ID      shift, and go to state 19
     ENTER   shift, and go to state 20
-    INT     shift, and go to state 21
-    CHAR    shift, and go to state 22
+    CHAR    shift, and go to state 21
+    INT     shift, and go to state 22
     RETURN  shift, and go to state 23
     WHILE   shift, and go to state 24
     IF      shift, and go to state 25
@@ -2453,8 +2453,8 @@ state 146
 
     ID      shift, and go to state 19
     ENTER   shift, and go to state 20
-    INT     shift, and go to state 21
-    CHAR    shift, and go to state 22
+    CHAR    shift, and go to state 21
+    INT     shift, and go to state 22
     RETURN  shift, and go to state 23
     WHILE   shift, and go to state 24
     IF      shift, and go to state 25
