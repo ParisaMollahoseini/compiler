@@ -101,6 +101,7 @@ _Bool a_state[4] = {0,0,0,0};
 %left <cval> '*' '/'
 %token NOT
 %token '(' ')' '[' ']'
+%token '$'
 %token ENTER
 %token VALUE_ID
 %token <cval> EQ
