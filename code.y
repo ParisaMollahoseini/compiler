@@ -348,8 +348,8 @@ ident:	ID;
 
 int main()
 {
-		//FILE* file = fopen("w.txt","r");
-		//yyin = file;
+		FILE* file = fopen("test.txt","r");
+		yyin = file;
     yyparse();
     return 0;
 }
