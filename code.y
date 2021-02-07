@@ -112,6 +112,8 @@ _Bool a_state[4] = {0,0,0,0};
 %%
 PROGRAM: FTYPE ID
 {
+	 printf("see function : %s\n",$2);
+
 	 datafile = fopen("mips.txt", "a+");
 	 fprintf(datafile, "%s:\n", $2);
 	 fclose(datafile);
@@ -122,16 +124,17 @@ PROGRAM: FTYPE ID
 '(' PARAMS ')' '{' STMTS '}' {
 
 		vardelete(first,last,current_func);
+		printf("delete variables after function\n");
 	}
 	} PROGRAM | ENTER
 
 FTYPE: VOID | INT;
 
-PARAMS:{$$ = 0}|
-VTYPE ID {$$ = 1}|
-VTYPE ID ',' VTYPE ID {$$ = 2}|
-VTYPE ID ',' VTYPE ID ',' VTYPE ID {$$ = 3}|
-VTYPE ID ',' VTYPE ID ',' VTYPE ID ',' VTYPE ID {$$ = 4};
+PARAMS:{$$ = 0; printf("no parameters\n");}|
+VTYPE ID {$$ = 1; printf("1 parameters\n");}|
+VTYPE ID ',' VTYPE ID {$$ = 2; printf("2 parameters\n");}|
+VTYPE ID ',' VTYPE ID ',' VTYPE ID {$$ = 3; printf("3 parameters\n");}|
+VTYPE ID ',' VTYPE ID ',' VTYPE ID ',' VTYPE ID {$$ = 4; printf("4 parameters\n");};
 
 VTYPE: CHAR | INT;
 
@@ -144,8 +147,9 @@ RETURN_STMT |
 ENTER;
 
 DECLARE_STMT: VTYPE ID {
-
 	if(!findvar(&first,$2,curr_func)){
+		printf("declare %s %s\n",$1,$2);
+
 		strcpy(currtype,$1);
 	struct var *newvar = addvar(&first, &last,$2, $1);
 	newvar -> current_func = current_func;
@@ -165,6 +169,7 @@ else
 IDS STMTS |
 INT ID EQ EXP {
 	if(!findvar(&first,$2,curr_func)){
+		printf("declare and assign int %s = %s\n",$2,$4);
 	struct var *newvar = addvar(&first, &last,$2, $1);
 	newvar -> current_func = current_func;
 	newvar -> which_reg = strcat("$t",itos(GetFreeRegister('t'));
@@ -183,6 +188,8 @@ else
 }'$' STMTS |
 CHAR ID EQ char_val {
 	if(!findvar(&first,$2,curr_func)){
+		printf("declare and assign char %s = %s\n",$2,$4);
+
 	struct var *newvar = addvar(&first, &last,$2, $1);
 	newvar -> current_func = current_func;
 	newvar -> which_reg = strcat("$t",itos(GetFreeRegister('t'));
@@ -201,6 +208,7 @@ else
 
 IDS: '$' | ',' ID {
 	if(!findvar(&first,$2,curr_func)){
+		printf("declare more id %s %s\n",currtype,$2);
 	struct var *newvar = addvar(&first, &last,$2, currtype);
 	newvar -> current_func = current_func;
 	newvar -> which_reg = strcat("$t",itos(GetFreeRegister('t'));
@@ -219,6 +227,7 @@ else
 
 ASSIGN_STMT: ID EQ EXP '$' {
 	if(findvar(&first,$1,curr_func)){
+		printf("assign  %s = %s\n",$1,$3);
 	struct var *newvar = findvar(&first,$1,curr_func);
 		datafile = fopen("mips.txt", "a+");
 	if(strcmp(newvar -> type ,"char")==0)
