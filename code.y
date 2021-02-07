@@ -186,6 +186,8 @@ else{
 
 
 	first = (struct var*)malloc(sizeof(struct var));
+	last = (struct var*)malloc(sizeof(struct var));
+
 	strcpy(first->name ,$2);
 	strcpy(first->type,"int");
 
@@ -200,7 +202,7 @@ else{
 
 
 strcpy(first -> which_reg , buffer);
-
+last = first;
 datafile = fopen("mips.txt", "a+");
 fprintf(datafile, "\taddi %s, $zero , %d \n", first->which_reg,0);
 fclose(datafile);
@@ -236,6 +238,8 @@ else{
 
 
 	first = (struct var*)malloc(sizeof(struct var));
+	last = (struct var*)malloc(sizeof(struct var));
+
 	strcpy(first->name ,$2);
 	strcpy(first->type,"int");
 	first->intchar_union.value_int = $4;
@@ -250,7 +254,7 @@ else{
 
 
 strcpy(first -> which_reg , buffer);
-
+last = first;
 datafile = fopen("mips.txt", "a+");
 fprintf(datafile, "\taddi %s, $zero , %d \n", first->which_reg,first -> intchar_union.value_int);
 fclose(datafile);
@@ -286,6 +290,8 @@ else{
 
 
 	first = (struct var*)malloc(sizeof(struct var));
+	last = (struct var*)malloc(sizeof(struct var));
+
 	strcpy(first->name ,$2);
 	strcpy(first->type,"char");
 	strcpy(first -> current_func ,current_func);
@@ -299,7 +305,7 @@ else{
 
 
 strcpy(first -> which_reg , buffer);
-
+last = first;
 datafile = fopen("mips.txt", "a+");
 fprintf(datafile, "\taddi %s, $zero , %d \n", first->which_reg,0);
 fclose(datafile);
@@ -385,6 +391,8 @@ else{
 
 
 	first = (struct var*)malloc(sizeof(struct var));
+	last = (struct var*)malloc(sizeof(struct var));
+
 	strcpy(first->name ,$2);
 	strcpy(first->type,currtype);
 
@@ -399,7 +407,7 @@ else{
 
 
 strcpy(first -> which_reg , buffer);
-
+last = first;
 datafile = fopen("mips.txt", "a+");
 fprintf(datafile, "\taddi %s, $zero , %d \n", first->which_reg,0);
 fclose(datafile);
