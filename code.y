@@ -256,21 +256,21 @@ else
 
 VAR_VALUE: EXP | char_val;
 
-WHILE_STMT: WHILE '(' EXP  ')' '{' STMTS '}' STMTS;
+WHILE_STMT: WHILE {printf("while begin\n");} '(' EXP  ')' '{' STMTS '}' {printf("while end\n");} STMTS;
 
-IF_STMT: IF '(' EXP ')' '{' STMTS  '}' ELSEIF_STMT ELSE_STMT STMTS;
+IF_STMT: IF {printf("if begin\n");} '(' EXP ')' '{' STMTS  '}' ELSEIF_STMT ELSE_STMT {printf("if end\n");} STMTS;
 
-ELSEIF_STMT: ELSEIF '(' EXP ')' '{' STMTS '}' ELSEIF | ENTER;
+ELSEIF_STMT: ELSEIF {printf("elseif begin\n");} '(' EXP ')' '{' STMTS '}' {printf("elseif end\n");} ELSEIF | ENTER;
 
-ELSE_STMT: ELSE '{' STMTS  '}' | ENTER;
+ELSE_STMT: ELSE {printf("else begin\n");} '{' STMTS  '}' {printf("else end\n");} | ENTER;
 
 FUNC_CALL: ID '(' ARGS_IN ')' '$' STMTS;
 
-ARGS_IN: |
-EXP ',' EXP ',' EXP ',' EXP {$$ =4;} |
-EXP ',' EXP ',' EXP {$$ =3;} |
-EXP ',' EXP {$$ =2;} |
-EXP;
+ARGS_IN: {printf("no args passed\n");} |
+EXP ',' EXP ',' EXP ',' EXP {$$ =4; printf("4 args passed\n");} |
+EXP ',' EXP ',' EXP {$$ =3; printf("3 args passed\n");} |
+EXP ',' EXP {$$ =2; printf("2 args passed\n");} |
+EXP {printf("1 arg passed\n");};
 
 RETURN_STMT: RETURN EXP '$' STMTS;
 
