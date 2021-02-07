@@ -160,13 +160,13 @@ DECLARE_STMT: INT ID {
 	if(first != NULL){
 	if(!findvar(first,$2,current_func)){
 		printf("declare %s %s\n",$1,$2);
-		
+
 
 		strcpy(currtype,$1);
 	struct var *newvar = addvar(&first, &last,$2, $1);
-	
+
   strcpy(newvar -> current_func , current_func);
-	
+
 	char num[5];
 	itoa(GetFreeRegister('t'),num,5);
 	char buffer[10] = {'$', 't'};
@@ -178,6 +178,7 @@ DECLARE_STMT: INT ID {
 }
 else
 {
+
 	char error[30] = "replicate variable ";
 				strcat(error, $2);
 				yyerror(error);
@@ -214,19 +215,19 @@ fclose(datafile);
 IDS '$' STMTS |
 INT ID EQ EXP {
 	if(first != NULL){
-	
+
 	if(!findvar(first,$2,current_func)){
-		
+
 		printf("declare and assign int %s = %d\n",$2,$4);
 	struct var *newvar = addvar(&first, &last,$2, $1);
-	
+
 	strcpy(newvar -> current_func ,current_func);
 
 	char num[5];
 	itoa(GetFreeRegister('t'),num,5);
 	char buffer[10] = {'$', 't'};
 	strcpy(newvar -> which_reg , strcat(buffer,num));
-	
+
 	newvar -> intchar_union.value_int = $4;
 	datafile = fopen("mips.txt", "a+");
 	fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,$4);
@@ -517,7 +518,7 @@ int main()
 
 void yyerror(const char *s)
 {
-	printf("-Error-");
+	printf("-Error- %s",s);
 
 }
 
@@ -598,14 +599,14 @@ struct var* addvar(struct var** first, struct var** last, char* name, char type[
 	return _new;
 }
 struct var* findvar(struct var* first, char* name,char* curr_func){
-	
+
 	if(first == NULL)
 		return NULL;
-	
+
 	for(struct var* t = first; t; t = t->next){
 		if(strcmp(t->name, name) == 0 && strcmp(t->current_func,curr_func)==0)
 			return t;
 	}
-	
+
 	return NULL;
 }
