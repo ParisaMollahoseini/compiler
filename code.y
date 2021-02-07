@@ -126,7 +126,7 @@ PROGRAM: FTYPE ID
 		vardelete(first,last,current_func);
 		printf("delete variables after function\n");
 	}
-	} PROGRAM | ENTER
+	PROGRAM | ENTER
 
 FTYPE: VOID | INT;
 
@@ -223,7 +223,7 @@ else
 				yyerror(error);
 				YYERROR;
 
-}IDS;
+}}IDS;
 
 ASSIGN_STMT: ID EQ EXP '$' {
 	if(findvar(&first,$1,curr_func)){
