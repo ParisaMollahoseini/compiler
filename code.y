@@ -147,7 +147,7 @@ RETURN_STMT |
 ENTER;
 
 DECLARE_STMT: VTYPE ID {
-	if(!findvar(&first,$2,curr_func)){
+	if(!findvar(&first,$2,current_func)){
 		printf("declare %s %s\n",$1,$2);
 
 		strcpy(currtype,$1);
@@ -172,7 +172,7 @@ else
 }
 IDS STMTS |
 INT ID EQ EXP {
-	if(!findvar(&first,$2,curr_func)){
+	if(!findvar(&first,$2,current_func)){
 		printf("declare and assign int %s = %s\n",$2,$4);
 	struct var *newvar = addvar(&first, &last,$2, "INT");
 	strcpy(newvar -> current_func ,current_func);
@@ -195,7 +195,7 @@ else
 }
 }'$' STMTS |
 CHAR ID EQ char_val {
-	if(!findvar(&first,$2,curr_func)){
+	if(!findvar(&first,$2,current_func)){
 		printf("declare and assign char %s = %s\n",$2,$4);
 
 	struct var *newvar = addvar(&first, &last,$2, "CHAR");
@@ -219,7 +219,7 @@ else
 }}'$' STMTS;
 
 IDS: '$' | ',' ID {
-	if(!findvar(first,$2,curr_func)){
+	if(!findvar(first,$2,current_func)){
 		printf("declare more id %s %s\n",currtype,$2);
 	struct var *newvar = addvar(&first, &last,$2, currtype);
 	strcpy(newvar -> current_func ,current_func);
@@ -241,9 +241,9 @@ else
 }}IDS;
 
 ASSIGN_STMT: ID EQ EXP '$' {
-	if(findvar(first,$1,curr_func)){
+	if(findvar(first,$1,current_func)){
 		printf("assign  %s = %s\n",$1,$3);
-	struct var *newvar = findvar(first,$1,curr_func);
+	struct var *newvar = findvar(first,$1,current_func);
 		datafile = fopen("mips.txt", "a+");
 	if(strcmp(newvar -> type ,"char")==0)
 	{

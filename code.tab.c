@@ -1671,7 +1671,7 @@ yyreduce:
 /* Line 1455 of yacc.c  */
 #line 149 "code.y"
     {
-	if(!findvar(&first,(yyvsp[(2) - (2)].sval),curr_func)){
+	if(!findvar(&first,(yyvsp[(2) - (2)].sval),current_func)){
 		printf("declare %s %s\n",(yyvsp[(1) - (2)].sval),(yyvsp[(2) - (2)].sval));
 
 		strcpy(currtype,(yyvsp[(1) - (2)].sval));
@@ -1701,7 +1701,7 @@ else
 /* Line 1455 of yacc.c  */
 #line 174 "code.y"
     {
-	if(!findvar(&first,(yyvsp[(2) - (4)].sval),curr_func)){
+	if(!findvar(&first,(yyvsp[(2) - (4)].sval),current_func)){
 		printf("declare and assign int %s = %s\n",(yyvsp[(2) - (4)].sval),(yyvsp[(4) - (4)].ival));
 	struct var *newvar = addvar(&first, &last,(yyvsp[(2) - (4)].sval), "INT");
 	strcpy(newvar -> current_func ,current_func);
@@ -1730,7 +1730,7 @@ else
 /* Line 1455 of yacc.c  */
 #line 197 "code.y"
     {
-	if(!findvar(&first,(yyvsp[(2) - (4)].sval),curr_func)){
+	if(!findvar(&first,(yyvsp[(2) - (4)].sval),current_func)){
 		printf("declare and assign char %s = %s\n",(yyvsp[(2) - (4)].sval),(yyvsp[(4) - (4)].sval));
 
 	struct var *newvar = addvar(&first, &last,(yyvsp[(2) - (4)].sval), "CHAR");
@@ -1759,7 +1759,7 @@ else
 /* Line 1455 of yacc.c  */
 #line 221 "code.y"
     {
-	if(!findvar(first,(yyvsp[(2) - (2)].sval),curr_func)){
+	if(!findvar(first,(yyvsp[(2) - (2)].sval),current_func)){
 		printf("declare more id %s %s\n",currtype,(yyvsp[(2) - (2)].sval));
 	struct var *newvar = addvar(&first, &last,(yyvsp[(2) - (2)].sval), currtype);
 	strcpy(newvar -> current_func ,current_func);
@@ -1786,9 +1786,9 @@ else
 /* Line 1455 of yacc.c  */
 #line 243 "code.y"
     {
-	if(findvar(first,(yyvsp[(1) - (4)].sval),curr_func)){
+	if(findvar(first,(yyvsp[(1) - (4)].sval),current_func)){
 		printf("assign  %s = %s\n",(yyvsp[(1) - (4)].sval),(yyvsp[(3) - (4)].ival));
-	struct var *newvar = findvar(first,(yyvsp[(1) - (4)].sval),curr_func);
+	struct var *newvar = findvar(first,(yyvsp[(1) - (4)].sval),current_func);
 		datafile = fopen("mips.txt", "a+");
 	if(strcmp(newvar -> type ,"char")==0)
 	{
