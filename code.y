@@ -31,7 +31,6 @@ struct function_names
 {
 	char name[10];
 	int num ;//arg nums
-	char return_func[5];
 };
 struct function_names fun_names[100];
 
@@ -87,7 +86,8 @@ _Bool a_state[4] = {0,0,0,0};
 
 
 
-
+%left <ival> INTVAL
+%left <cval> char_val
 %left ','
 %left COND_OR
 %left COND_AND
@@ -106,18 +106,19 @@ _Bool a_state[4] = {0,0,0,0};
 %left <cval> EQ
 %left COMMENT MULTI_COMMENT
 
-//%type <ival> EXP PARAMS ARGS_IN FUNC_CALL
-%left <ival> INTVAL
-%left <sval> ID
-%left <cval> char_val
-%type <ival> PARAMS
-%type <sval> VTYPE FTYPE
+
 
 %left <sval> CHAR
-%left <sval> INT VOID
+%left <sval> INT
 %left BREAK CONTINUE
-%left IF WHILE ELSEIF ELSE FOR MAIN RETURN
+%left IF WHILE ELSEIF ELSE VOID FOR MAIN RETURN
 
+%nterm <ival> EXP
+%token <ival> NUM
+%token <sval> ID
+%nterm <ival> PARAMS
+%nterm <ival> ARGS_IN
+%start PROGRAM
 
 %%
 PROGRAM: FTYPE ID
@@ -128,7 +129,6 @@ PROGRAM: FTYPE ID
 	 fprintf(datafile, "%s:\n", $2);
 	 fclose(datafile);
 	 strcpy(current_func,$2);
-	 strcpy(fun_names[func_count].return_func , $1);
 	 fun_names[func_count].num = $4;
 	 strcpy(fun_names[func_count++].name,current_func);
 		}')' '{' STMTS '}' {
@@ -148,9 +148,63 @@ VTYPE ID ',' VTYPE ID ',' VTYPE ID ',' VTYPE ID {$$ = 4; printf("4 parameters\n"
 
 VTYPE: CHAR | INT;
 
-STMTS: DECLARE_STMT;
+STMTS: DECLARE_STMT |
+ASSIGN_STMT |
+WHILE_STMT |
+IF_STMT |
+FUNC_CALL |
+RETURN_STMT |
+ENTER;
 
-DECLARE_STMT: VTYPE ID {
+DECLARE_STMT: INT ID {
+	if(!findvar(first,$2,current_func)){
+		printf("declare %s %s\n",$1,$2);
+
+		strcpy(currtype,$1);
+	struct var *newvar = addvar(&first, &last,$2, $1);
+  strcpy(newvar -> current_func , current_func);
+
+	char buffer[10];
+	itoa(GetFreeRegister('t'),buffer,10);
+	strcpy(newvar -> which_reg , strcat("$t",buffer));
+
+	datafile = fopen("mips.txt", "a+");
+	fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,0);
+	fclose(datafile);
+}
+else
+{
+	char error[30] = "replicate variable ";
+				strcat(error, $2);
+				yyerror(error);
+				YYERROR;
+}
+}
+IDS '$' STMTS |
+INT ID EQ EXP {
+	if(!findvar(first,$2,current_func)){
+		printf("declare and assign int %s = %s\n",$2,$4);
+	struct var *newvar = addvar(&first, &last,$2, $1);
+	strcpy(newvar -> current_func ,current_func);
+
+	char buffer[10];
+	itoa(GetFreeRegister('t'),buffer,10);
+	strcpy(newvar -> which_reg , strcat("$t",buffer));
+
+	newvar -> intchar_union.value_int = $4;
+	datafile = fopen("mips.txt", "a+");
+	fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,0);
+	fclose(datafile);
+}
+else
+{
+	char error[30] = "replicate variable ";
+				strcat(error, $2);
+				yyerror(error);
+				YYERROR;
+}
+}'$' STMTS |
+CHAR ID {
 	if(!findvar(first,$2,current_func)){
 		printf("declare %s %s\n",$1,$2);
 
@@ -220,6 +274,58 @@ else
 				YYERROR;
 
 }}IDS;
+
+ASSIGN_STMT: ID EQ EXP '$' {
+	if(findvar(first,$1,current_func)){
+		printf("assign  %s = %s\n",$1,$3);
+	struct var *newvar = findvar(first,$1,current_func);
+		datafile = fopen("mips.txt", "a+");
+	if(strcmp(newvar -> type ,"char")==0)
+	{
+		newvar -> intchar_union.value_char = $3;
+		fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,newvar -> intchar_union.value_int);
+
+	}
+	else
+	{
+		newvar -> intchar_union.value_int = $3;
+		fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,newvar -> intchar_union.value_int);
+
+	}
+
+	fclose(datafile);
+}
+else
+{
+	char error[30] = "no such variable exists ...";
+				strcat(error, $1);
+				yyerror(error);
+				YYERROR;
+
+}} STMTS;
+
+//VAR_VALUE: EXP | char_val;
+
+WHILE_STMT: WHILE {printf("while begin\n");} '(' EXP  ')' '{' STMTS '}' {printf("while end\n");} STMTS;
+
+IF_STMT: IF {printf("if begin\n");} '(' EXP ')' '{' STMTS  '}' ELSEIF_STMT ELSE_STMT {printf("if end\n");} STMTS;
+
+ELSEIF_STMT: ELSEIF {printf("elseif begin\n");} '(' EXP ')' '{' STMTS '}' {printf("elseif end\n");} ELSEIF | ENTER;
+
+ELSE_STMT: ELSE {printf("else begin\n");} '{' STMTS  '}' {printf("else end\n");} | ENTER;
+
+FUNC_CALL: ID '(' ARGS_IN ')' '$' STMTS;
+
+ARGS_IN: {printf("no args passed\n");} |
+EXP ',' EXP ',' EXP ',' EXP {$$ =4; printf("4 args passed\n");} |
+EXP ',' EXP ',' EXP {$$ =3; printf("3 args passed\n");} |
+EXP ',' EXP {$$ =2; printf("2 args passed\n");} |
+EXP {printf("1 arg passed\n");};
+
+RETURN_STMT: RETURN EXP '$' STMTS;
+
+EXP: INTVAL {printf("int literal\n"); $$= $1;}  |
+'-' EXP {printf("negative num\n"); $$= -$2;} ;
 
 
 %%

@@ -87,7 +87,6 @@ _Bool a_state[4] = {0,0,0,0};
 
 
 %left <ival> INTVAL
-%left <sval> ID
 %left <cval> char_val
 %left ','
 %left COND_OR
@@ -107,14 +106,20 @@ _Bool a_state[4] = {0,0,0,0};
 %left <cval> EQ
 %left COMMENT MULTI_COMMENT
 
-%type <ival> EXP PARAMS ARGS_IN FUNC_CALL
-%type <sval> VTYPE
+
 
 %left <sval> CHAR
 %left <sval> INT
 %left BREAK CONTINUE
 %left IF WHILE ELSEIF ELSE VOID FOR MAIN RETURN
 
+%nterm <ival> EXP
+%token <ival> NUM
+%token <sval> ID
+%nterm <ival> PARAMS
+%nterm <ival> ARGS_IN
+%nterm <sval> VTYPE
+%start PROGRAM
 
 %%
 PROGRAM: FTYPE ID
@@ -363,8 +368,7 @@ NOT EXP {printf("logical not\n"); $$= !$2;} |
 '(' EXP ')' {printf("parantheses\n");  $$= $2;} |
 INTVAL {printf("int literal\n"); $$= $1;} |
 char_val {printf("character literal\n"); $$= $1;} |
-'-' EXP {printf("negative num\n"); $$= -$2;} |
-| FUNC_CALL { printf("func call\n");  $$= $1;} ;
+'-' EXP {printf("negative num\n"); $$= -$2;} ;
 
 
 %%
