@@ -173,7 +173,7 @@ else
 				YYERROR;
 }
 }
-IDS STMTS |
+IDS '$' STMTS |
 INT ID EQ EXP {
 	if(!findvar(first,$2,current_func)){
 		printf("declare and assign int %s = %s\n",$2,$4);
@@ -221,7 +221,7 @@ else
 				YYERROR;
 }}'$' STMTS;
 
-IDS: '$' | ',' ID {
+IDS: | ',' ID {
 	if(!findvar(first,$2,current_func)){
 		printf("declare more id %s %s\n",currtype,$2);
 	struct var *newvar = addvar(&first, &last,$2, currtype);
