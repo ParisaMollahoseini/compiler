@@ -150,6 +150,15 @@ VTYPE   ID {
 	struct var *newvar = addvar(&first, &last,$2, $1);
 	strcpy(newvar -> current_func ,current_func);
 
+	if(strcmp(newvar->type,"int")==0)
+	{
+			newvar->intchar_union.value_int = 0;
+	}
+	else
+	{
+			newvar->intchar_union.value_char = 0;
+	}
+
 	char num[5];
 	itoa(GetFreeRegister('a'),num,5);
 	char buffer[10] = {'$', 'a'};
@@ -516,7 +525,39 @@ EXP LOG_XOR EXP {printf("logical xor\n"); $$= $1 ^ $3;} |
 NOT EXP {printf("logical not\n"); $$= !$2;} |
 '(' EXP ')' {printf("parantheses\n");  $$= $2;} |
 char_val {printf("character literal\n"); $$= $1;} |
-'-' EXP {printf("negative num\n"); $$= -$2;} ;
+ID {
+	printf("id literal\n");
+	if(first != NULL){
+if(findvar(first,$1,current_func)){
+
+struct var *newvar = findvar(first,$1,current_func);
+if(strcmp(newvar->type,"int")==0)
+{
+	$$ = newvar -> intchar_union.value_int;
+}
+else
+{
+	$$ = newvar -> intchar_union.value_char;
+}
+}
+else
+{
+char error[30] = "no such variable exists ...";
+			strcat(error, $1);
+			yyerror(error);
+			YYERROR;
+
+}
+}
+else
+{
+char error[30] = "no such variable exists ...";
+			strcat(error, $1);
+			yyerror(error);
+			YYERROR;
+}
+}
+| '-' EXP {printf("negative num\n"); $$= -$2;} ;
 
 
 %%
