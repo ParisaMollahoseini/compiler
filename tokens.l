@@ -17,12 +17,12 @@ ints ([1-9])+([0-9])*
 "for" {return FOR;}
 "if" {return IF;}
 "else" {return ELSE;}
-"int" {return INT;}
+"int" {strcpy(yylval.sval,yytext); return INT;}
 "break" {return BREAK;}
 "continue" {return CONTINUE;}
 "return" {return RETURN;}
 "main" {return MAIN;}
-"char" {return CHAR;}
+"char" {strcpy(yylval.sval,yytext); return CHAR;}
 "elseif" {return ELSEIF;}
 [A-Za-z"_"]+[0-9A-Za-z"_"]* {strcpy(yylval.sval,yytext); return ID; }
 "#".*"\n" {return COMMENT;}

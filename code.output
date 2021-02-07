@@ -1,8 +1,3 @@
-Nonterminals useless in grammar
-
-   VAR_VALUE
-
-
 Terminals unused in grammar
 
    '['
@@ -14,12 +9,6 @@ Terminals unused in grammar
    CONTINUE
    FOR
    MAIN
-
-
-Rules useless in grammar
-
-   75 VAR_VALUE: EXP
-   76          | char_val
 
 
 State 21 conflicts: 1 shift/reduce

@@ -786,7 +786,7 @@ YY_RULE_SETUP
 case 6:
 YY_RULE_SETUP
 #line 20 "tokens.l"
-{return INT;}
+{strcpy(yylval.sval,yytext); return INT;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
@@ -811,7 +811,7 @@ YY_RULE_SETUP
 case 11:
 YY_RULE_SETUP
 #line 25 "tokens.l"
-{return CHAR;}
+{strcpy(yylval.sval,yytext); return CHAR;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP

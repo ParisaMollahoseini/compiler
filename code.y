@@ -87,7 +87,8 @@ _Bool a_state[4] = {0,0,0,0};
 
 
 %token <ival> INTVAL
-%token <sval> ID char_val
+%token <sval> ID
+%token <cval> char_val
 %token ','
 %token COND_OR
 %token COND_AND
@@ -104,9 +105,10 @@ _Bool a_state[4] = {0,0,0,0};
 %token VALUE_ID
 %token <cval> EQ
 %token COMMENT MULTI_COMMENT
+%token <sval> CHAR INT
 %type <ival> EXP PARAMS ARGS_IN
 %type <sval> VTYPE
-%token CHAR INT BREAK CONTINUE
+%token BREAK CONTINUE
 %token IF WHILE ELSEIF ELSE VOID FOR MAIN RETURN
 
 
@@ -174,7 +176,7 @@ IDS STMTS |
 INT ID EQ EXP {
 	if(!findvar(first,$2,current_func)){
 		printf("declare and assign int %s = %s\n",$2,$4);
-	struct var *newvar = addvar(&first, &last,$2, "INT");
+	struct var *newvar = addvar(&first, &last,$2, $1);
 	strcpy(newvar -> current_func ,current_func);
 
 	char buffer[10];
@@ -198,7 +200,7 @@ CHAR ID EQ char_val {
 	if(!findvar(first,$2,current_func)){
 		printf("declare and assign char %s = %s\n",$2,$4);
 
-	struct var *newvar = addvar(&first, &last,$2, "CHAR");
+	struct var *newvar = addvar(&first, &last,$2, $1);
 	strcpy(newvar -> current_func ,current_func);
 
 	char buffer[10];
@@ -269,7 +271,7 @@ else
 
 }} STMTS;
 
-VAR_VALUE: EXP | char_val;
+//VAR_VALUE: EXP | char_val;
 
 WHILE_STMT: WHILE {printf("while begin\n");} '(' EXP  ')' '{' STMTS '}' {printf("while end\n");} STMTS;
 
@@ -442,10 +444,8 @@ struct var* addvar(struct var** first, struct var** last, char* name, char type[
 
 	struct var* _new = (struct var*)malloc(sizeof(struct var));
 	strcpy(_new->name ,name);
-	if(strcmp(type,"INT"))
-		strcpy(_new->type,"int");
-	else
-		strcpy(_new->type,"char");
+
+		strcpy(_new->type,type);
 
 	if(*first){
 		_new->next = *first;
