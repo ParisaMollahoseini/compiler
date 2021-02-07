@@ -101,8 +101,7 @@ _Bool a_state[4] = {0,0,0,0};
 %left NOT
 %left '(' ')' '[' ']'
 %left '$'
-%left ENTER
-%token SPC
+
 %left VALUE_ID
 %left <cval> EQ
 %left COMMENT MULTI_COMMENT
@@ -122,30 +121,30 @@ _Bool a_state[4] = {0,0,0,0};
 %start PROGRAM
 
 %%
-PROGRAM: FTYPE SPC ID SPC
-'(' SPC PARAMS {
-	 printf("see function : %s\n",$3);
+PROGRAM: FTYPE ID
+'('  PARAMS {
+	 printf("see function : %s\n",$2);
 
 	 datafile = fopen("mips.txt", "a+");
-	 fprintf(datafile, "%s:\n", $3);
+	 fprintf(datafile, "%s:\n", $2);
 	 fclose(datafile);
-	 strcpy(current_func,$3);
-	 fun_names[func_count].num = $7;
+	 strcpy(current_func,$2);
+	 fun_names[func_count].num = $4;
 	 strcpy(fun_names[func_count++].name,current_func);
-		}')' SPC '{' SPC STMTS SPC '}' SPC {
+		}')'  '{'  STMTS  '}'  {
 
 		vardelete(&first,&last,current_func);
 		printf("delete variables after function\n");
 	}
-	PROGRAM | ENTER ;
+	PROGRAM |  ;
 
 FTYPE: VOID | INT;
 
 PARAMS:{$$ = 0; printf("no parameters\n");}|
-VTYPE SPC ID {$$ = 1; printf("1 parameters\n");}|
-VTYPE SPC ID SPC ',' SPC VTYPE SPC ID {$$ = 2; printf("2 parameters\n");}|
-VTYPE SPC ID SPC ',' SPC VTYPE SPC ID SPC ',' SPC VTYPE SPC ID {$$ = 3; printf("3 parameters\n");}|
-VTYPE SPC ID ',' SPC VTYPE SPC ID SPC ',' SPC VTYPE SPC ID SPC ',' SPC VTYPE SPC ID {$$ = 4; printf("4 parameters\n");};
+VTYPE   ID {$$ = 1; printf("1 parameters\n");}|
+VTYPE   ID   ','   VTYPE   ID {$$ = 2; printf("2 parameters\n");}|
+VTYPE   ID   ','   VTYPE   ID   ','   VTYPE   ID {$$ = 3; printf("3 parameters\n");}|
+VTYPE   ID ','   VTYPE   ID   ','   VTYPE   ID   ','   VTYPE   ID {$$ = 4; printf("4 parameters\n");};
 
 VTYPE: CHAR | INT;
 
@@ -155,7 +154,7 @@ WHILE_STMT |
 IF_STMT |
 FUNC_CALL |
 RETURN_STMT |
-ENTER;
+;
 
 DECLARE_STMT: INT ID {
 	if(!findvar(first,$2,current_func)){
@@ -311,9 +310,9 @@ WHILE_STMT: WHILE {printf("while begin\n");} '(' EXP  ')' '{' STMTS '}' {printf(
 
 IF_STMT: IF {printf("if begin\n");} '(' EXP ')' '{' STMTS  '}' ELSEIF_STMT ELSE_STMT {printf("if end\n");} STMTS;
 
-ELSEIF_STMT: ELSEIF {printf("elseif begin\n");} '(' EXP ')' '{' STMTS '}' {printf("elseif end\n");} ELSEIF | ENTER;
+ELSEIF_STMT: ELSEIF {printf("elseif begin\n");} '(' EXP ')' '{' STMTS '}' {printf("elseif end\n");} ELSEIF | ;
 
-ELSE_STMT: ELSE {printf("else begin\n");} '{' STMTS  '}' {printf("else end\n");} | ENTER;
+ELSE_STMT: ELSE {printf("else begin\n");} '{' STMTS  '}' {printf("else end\n");} | ;
 
 FUNC_CALL: ID '(' ARGS_IN ')' '$' STMTS;
 
@@ -348,6 +347,8 @@ char_val {printf("character literal\n"); $$= $1;} |
 
 int main()
 {
+	  FILE* file1 = fopen("mips.txt","w");
+		fclose(file1);
 		FILE* file = fopen("input.txt","r");
 		yyin = file;
     yyparse();

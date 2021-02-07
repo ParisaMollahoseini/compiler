@@ -12,7 +12,8 @@ ints ([1-9])+([0-9])*
 
 
 %%
-[ \t]* {  return SPC;}
+[ \t]* { }
+[\n]* {}
 "while"  {  printf("%s\n",yytext); return WHILE;}
 "void" {  printf("%s\n",yytext); return VOID; }
 "for" {  printf("%s\n",yytext); return FOR; }
@@ -44,7 +45,7 @@ ints ([1-9])+([0-9])*
 "=" {  printf("%s\n",yytext); return EQ; }
 "!=" {  printf("%s\n",yytext); return ISNOTEQ; }
 "==" {  printf("%s\n",yytext); return ISEQ; }
-\n {  printf("%s\n",yytext); return ENTER;  }
+
 "||" {  printf("%s\n",yytext); return COND_OR;}
 "&&" {  printf("%s\n",yytext); return COND_AND; }
 "|" {  printf("%s\n",yytext); return LOG_OR; }

@@ -53,26 +53,24 @@
      ISLOWERANDEQ = 269,
      ISLOWER = 270,
      NOT = 271,
-     ENTER = 272,
-     SPC = 273,
-     VALUE_ID = 274,
-     EQ = 275,
-     MULTI_COMMENT = 276,
-     COMMENT = 277,
-     CHAR = 278,
-     INT = 279,
-     CONTINUE = 280,
-     BREAK = 281,
-     RETURN = 282,
-     MAIN = 283,
-     FOR = 284,
-     VOID = 285,
-     ELSE = 286,
-     ELSEIF = 287,
-     WHILE = 288,
-     IF = 289,
-     NUM = 290,
-     ID = 291
+     VALUE_ID = 272,
+     EQ = 273,
+     MULTI_COMMENT = 274,
+     COMMENT = 275,
+     CHAR = 276,
+     INT = 277,
+     CONTINUE = 278,
+     BREAK = 279,
+     RETURN = 280,
+     MAIN = 281,
+     FOR = 282,
+     VOID = 283,
+     ELSE = 284,
+     ELSEIF = 285,
+     WHILE = 286,
+     IF = 287,
+     NUM = 288,
+     ID = 289
    };
 #endif
 
@@ -93,7 +91,7 @@ typedef union YYSTYPE
 
 
 /* Line 1676 of yacc.c  */
-#line 97 "code.tab.h"
+#line 95 "code.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
