@@ -1,2 +1,5 @@
 	addi $a0, $zero , 0 
 func1:
+	addi $t0, $zero , 107 
+	addi $t0, $zero , 97 
+	addi $t1, $zero , 0 

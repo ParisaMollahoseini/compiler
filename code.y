@@ -340,7 +340,7 @@ IDS '$' STMTS |
 CHAR ID EQ char_val {
 	if(first != NULL){
 		if(!findvar(first,$2,current_func)){
-			printf("declare and assign char %s = %s\n",$2,$4);
+			printf("declare and assign char %s = %c\n",$2,$4);
 
 		struct var *newvar = addvar(&first, &last,$2, $1);
 		strcpy(newvar -> current_func ,current_func);
