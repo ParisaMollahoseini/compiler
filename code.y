@@ -468,7 +468,7 @@ fclose(datafile);
 }
 }
 IDS '$' STMTS |
-CHAR ID EQ char_val {
+CHAR ID EQ EXP {
 	if(first != NULL){
 		if(!findvar(first,$2,current_func)){
 			printf("declare and assign char %s = %c\n",$2,$4);
