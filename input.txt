@@ -3,5 +3,7 @@ void func1( int a , int b)
 char f = 'k' $
 f = 'a' $
 int s $
-s = 3 + 2 $
+s = 4 + 5 $
+int f = 8 $
+
 }

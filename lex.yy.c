@@ -838,17 +838,17 @@ YY_RULE_SETUP
 case 16:
 YY_RULE_SETUP
 #line 30 "tokens.l"
-{  printf("%s\n",yytext); return COMMENT; }
+{  printf("%s\n",yytext);}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
 #line 31 "tokens.l"
-{   printf("%s\n",yytext);   return MULTI_COMMENT;  }
+{   printf("%s\n",yytext);     }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
 #line 32 "tokens.l"
-{yylval.ival = atoi(yytext);  printf("%s\n",yytext);  return INTVAL; }
+{yylval.ival = atoi(yytext);  printf("integer token %d\n",atoi(yytext));  return INTVAL; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP

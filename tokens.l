@@ -27,9 +27,9 @@ ints ([1-9])+([0-9])*
 "char" {strcpy(yylval.sval,yytext);  printf("%s\n",yytext);  return CHAR; }
 "elseif" {  printf("%s\n",yytext); return ELSEIF;  }
 [A-Za-z"_"]+[0-9A-Za-z"_"]* { printf("%s\n",yytext);strcpy(yylval.sval,yytext);   return ID; }
-"#".*"\n" {  printf("%s\n",yytext); return COMMENT; }
-"#*".*"*#" {   printf("%s\n",yytext);   return MULTI_COMMENT;  }
-{ints} {yylval.ival = atoi(yytext);  printf("%s\n",yytext);  return INTVAL; }
+"#".*"\n" {  printf("%s\n",yytext);}
+"#*".*"*#" {   printf("%s\n",yytext);     }
+{ints} {yylval.ival = atoi(yytext);  printf("integer token %d\n",atoi(yytext));  return INTVAL; }
 "*" {  printf("%s\n",yytext); return '*'; }
 "+" {  printf("%s\n",yytext); return '+';  }
 "-" {  printf("%s\n",yytext); return '-';  }
