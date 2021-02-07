@@ -237,7 +237,7 @@ else
 IDS '$' STMTS |
 CHAR ID EQ char_val {
 	if(first != NULL){
-		if(!first->name || !findvar(first,$2,current_func)){
+		if(!findvar(first,$2,current_func)){
 			printf("declare and assign char %s = %s\n",$2,$4);
 
 		struct var *newvar = addvar(&first, &last,$2, $1);
@@ -259,6 +259,21 @@ CHAR ID EQ char_val {
 					yyerror(error);
 					YYERROR;
 	}
+	}
+	else{
+		printf("declare and assign char %s = %c\n",$2,$4);
+
+	/* struct var *newvar = addvar(&first, &last,$2, $1);
+	strcpy(newvar -> current_func ,current_func);
+
+	char buffer[10];
+	itoa(GetFreeRegister('t'),buffer,10);
+	strcpy(newvar -> which_reg , strcat("$t",buffer));
+
+	newvar -> intchar_union.value_char = $4;
+	datafile = fopen("mips.txt", "a+");
+	fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,0);
+	fclose(datafile); */
 	}
 	}'$' STMTS;
 
