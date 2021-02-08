@@ -213,9 +213,7 @@ VTYPE   ID {
 	itoa(GetFreeRegister('a'),num,5);
 	char buffer[10] = {'$', 'a'};
 	strcpy(newvar -> which_reg , strcat(buffer,num));
-	/* datafile = fopen("mips.txt", "a+");
-	fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,0);
-	fclose(datafile); */
+
 		$$ = 1;
 		printf("1 parameters %d\n",$$);
 }
@@ -1901,7 +1899,7 @@ EXP ISHIGHER EXP {
 
 	}
 
-} 
+}
 | EXP ISHIGHERANDEQ EXP {
 	printf("greater than or equal to condition\n");
 	if (isnumber($1) || isalpha($1[0]) || isnumber($3) || isalpha($3[0]))
@@ -2067,7 +2065,7 @@ EXP COND_AND EXP {
 		fprintf(datafile, "\t%s\n",buff);
 		fclose(datafile);
 
-		
+
 		if (new_buffer1)
 		freereg(buffer1);
 		if (new_buffer2)
@@ -2169,7 +2167,7 @@ EXP COND_OR EXP {
 		fprintf(datafile, "\t%s\n",buff);
 		fclose(datafile);
 
-		
+
 		if (new_buffer1)
 		freereg(buffer1);
 		if (new_buffer2)
