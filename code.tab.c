@@ -464,7 +464,7 @@ union yyalloc
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  36
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  70
+#define YYNRULES  73
 /* YYNRULES -- Number of states.  */
 #define YYNSTATES  153
 
@@ -519,9 +519,9 @@ static const yytype_uint8 yyprhs[] =
       61,    63,    65,    67,    69,    70,    71,    78,    79,    87,
       88,    95,    96,   104,   105,   106,   111,   112,   119,   120,
      121,   132,   133,   134,   147,   148,   149,   160,   161,   162,
-     168,   169,   170,   178,   179,   187,   192,   196,   200,   204,
-     208,   210,   214,   218,   222,   226,   230,   233,   237,   239,
-     241
+     168,   169,   170,   178,   179,   187,   193,   197,   199,   204,
+     208,   212,   216,   220,   222,   226,   230,   234,   238,   242,
+     245,   249,   251,   253
 };
 
 /* YYRHS -- A `-1'-separated list of the rules' RHS.  */
@@ -545,13 +545,14 @@ static const yytype_int8 yyrhs[] =
       76,    22,    48,    23,    45,    59,    46,    77,    40,    -1,
       -1,    -1,    39,    79,    45,    59,    46,    -1,    -1,    -1,
       44,    81,    22,    51,    23,    26,    59,    -1,    -1,    48,
-       5,    48,     5,    48,     5,    48,    -1,    35,    48,    26,
-      59,    -1,    48,    12,    48,    -1,    48,    11,    48,    -1,
-      48,    17,    48,    -1,    48,    18,    48,    -1,     3,    -1,
-      48,     7,    48,    -1,    48,     6,    48,    -1,    48,     8,
-      48,    -1,    48,    10,    48,    -1,    48,     9,    48,    -1,
-      21,    48,    -1,    22,    48,    23,    -1,     4,    -1,    44,
-      -1,    18,    48,    -1
+       5,    48,     5,    48,     5,    48,    -1,    48,     5,    48,
+       5,    48,    -1,    48,     5,    48,    -1,    48,    -1,    35,
+      48,    26,    59,    -1,    48,    12,    48,    -1,    48,    11,
+      48,    -1,    48,    17,    48,    -1,    48,    18,    48,    -1,
+       3,    -1,    48,     7,    48,    -1,    48,     6,    48,    -1,
+      48,     8,    48,    -1,    48,    10,    48,    -1,    48,     9,
+      48,    -1,    21,    48,    -1,    22,    48,    23,    -1,     4,
+      -1,    44,    -1,    18,    48,    -1
 };
 
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
@@ -562,9 +563,9 @@ static const yytype_uint16 yyrline[] =
      309,   310,   311,   312,   312,   315,   315,   372,   372,   460,
      460,   513,   513,   606,   606,   606,   656,   656,   720,   720,
      720,   722,   722,   722,   724,   724,   724,   724,   726,   726,
-     726,   728,   728,   752,   753,   755,   757,   758,   759,   776,
-     795,   801,   802,   803,   804,   805,   806,   807,   808,   815,
-     842
+     726,   728,   728,   752,   763,   816,   861,   899,   927,   929,
+     930,   931,   948,   967,   973,   974,   975,   976,   977,   978,
+     979,   980,   987,  1014
 };
 #endif
 
@@ -609,9 +610,9 @@ static const yytype_uint8 yyr1[] =
       59,    59,    59,    59,    59,    61,    60,    62,    60,    63,
       60,    64,    60,    65,    66,    65,    68,    67,    70,    71,
       69,    73,    74,    72,    76,    77,    75,    75,    79,    78,
-      78,    81,    80,    51,    51,    82,    48,    48,    48,    48,
+      78,    81,    80,    51,    51,    51,    51,    51,    82,    48,
       48,    48,    48,    48,    48,    48,    48,    48,    48,    48,
-      48
+      48,    48,    48,    48
 };
 
 /* YYR2[YYN] -- Number of symbols composing right hand side of rule YYN.  */
@@ -622,9 +623,9 @@ static const yytype_uint8 yyr2[] =
        1,     1,     1,     1,     0,     0,     6,     0,     7,     0,
        6,     0,     7,     0,     0,     4,     0,     6,     0,     0,
       10,     0,     0,    12,     0,     0,    10,     0,     0,     5,
-       0,     0,     7,     0,     7,     4,     3,     3,     3,     3,
-       1,     3,     3,     3,     3,     3,     2,     3,     1,     1,
-       2
+       0,     0,     7,     0,     7,     5,     3,     1,     4,     3,
+       3,     3,     3,     1,     3,     3,     3,     3,     3,     2,
+       3,     1,     1,     2
 };
 
 /* YYDEFACT[STATE-NAME] -- Default rule to reduce with in state
@@ -636,15 +637,15 @@ static const yytype_uint8 yydefact[] =
       15,     0,     3,     0,    10,     0,     0,     0,     0,     0,
        0,     0,    24,    11,     0,     0,     0,     0,     0,    38,
       41,    51,     0,    18,    19,    20,    21,    22,    23,    12,
-       0,    29,    25,    60,    68,     0,     0,     0,    69,     0,
+       0,    29,    25,    63,    71,     0,     0,     0,    72,     0,
        0,     0,     0,     0,     4,    13,     0,    33,     0,    33,
-      70,    66,     0,     0,     0,     0,     0,     0,     0,     0,
+      73,    69,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,    24,     0,     0,     0,    53,     6,    31,     0,
-       0,    27,     0,    67,    62,    61,    63,    65,    64,    57,
-      56,    58,    59,    55,     0,     0,    36,     0,     0,     5,
+       0,    27,     0,    70,    65,    64,    66,    68,    67,    60,
+      59,    61,    62,    58,     0,     0,    36,    57,     0,     5,
        0,    34,    24,     0,    24,     0,     0,    24,     0,     0,
-      24,    33,    30,    24,    26,    24,    24,    37,     0,    24,
-      32,    35,    28,     0,     0,     0,    52,    39,    47,     0,
+      24,    33,    30,    24,    26,    24,    24,    37,    56,    24,
+      32,    35,    28,     0,     0,     0,    52,    39,    47,    55,
       24,    44,    50,     0,    40,     0,    48,    42,    54,     0,
        0,    24,     0,    24,    43,     0,     0,    24,    49,     0,
       45,     0,    46
@@ -2336,34 +2337,224 @@ else
 
 /* Line 1455 of yacc.c  */
 #line 752 "code.y"
-    {(yyval.ival)=0; printf("no args passed\n");;}
+    {
+	if(founded_func_num != 0 )
+	{
+		char error[50] = "wrong number of arguments for function  ...";
+				strcat(error,founded_func);
+				yyerror(error);
+				YYERROR;
+
+	}
+	(yyval.ival)=0; printf("no args passed\n");
+	;}
     break;
 
   case 54:
 
 /* Line 1455 of yacc.c  */
-#line 753 "code.y"
-    {(yyval.ival)=4; printf("4 args passed\n");;}
+#line 763 "code.y"
+    {
+	if(founded_func_num != 4 )
+	{
+		char error[50] = "wrong number of arguments for function  ...";
+				strcat(error,founded_func);
+				yyerror(error);
+				YYERROR;
+
+	}
+	datafile = fopen("mips.txt", "a+");
+
+	char buff[20];
+	//a0
+	if(isnumber((yyvsp[(1) - (7)].sval)))
+		sprintf(buff,"addi %s,%s,%d","$a0","$zero",atoi((yyvsp[(1) - (7)].sval)));
+		else if(isalpha((yyvsp[(1) - (7)].sval)[0]))
+		sprintf(buff,"addi %s,%s,%d","$a0","$zero",(yyvsp[(1) - (7)].sval)[0]);
+		else
+		sprintf(buff,"addi %s,%s,%s","$a0","$zero",(yyvsp[(1) - (7)].sval));
+		fprintf(datafile, "\t%s\n",buff);
+
+		//a1
+		if(isnumber((yyvsp[(3) - (7)].sval)))
+			sprintf(buff,"addi %s,%s,%d","$a1","$zero",atoi((yyvsp[(3) - (7)].sval)));
+			else if(isalpha((yyvsp[(3) - (7)].sval)[0]))
+			sprintf(buff,"addi %s,%s,%d","$a1","$zero",(yyvsp[(3) - (7)].sval)[0]);
+			else
+			sprintf(buff,"addi %s,%s,%s","$a1","$zero",(yyvsp[(3) - (7)].sval));
+			fprintf(datafile, "\t%s\n",buff);
+
+			//a2
+			if(isnumber((yyvsp[(5) - (7)].sval)))
+				sprintf(buff,"addi %s,%s,%d","$a2","$zero",atoi((yyvsp[(5) - (7)].sval)));
+				else if(isalpha((yyvsp[(5) - (7)].sval)[0]))
+				sprintf(buff,"addi %s,%s,%d","$a2","$zero",(yyvsp[(5) - (7)].sval)[0]);
+				else
+				sprintf(buff,"addi %s,%s,%s","$a2","$zero",(yyvsp[(5) - (7)].sval));
+				fprintf(datafile, "\t%s\n",buff);
+
+				//a3
+				if(isnumber((yyvsp[(7) - (7)].sval)))
+					sprintf(buff,"addi %s,%s,%d","$a3","$zero",atoi((yyvsp[(7) - (7)].sval)));
+					else if(isalpha((yyvsp[(7) - (7)].sval)[0]))
+					sprintf(buff,"addi %s,%s,%d","$a3","$zero",(yyvsp[(7) - (7)].sval)[0]);
+					else
+					sprintf(buff,"addi %s,%s,%s","$a3","$zero",(yyvsp[(7) - (7)].sval));
+					fprintf(datafile, "\t%s\n",buff);
+
+
+	fclose(datafile);
+
+	(yyval.ival)=4; printf("4 args passed\n");
+;}
+    break;
+
+  case 55:
+
+/* Line 1455 of yacc.c  */
+#line 816 "code.y"
+    {
+	if(founded_func_num != 3 )
+	{
+		char error[50] = "wrong number of arguments for function  ...";
+				strcat(error, founded_func);
+				yyerror(error);
+				YYERROR;
+
+	}
+	datafile = fopen("mips.txt", "a+");
+
+	char buff[20];
+	//a0
+	if(isnumber((yyvsp[(1) - (5)].sval)))
+		sprintf(buff,"addi %s,%s,%d","$a0","$zero",atoi((yyvsp[(1) - (5)].sval)));
+		else if(isalpha((yyvsp[(1) - (5)].sval)[0]))
+		sprintf(buff,"addi %s,%s,%d","$a0","$zero",(yyvsp[(1) - (5)].sval)[0]);
+		else
+		sprintf(buff,"addi %s,%s,%s","$a0","$zero",(yyvsp[(1) - (5)].sval));
+		fprintf(datafile, "\t%s\n",buff);
+
+		//a1
+		if(isnumber((yyvsp[(3) - (5)].sval)))
+			sprintf(buff,"addi %s,%s,%d","$a1","$zero",atoi((yyvsp[(3) - (5)].sval)));
+			else if(isalpha((yyvsp[(3) - (5)].sval)[0]))
+			sprintf(buff,"addi %s,%s,%d","$a1","$zero",(yyvsp[(3) - (5)].sval)[0]);
+			else
+			sprintf(buff,"addi %s,%s,%s","$a1","$zero",(yyvsp[(3) - (5)].sval));
+			fprintf(datafile, "\t%s\n",buff);
+
+			//a2
+			if(isnumber((yyvsp[(5) - (5)].sval)))
+				sprintf(buff,"addi %s,%s,%d","$a2","$zero",atoi((yyvsp[(5) - (5)].sval)));
+				else if(isalpha((yyvsp[(5) - (5)].sval)[0]))
+				sprintf(buff,"addi %s,%s,%d","$a2","$zero",(yyvsp[(5) - (5)].sval)[0]);
+				else
+				sprintf(buff,"addi %s,%s,%s","$a2","$zero",(yyvsp[(5) - (5)].sval));
+				fprintf(datafile, "\t%s\n",buff);
+
+
+
+	fclose(datafile);
+
+	(yyval.ival)=3; printf("3 args passed\n");
+;}
     break;
 
   case 56:
 
 /* Line 1455 of yacc.c  */
-#line 757 "code.y"
-    {printf("equality\n"); sprintf((yyval.sval),"%d",(yyvsp[(1) - (3)].sval) == (yyvsp[(3) - (3)].sval));;}
+#line 861 "code.y"
+    {
+	if(founded_func_num != 2 )
+	{
+		char error[50] = "wrong number of arguments for function  ...";
+				strcat(error, founded_func);
+				yyerror(error);
+				YYERROR;
+
+	}
+	datafile = fopen("mips.txt", "a+");
+
+	char buff[20];
+	//a0
+	if(isnumber((yyvsp[(1) - (3)].sval)))
+		sprintf(buff,"addi %s,%s,%d","$a0","$zero",atoi((yyvsp[(1) - (3)].sval)));
+		else if(isalpha((yyvsp[(1) - (3)].sval)[0]))
+		sprintf(buff,"addi %s,%s,%d","$a0","$zero",(yyvsp[(1) - (3)].sval)[0]);
+		else
+		sprintf(buff,"addi %s,%s,%s","$a0","$zero",(yyvsp[(1) - (3)].sval));
+		fprintf(datafile, "\t%s\n",buff);
+
+		//a1
+		if(isnumber((yyvsp[(3) - (3)].sval)))
+			sprintf(buff,"addi %s,%s,%d","$a1","$zero",atoi((yyvsp[(3) - (3)].sval)));
+			else if(isalpha((yyvsp[(3) - (3)].sval)[0]))
+			sprintf(buff,"addi %s,%s,%d","$a1","$zero",(yyvsp[(3) - (3)].sval)[0]);
+			else
+			sprintf(buff,"addi %s,%s,%s","$a1","$zero",(yyvsp[(3) - (3)].sval));
+			fprintf(datafile, "\t%s\n",buff);
+
+
+
+
+
+	fclose(datafile);
+
+	(yyval.ival)=2; printf("2 args passed\n");
+;}
     break;
 
   case 57:
 
 /* Line 1455 of yacc.c  */
-#line 758 "code.y"
+#line 899 "code.y"
+    {
+	if(founded_func_num != 1 )
+	{
+		char error[50] = "wrong number of arguments for function  ...";
+				strcat(error, founded_func);
+				yyerror(error);
+				YYERROR;
+
+	}
+	datafile = fopen("mips.txt", "a+");
+
+	char buff[20];
+	//a0
+	if(isnumber((yyvsp[(1) - (1)].sval)))
+		sprintf(buff,"addi %s,%s,%d","$a0","$zero",atoi((yyvsp[(1) - (1)].sval)));
+		else if(isalpha((yyvsp[(1) - (1)].sval)[0]))
+		sprintf(buff,"addi %s,%s,%d","$a0","$zero",(yyvsp[(1) - (1)].sval)[0]);
+		else
+		sprintf(buff,"addi %s,%s,%s","$a0","$zero",(yyvsp[(1) - (1)].sval));
+		fprintf(datafile, "\t%s\n",buff);
+
+
+
+	fclose(datafile);
+
+	(yyval.ival)=1; printf("1 args passed\n");
+;}
+    break;
+
+  case 59:
+
+/* Line 1455 of yacc.c  */
+#line 929 "code.y"
+    {printf("equality\n"); sprintf((yyval.sval),"%d",(yyvsp[(1) - (3)].sval) == (yyvsp[(3) - (3)].sval));;}
+    break;
+
+  case 60:
+
+/* Line 1455 of yacc.c  */
+#line 930 "code.y"
     {printf("notequality\n"); sprintf((yyval.sval),"%d",(yyvsp[(1) - (3)].sval) != (yyvsp[(3) - (3)].sval));;}
     break;
 
-  case 58:
+  case 61:
 
 /* Line 1455 of yacc.c  */
-#line 759 "code.y"
+#line 931 "code.y"
     {
 	char num[5];
 	itoa(GetFreeRegister('t'), num,5);
@@ -2383,10 +2574,10 @@ else
 ;}
     break;
 
-  case 59:
+  case 62:
 
 /* Line 1455 of yacc.c  */
-#line 776 "code.y"
+#line 948 "code.y"
     {
 		char num[5];
 		itoa(GetFreeRegister('t'), num,5);
@@ -2408,10 +2599,10 @@ else
 	;}
     break;
 
-  case 60:
+  case 63:
 
 /* Line 1455 of yacc.c  */
-#line 795 "code.y"
+#line 967 "code.y"
     {
 	printf("int literal\n");
 	char buff[10];
@@ -2420,59 +2611,59 @@ else
 	;}
     break;
 
-  case 61:
-
-/* Line 1455 of yacc.c  */
-#line 801 "code.y"
-    {printf("conditional and\n");  sprintf((yyval.sval),"%d",(yyvsp[(1) - (3)].sval) && (yyvsp[(3) - (3)].sval));;}
-    break;
-
-  case 62:
-
-/* Line 1455 of yacc.c  */
-#line 802 "code.y"
-    {printf("nonditional or\n"); sprintf((yyval.sval),"%d",(yyvsp[(1) - (3)].sval) || (yyvsp[(3) - (3)].sval));;}
-    break;
-
-  case 63:
-
-/* Line 1455 of yacc.c  */
-#line 803 "code.y"
-    {printf("logical or\n"); sprintf((yyval.sval),"%d",atoi((yyvsp[(1) - (3)].sval)) | atoi((yyvsp[(3) - (3)].sval)));;}
-    break;
-
   case 64:
 
 /* Line 1455 of yacc.c  */
-#line 804 "code.y"
-    {printf("logical and\n"); sprintf((yyval.sval),"%d",atoi((yyvsp[(1) - (3)].sval)) & atoi((yyvsp[(3) - (3)].sval)));;}
+#line 973 "code.y"
+    {printf("conditional and\n");  sprintf((yyval.sval),"%d",(yyvsp[(1) - (3)].sval) && (yyvsp[(3) - (3)].sval));;}
     break;
 
   case 65:
 
 /* Line 1455 of yacc.c  */
-#line 805 "code.y"
-    {printf("logical xor\n"); sprintf((yyval.sval),"%d",atoi((yyvsp[(1) - (3)].sval)) ^ atoi((yyvsp[(3) - (3)].sval)));;}
+#line 974 "code.y"
+    {printf("nonditional or\n"); sprintf((yyval.sval),"%d",(yyvsp[(1) - (3)].sval) || (yyvsp[(3) - (3)].sval));;}
     break;
 
   case 66:
 
 /* Line 1455 of yacc.c  */
-#line 806 "code.y"
-    {printf("logical not\n"); sprintf((yyval.sval),"%d", !(yyvsp[(2) - (2)].sval));;}
+#line 975 "code.y"
+    {printf("logical or\n"); sprintf((yyval.sval),"%d",atoi((yyvsp[(1) - (3)].sval)) | atoi((yyvsp[(3) - (3)].sval)));;}
     break;
 
   case 67:
 
 /* Line 1455 of yacc.c  */
-#line 807 "code.y"
-    {printf("parantheses\n");  sprintf((yyval.sval),"%d",(yyvsp[(2) - (3)].sval));;}
+#line 976 "code.y"
+    {printf("logical and\n"); sprintf((yyval.sval),"%d",atoi((yyvsp[(1) - (3)].sval)) & atoi((yyvsp[(3) - (3)].sval)));;}
     break;
 
   case 68:
 
 /* Line 1455 of yacc.c  */
-#line 808 "code.y"
+#line 977 "code.y"
+    {printf("logical xor\n"); sprintf((yyval.sval),"%d",atoi((yyvsp[(1) - (3)].sval)) ^ atoi((yyvsp[(3) - (3)].sval)));;}
+    break;
+
+  case 69:
+
+/* Line 1455 of yacc.c  */
+#line 978 "code.y"
+    {printf("logical not\n"); sprintf((yyval.sval),"%d", !(yyvsp[(2) - (2)].sval));;}
+    break;
+
+  case 70:
+
+/* Line 1455 of yacc.c  */
+#line 979 "code.y"
+    {printf("parantheses\n");  sprintf((yyval.sval),"%d",(yyvsp[(2) - (3)].sval));;}
+    break;
+
+  case 71:
+
+/* Line 1455 of yacc.c  */
+#line 980 "code.y"
     {
 	printf("character literal\n");
 	char buff[2];
@@ -2482,10 +2673,10 @@ else
 	;}
     break;
 
-  case 69:
+  case 72:
 
 /* Line 1455 of yacc.c  */
-#line 815 "code.y"
+#line 987 "code.y"
     {
 	printf("id literal\n");
 	if(first != NULL){
@@ -2515,17 +2706,17 @@ char error[30] = "no such variable exists ...";
 ;}
     break;
 
-  case 70:
+  case 73:
 
 /* Line 1455 of yacc.c  */
-#line 842 "code.y"
+#line 1014 "code.y"
     {printf("negative num\n"); sprintf((yyval.sval),"%d", -atoi((yyvsp[(2) - (2)].sval)));;}
     break;
 
 
 
 /* Line 1455 of yacc.c  */
-#line 2529 "code.tab.c"
+#line 2720 "code.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -2737,7 +2928,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 845 "code.y"
+#line 1017 "code.y"
 
 
 

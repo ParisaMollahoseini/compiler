@@ -749,8 +749,180 @@ FUNC_CALL: ID {
 }
 '(' ARGS_IN ')' '$' STMTS;
 
-ARGS_IN: {$$=0; printf("no args passed\n");} |
-EXP ',' EXP ',' EXP ',' EXP {$$=4; printf("4 args passed\n");};
+ARGS_IN: {
+	if(founded_func_num != 0 )
+	{
+		char error[50] = "wrong number of arguments for function  ...";
+				strcat(error,founded_func);
+				yyerror(error);
+				YYERROR;
+
+	}
+	$$=0; printf("no args passed\n");
+	} |
+EXP ',' EXP ',' EXP ',' EXP {
+	if(founded_func_num != 4 )
+	{
+		char error[50] = "wrong number of arguments for function  ...";
+				strcat(error,founded_func);
+				yyerror(error);
+				YYERROR;
+
+	}
+	datafile = fopen("mips.txt", "a+");
+
+	char buff[20];
+	//a0
+	if(isnumber($1))
+		sprintf(buff,"addi %s,%s,%d","$a0","$zero",atoi($1));
+		else if(isalpha($1[0]))
+		sprintf(buff,"addi %s,%s,%d","$a0","$zero",$1[0]);
+		else
+		sprintf(buff,"addi %s,%s,%s","$a0","$zero",$1);
+		fprintf(datafile, "\t%s\n",buff);
+
+		//a1
+		if(isnumber($3))
+			sprintf(buff,"addi %s,%s,%d","$a1","$zero",atoi($3));
+			else if(isalpha($3[0]))
+			sprintf(buff,"addi %s,%s,%d","$a1","$zero",$3[0]);
+			else
+			sprintf(buff,"addi %s,%s,%s","$a1","$zero",$3);
+			fprintf(datafile, "\t%s\n",buff);
+
+			//a2
+			if(isnumber($5))
+				sprintf(buff,"addi %s,%s,%d","$a2","$zero",atoi($5));
+				else if(isalpha($5[0]))
+				sprintf(buff,"addi %s,%s,%d","$a2","$zero",$5[0]);
+				else
+				sprintf(buff,"addi %s,%s,%s","$a2","$zero",$5);
+				fprintf(datafile, "\t%s\n",buff);
+
+				//a3
+				if(isnumber($7))
+					sprintf(buff,"addi %s,%s,%d","$a3","$zero",atoi($7));
+					else if(isalpha($7[0]))
+					sprintf(buff,"addi %s,%s,%d","$a3","$zero",$7[0]);
+					else
+					sprintf(buff,"addi %s,%s,%s","$a3","$zero",$7);
+					fprintf(datafile, "\t%s\n",buff);
+
+
+	fclose(datafile);
+
+	$$=4; printf("4 args passed\n");
+}|
+EXP ',' EXP ',' EXP  {
+	if(founded_func_num != 3 )
+	{
+		char error[50] = "wrong number of arguments for function  ...";
+				strcat(error, founded_func);
+				yyerror(error);
+				YYERROR;
+
+	}
+	datafile = fopen("mips.txt", "a+");
+
+	char buff[20];
+	//a0
+	if(isnumber($1))
+		sprintf(buff,"addi %s,%s,%d","$a0","$zero",atoi($1));
+		else if(isalpha($1[0]))
+		sprintf(buff,"addi %s,%s,%d","$a0","$zero",$1[0]);
+		else
+		sprintf(buff,"addi %s,%s,%s","$a0","$zero",$1);
+		fprintf(datafile, "\t%s\n",buff);
+
+		//a1
+		if(isnumber($3))
+			sprintf(buff,"addi %s,%s,%d","$a1","$zero",atoi($3));
+			else if(isalpha($3[0]))
+			sprintf(buff,"addi %s,%s,%d","$a1","$zero",$3[0]);
+			else
+			sprintf(buff,"addi %s,%s,%s","$a1","$zero",$3);
+			fprintf(datafile, "\t%s\n",buff);
+
+			//a2
+			if(isnumber($5))
+				sprintf(buff,"addi %s,%s,%d","$a2","$zero",atoi($5));
+				else if(isalpha($5[0]))
+				sprintf(buff,"addi %s,%s,%d","$a2","$zero",$5[0]);
+				else
+				sprintf(buff,"addi %s,%s,%s","$a2","$zero",$5);
+				fprintf(datafile, "\t%s\n",buff);
+
+
+
+	fclose(datafile);
+
+	$$=3; printf("3 args passed\n");
+}|
+EXP ',' EXP  {
+	if(founded_func_num != 2 )
+	{
+		char error[50] = "wrong number of arguments for function  ...";
+				strcat(error, founded_func);
+				yyerror(error);
+				YYERROR;
+
+	}
+	datafile = fopen("mips.txt", "a+");
+
+	char buff[20];
+	//a0
+	if(isnumber($1))
+		sprintf(buff,"addi %s,%s,%d","$a0","$zero",atoi($1));
+		else if(isalpha($1[0]))
+		sprintf(buff,"addi %s,%s,%d","$a0","$zero",$1[0]);
+		else
+		sprintf(buff,"addi %s,%s,%s","$a0","$zero",$1);
+		fprintf(datafile, "\t%s\n",buff);
+
+		//a1
+		if(isnumber($3))
+			sprintf(buff,"addi %s,%s,%d","$a1","$zero",atoi($3));
+			else if(isalpha($3[0]))
+			sprintf(buff,"addi %s,%s,%d","$a1","$zero",$3[0]);
+			else
+			sprintf(buff,"addi %s,%s,%s","$a1","$zero",$3);
+			fprintf(datafile, "\t%s\n",buff);
+
+
+
+
+
+	fclose(datafile);
+
+	$$=2; printf("2 args passed\n");
+}|
+EXP  {
+	if(founded_func_num != 1 )
+	{
+		char error[50] = "wrong number of arguments for function  ...";
+				strcat(error, founded_func);
+				yyerror(error);
+				YYERROR;
+
+	}
+	datafile = fopen("mips.txt", "a+");
+
+	char buff[20];
+	//a0
+	if(isnumber($1))
+		sprintf(buff,"addi %s,%s,%d","$a0","$zero",atoi($1));
+		else if(isalpha($1[0]))
+		sprintf(buff,"addi %s,%s,%d","$a0","$zero",$1[0]);
+		else
+		sprintf(buff,"addi %s,%s,%s","$a0","$zero",$1);
+		fprintf(datafile, "\t%s\n",buff);
+
+
+
+	fclose(datafile);
+
+	$$=1; printf("1 args passed\n");
+};
 
 RETURN_STMT: RETURN EXP '$' STMTS;
 
