@@ -1,11 +1,21 @@
 int func1(int a)
 
 {
-    int b = 2$
+    int b = 2 && 3 || 4$
     int c = 3$
+<<<<<<< HEAD
+    if(b <= c)
+    {
+    if(3 <= 2)
+      {
+      c = 9$
+      }
+    elseif(1 > 3)
+=======
     while ( b == c)
     {
     while ( 1 )
+>>>>>>> 0b848c3b3b13491f638c05bdb1f1e16d4d8ba190
     {
     while(2)
     {

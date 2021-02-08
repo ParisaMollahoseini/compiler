@@ -1319,6 +1319,90 @@ EXP: EXP ISEQ EXP {
 		strcat(buffer3, num);
 
 		char buff[20];
+		sprintf(buff,"seq %s,%s,%s",buffer3,buffer1,buffer2);
+		if (new_buffer1)
+		freereg(buffer1);
+		if (new_buffer2)
+		freereg(buffer2);
+		datafile = fopen("mips.txt", "a+");
+
+
+
+		fprintf(datafile, "\t%s\n",buff);
+		fclose(datafile);
+
+		sprintf($$,"%s",buffer3);
+	}
+	else{
+	char num[5];
+	itoa(GetFreeRegister('t'), num,5);
+	char buffer[10] = {'$','t'};
+	strcat(buffer, num);
+
+	char buff[20];
+	sprintf(buff,"seq %s,%s,%s",buffer,$1,$3);
+
+	datafile = fopen("mips.txt", "a+");
+	fprintf(datafile, "\t%s\n",buff);
+	fclose(datafile);
+
+
+	sprintf($$,"%s",buffer);
+
+	}
+
+} |
+EXP ISNOTEQ EXP {
+	printf("inequality condition\n");
+	if (isnumber($1) || isalpha($1[0]) || isnumber($3) || isalpha($3[0]))
+	{
+		char buffer1[10] = {'$','t'};
+		char buffer2[10] = {'$','t'};
+		char buffer3[10] = {'$', 't'};
+		int new_buffer1 = 0;
+		int new_buffer2 = 0;
+		if (isnumber($1) || isalpha($1[0]))
+		{
+			new_buffer1 = 1;
+		char num[5];
+		itoa(GetFreeRegister('t'), num,5);
+
+		strcat(buffer1, num);
+		char buff[50];
+		if (isalpha($1[0]))
+			sprintf(buff,"addi %s, $zero, %d",buffer1,$1[0]);
+		else
+			sprintf(buff,"addi %s, $zero, %s",buffer1,$1);
+		datafile = fopen("mips.txt", "a+");
+		fprintf(datafile, "\t%s\n",buff);
+		fclose(datafile);
+		}
+		else
+			sprintf(buffer1, "%s", $1);
+
+		if (isnumber($3) || isalpha($3[0]))
+		{
+			new_buffer2 = 1;
+			char num[5];
+			itoa(GetFreeRegister('t'), num,5);
+			strcat(buffer2, num);
+			char buff[50];
+			if (isalpha($3[0]))
+				sprintf(buff,"addi %s, $zero, %d",buffer2,$3[0]);
+			else
+				sprintf(buff,"addi %s, $zero, %s",buffer2,$3);
+			datafile = fopen("mips.txt", "a+");
+			fprintf(datafile, "\t%s\n",buff);
+			fclose(datafile);
+		}
+		else
+			sprintf(buffer2, "%s", $3);
+
+		char num[5];
+		itoa(GetFreeRegister('t'), num,5);
+		strcat(buffer3, num);
+
+		char buff[20];
 		sprintf(buff,"sub %s,%s,%s",buffer3,buffer1,buffer2);
 		if (new_buffer1)
 		freereg(buffer1);
@@ -1352,7 +1436,6 @@ EXP: EXP ISEQ EXP {
 	}
 
 } |
-EXP ISNOTEQ EXP {printf("notequality\n"); sprintf($$,"%d",$1 != $3);} |
 EXP '+' EXP {
 	datafile = fopen("mips.txt", "a+");
 	char num[5];
@@ -1551,11 +1634,831 @@ INTVAL {
 	sprintf(buff,"%d",$1);
 	 strcpy($$ , buff);
 	}  |
-EXP COND_AND EXP {printf("conditional and\n");  sprintf($$,"%d",$1 && $3);} |
-EXP COND_OR EXP {printf("nonditional or\n"); sprintf($$,"%d",$1 || $3);} |
-EXP LOG_OR EXP {printf("logical or\n"); sprintf($$,"%d",atoi($1) | atoi($3));} |
-EXP LOG_AND EXP {printf("logical and\n"); sprintf($$,"%d",atoi($1) & atoi($3));} |
-EXP LOG_XOR EXP {printf("logical xor\n"); sprintf($$,"%d",atoi($1) ^ atoi($3));} |
+	EXP ISLOWER EXP {
+	printf("less than condition\n");
+	if (isnumber($1) || isalpha($1[0]) || isnumber($3) || isalpha($3[0]))
+	{
+		char buffer1[10] = {'$','t'};
+		char buffer2[10] = {'$','t'};
+		char buffer3[10] = {'$', 't'};
+		int new_buffer1 = 0;
+		int new_buffer2 = 0;
+		if (isnumber($1) || isalpha($1[0]))
+		{
+			new_buffer1 = 1;
+		char num[5];
+		itoa(GetFreeRegister('t'), num,5);
+
+		strcat(buffer1, num);
+		char buff[50];
+		if (isalpha($1[0]))
+			sprintf(buff,"addi %s, $zero, %d",buffer1,$1[0]);
+		else
+			sprintf(buff,"addi %s, $zero, %s",buffer1,$1);
+		datafile = fopen("mips.txt", "a+");
+		fprintf(datafile, "\t%s\n",buff);
+		fclose(datafile);
+		}
+		else
+			sprintf(buffer1, "%s", $1);
+
+		if (isnumber($3) || isalpha($3[0]))
+		{
+			new_buffer2 = 1;
+			char num[5];
+			itoa(GetFreeRegister('t'), num,5);
+			strcat(buffer2, num);
+			char buff[50];
+			if (isalpha($3[0]))
+				sprintf(buff,"addi %s, $zero, %d",buffer2,$3[0]);
+			else
+				sprintf(buff,"addi %s, $zero, %s",buffer2,$3);
+			datafile = fopen("mips.txt", "a+");
+			fprintf(datafile, "\t%s\n",buff);
+			fclose(datafile);
+		}
+		else
+			sprintf(buffer2, "%s", $3);
+
+		char num[5];
+		itoa(GetFreeRegister('t'), num,5);
+		strcat(buffer3, num);
+
+		char buff[20];
+		sprintf(buff,"slt %s,%s,%s",buffer3,buffer1,buffer2);
+		if (new_buffer1)
+		freereg(buffer1);
+		if (new_buffer2)
+		freereg(buffer2);
+		datafile = fopen("mips.txt", "a+");
+
+
+
+		fprintf(datafile, "\t%s\n",buff);
+		fclose(datafile);
+
+		sprintf($$,"%s",buffer3);
+	}
+	else{
+	char num[5];
+	itoa(GetFreeRegister('t'), num,5);
+	char buffer[10] = {'$','t'};
+	strcat(buffer, num);
+
+	char buff[20];
+	sprintf(buff,"slt %s,%s,%s",buffer,$1,$3);
+
+	datafile = fopen("mips.txt", "a+");
+	fprintf(datafile, "\t%s\n",buff);
+	fclose(datafile);
+
+
+	sprintf($$,"%s",buffer);
+
+	}
+
+} |
+EXP ISHIGHER EXP {
+	printf("greater than condition\n");
+	if (isnumber($1) || isalpha($1[0]) || isnumber($3) || isalpha($3[0]))
+	{
+		char buffer1[10] = {'$','t'};
+		char buffer2[10] = {'$','t'};
+		char buffer3[10] = {'$', 't'};
+		int new_buffer1 = 0;
+		int new_buffer2 = 0;
+		if (isnumber($1) || isalpha($1[0]))
+		{
+			new_buffer1 = 1;
+		char num[5];
+		itoa(GetFreeRegister('t'), num,5);
+
+		strcat(buffer1, num);
+		char buff[50];
+		if (isalpha($1[0]))
+			sprintf(buff,"addi %s, $zero, %d",buffer1,$1[0]);
+		else
+			sprintf(buff,"addi %s, $zero, %s",buffer1,$1);
+		datafile = fopen("mips.txt", "a+");
+		fprintf(datafile, "\t%s\n",buff);
+		fclose(datafile);
+		}
+		else
+			sprintf(buffer1, "%s", $1);
+
+		if (isnumber($3) || isalpha($3[0]))
+		{
+			new_buffer2 = 1;
+			char num[5];
+			itoa(GetFreeRegister('t'), num,5);
+			strcat(buffer2, num);
+			char buff[50];
+			if (isalpha($3[0]))
+				sprintf(buff,"addi %s, $zero, %d",buffer2,$3[0]);
+			else
+				sprintf(buff,"addi %s, $zero, %s",buffer2,$3);
+			datafile = fopen("mips.txt", "a+");
+			fprintf(datafile, "\t%s\n",buff);
+			fclose(datafile);
+		}
+		else
+			sprintf(buffer2, "%s", $3);
+
+		char num[5];
+		itoa(GetFreeRegister('t'), num,5);
+		strcat(buffer3, num);
+
+		char buff[20];
+		sprintf(buff,"sgt %s,%s,%s",buffer3,buffer1,buffer2);
+		if (new_buffer1)
+		freereg(buffer1);
+		if (new_buffer2)
+		freereg(buffer2);
+		datafile = fopen("mips.txt", "a+");
+
+
+
+		fprintf(datafile, "\t%s\n",buff);
+		fclose(datafile);
+
+		sprintf($$,"%s",buffer3);
+	}
+	else{
+	char num[5];
+	itoa(GetFreeRegister('t'), num,5);
+	char buffer[10] = {'$','t'};
+	strcat(buffer, num);
+
+	char buff[20];
+	sprintf(buff,"sgt %s,%s,%s",buffer,$1,$3);
+
+	datafile = fopen("mips.txt", "a+");
+	fprintf(datafile, "\t%s\n",buff);
+	fclose(datafile);
+
+
+	sprintf($$,"%s",buffer);
+
+	}
+
+} | EXP ISLOWERANDEQ EXP {
+	printf("greater than or equal to condition\n");
+	if (isnumber($1) || isalpha($1[0]) || isnumber($3) || isalpha($3[0]))
+	{
+		char buffer1[10] = {'$','t'};
+		char buffer2[10] = {'$','t'};
+		char buffer3[10] = {'$', 't'};
+		char buffer4[10] = {'$', 't'};
+		int new_buffer1 = 0;
+		int new_buffer2 = 0;
+		if (isnumber($1) || isalpha($1[0]))
+		{
+			new_buffer1 = 1;
+		char num[5];
+		itoa(GetFreeRegister('t'), num,5);
+
+		strcat(buffer1, num);
+		char buff[50];
+		if (isalpha($1[0]))
+			sprintf(buff,"addi %s, $zero, %d",buffer1,$1[0]);
+		else
+			sprintf(buff,"addi %s, $zero, %s",buffer1,$1);
+		datafile = fopen("mips.txt", "a+");
+		fprintf(datafile, "\t%s\n",buff);
+		fclose(datafile);
+		}
+		else
+			sprintf(buffer1, "%s", $1);
+
+		if (isnumber($3) || isalpha($3[0]))
+		{
+			new_buffer2 = 1;
+			char num[5];
+			itoa(GetFreeRegister('t'), num,5);
+			strcat(buffer2, num);
+			char buff[50];
+			if (isalpha($3[0]))
+				sprintf(buff,"addi %s, $zero, %d",buffer2,$3[0]);
+			else
+				sprintf(buff,"addi %s, $zero, %s",buffer2,$3);
+			datafile = fopen("mips.txt", "a+");
+			fprintf(datafile, "\t%s\n",buff);
+			fclose(datafile);
+		}
+		else
+			sprintf(buffer2, "%s", $3);
+
+		char num[5];
+		itoa(GetFreeRegister('t'), num,5);
+		strcat(buffer3, num);
+
+		itoa(GetFreeRegister('t'), num,5);
+		strcat(buffer4, num);
+
+		datafile = fopen("mips.txt", "a+");
+		char buff[20];
+		sprintf(buff,"slt %s,%s,%s",buffer3,buffer1,buffer2);
+		fprintf(datafile, "\t%s\n",buff);
+		sprintf(buff,"seq %s,%s,%s",buffer4,buffer1,buffer2);
+		fprintf(datafile, "\t%s\n",buff);
+		sprintf(buff,"or %s,%s,%s", buffer4, buffer3, buffer4);
+		fprintf(datafile, "\t%s\n",buff);
+		fclose(datafile);
+
+		if (new_buffer1)
+		freereg(buffer1);
+		if (new_buffer2)
+		freereg(buffer2);
+
+		freereg(buffer3);
+
+
+		sprintf($$,"%s",buffer4);
+	}
+	else{
+	char num[5];
+	itoa(GetFreeRegister('t'), num,5);
+	char buffer1[10] = {'$','t'};
+	strcat(buffer1, num);
+
+	itoa(GetFreeRegister('t'), num,5);
+	char buffer2[10] = {'$','t'};
+	strcat(buffer2, num);
+
+	datafile = fopen("mips.txt", "a+");
+
+	char buff[20];
+	sprintf(buff,"slt %s,%s,%s",buffer1,$1,$3);
+	fprintf(datafile, "\t%s\n",buff);
+	sprintf(buff,"seq %s,%s,%s",buffer2,$1,$3);
+	fprintf(datafile, "\t%s\n",buff);
+	sprintf(buff,"or %s,%s,%s",buffer2, buffer1, buffer2);
+	fprintf(datafile, "\t%s\n",buff);
+	fclose(datafile);
+
+	freereg(buffer1);
+	sprintf($$,"%s",buffer2);
+
+	}
+
+} 
+| EXP ISHIGHERANDEQ EXP {
+	printf("greater than or equal to condition\n");
+	if (isnumber($1) || isalpha($1[0]) || isnumber($3) || isalpha($3[0]))
+	{
+		char buffer1[10] = {'$','t'};
+		char buffer2[10] = {'$','t'};
+		char buffer3[10] = {'$', 't'};
+		char buffer4[10] = {'$', 't'};
+		int new_buffer1 = 0;
+		int new_buffer2 = 0;
+		if (isnumber($1) || isalpha($1[0]))
+		{
+			new_buffer1 = 1;
+		char num[5];
+		itoa(GetFreeRegister('t'), num,5);
+
+		strcat(buffer1, num);
+		char buff[50];
+		if (isalpha($1[0]))
+			sprintf(buff,"addi %s, $zero, %d",buffer1,$1[0]);
+		else
+			sprintf(buff,"addi %s, $zero, %s",buffer1,$1);
+		datafile = fopen("mips.txt", "a+");
+		fprintf(datafile, "\t%s\n",buff);
+		fclose(datafile);
+		}
+		else
+			sprintf(buffer1, "%s", $1);
+
+		if (isnumber($3) || isalpha($3[0]))
+		{
+			new_buffer2 = 1;
+			char num[5];
+			itoa(GetFreeRegister('t'), num,5);
+			strcat(buffer2, num);
+			char buff[50];
+			if (isalpha($3[0]))
+				sprintf(buff,"addi %s, $zero, %d",buffer2,$3[0]);
+			else
+				sprintf(buff,"addi %s, $zero, %s",buffer2,$3);
+			datafile = fopen("mips.txt", "a+");
+			fprintf(datafile, "\t%s\n",buff);
+			fclose(datafile);
+		}
+		else
+			sprintf(buffer2, "%s", $3);
+
+		char num[5];
+		itoa(GetFreeRegister('t'), num,5);
+		strcat(buffer3, num);
+
+		itoa(GetFreeRegister('t'), num,5);
+		strcat(buffer4, num);
+
+		datafile = fopen("mips.txt", "a+");
+		char buff[20];
+		sprintf(buff,"sgt %s,%s,%s",buffer3,buffer1,buffer2);
+		fprintf(datafile, "\t%s\n",buff);
+		sprintf(buff,"seq %s,%s,%s",buffer4,buffer1,buffer2);
+		fprintf(datafile, "\t%s\n",buff);
+		sprintf(buff,"or %s,%s,%s", buffer4, buffer3, buffer4);
+		fprintf(datafile, "\t%s\n",buff);
+		fclose(datafile);
+
+		if (new_buffer1)
+		freereg(buffer1);
+		if (new_buffer2)
+		freereg(buffer2);
+
+		freereg(buffer3);
+
+
+		sprintf($$,"%s",buffer4);
+	}
+	else{
+	char num[5];
+	itoa(GetFreeRegister('t'), num,5);
+	char buffer1[10] = {'$','t'};
+	strcat(buffer1, num);
+
+	itoa(GetFreeRegister('t'), num,5);
+	char buffer2[10] = {'$','t'};
+	strcat(buffer2, num);
+
+	datafile = fopen("mips.txt", "a+");
+
+	char buff[20];
+	sprintf(buff,"sgt %s,%s,%s",buffer1,$1,$3);
+	fprintf(datafile, "\t%s\n",buff);
+	sprintf(buff,"seq %s,%s,%s",buffer2,$1,$3);
+	fprintf(datafile, "\t%s\n",buff);
+	sprintf(buff,"or %s,%s,%s",buffer2, buffer1, buffer2);
+	fprintf(datafile, "\t%s\n",buff);
+	fclose(datafile);
+
+	freereg(buffer1);
+	sprintf($$,"%s",buffer2);
+
+	}
+
+} |
+EXP COND_AND EXP {
+	printf("and conditions\n");
+	if (isnumber($1) || isalpha($1[0]) || isnumber($3) || isalpha($3[0]))
+	{
+		char buffer1[10] = {'$','t'};
+		char buffer2[10] = {'$','t'};
+		char buffer3[10] = {'$', 't'};
+		char buffer4[10] = {'$', 't'};
+		int new_buffer1 = 0;
+		int new_buffer2 = 0;
+		if (isnumber($1) || isalpha($1[0]))
+		{
+			new_buffer1 = 1;
+		char num[5];
+		itoa(GetFreeRegister('t'), num,5);
+
+		strcat(buffer1, num);
+		char buff[50];
+		if (isalpha($1[0]))
+			sprintf(buff,"addi %s, $zero, %d",buffer1,$1[0]);
+		else
+			sprintf(buff,"addi %s, $zero, %s",buffer1,$1);
+		datafile = fopen("mips.txt", "a+");
+		fprintf(datafile, "\t%s\n",buff);
+		fclose(datafile);
+		}
+		else
+			sprintf(buffer1, "%s", $1);
+
+		if (isnumber($3) || isalpha($3[0]))
+		{
+			new_buffer2 = 1;
+			char num[5];
+			itoa(GetFreeRegister('t'), num,5);
+			strcat(buffer2, num);
+			char buff[50];
+			if (isalpha($3[0]))
+				sprintf(buff,"addi %s, $zero, %d",buffer2,$3[0]);
+			else
+				sprintf(buff,"addi %s, $zero, %s",buffer2,$3);
+			datafile = fopen("mips.txt", "a+");
+			fprintf(datafile, "\t%s\n",buff);
+			fclose(datafile);
+		}
+		else
+			sprintf(buffer2, "%s", $3);
+
+		char num[5];
+		itoa(GetFreeRegister('t'), num,5);
+		strcat(buffer3, num);
+
+		itoa(GetFreeRegister('t'), num,5);
+		strcat(buffer4, num);
+
+		datafile = fopen("mips.txt", "a+");
+		char buff[20];
+		sprintf(buff,"sgt %s,%s,$zero",buffer3,buffer1);
+		fprintf(datafile, "\t%s\n",buff);
+		sprintf(buff,"sgt %s,%s,$zero",buffer4,buffer2);
+		fprintf(datafile, "\t%s\n",buff);
+		sprintf(buff,"and %s, %s, %s",buffer4,buffer4,buffer3);
+		fprintf(datafile, "\t%s\n",buff);
+		fclose(datafile);
+
+		
+		if (new_buffer1)
+		freereg(buffer1);
+		if (new_buffer2)
+		freereg(buffer2);
+
+		freereg(buffer3);
+
+		sprintf($$,"%s",buffer4);
+	}
+	else{
+	char num[5];
+	itoa(GetFreeRegister('t'), num,5);
+	char buffer[10] = {'$','t'};
+	strcat(buffer, num);
+
+	itoa(GetFreeRegister('t'), num,5);
+	char buffer1[10] = {'$','t'};
+	strcat(buffer, num);
+
+	char buff[20];
+	datafile = fopen("mips.txt", "a+");
+	sprintf(buff,"sgt %s, %s, $zero",buffer,$1);
+	fprintf(datafile, "\t%s\n",buff);
+	sprintf(buff,"sgt %s, %s, ,$zero", buffer1, $3);
+	fprintf(datafile, "\t%s\n",buff);
+	sprintf(buff,"and %s, %s, %s", buffer1, buffer1, buffer);
+	fprintf(datafile, "\t%s\n",buff);
+
+	fclose(datafile);
+
+	freereg(buffer);
+
+	sprintf($$,"%s",buffer1);
+
+	}
+
+} |
+EXP COND_OR EXP {
+	printf("and conditions\n");
+	if (isnumber($1) || isalpha($1[0]) || isnumber($3) || isalpha($3[0]))
+	{
+		char buffer1[10] = {'$','t'};
+		char buffer2[10] = {'$','t'};
+		char buffer3[10] = {'$', 't'};
+		char buffer4[10] = {'$', 't'};
+		int new_buffer1 = 0;
+		int new_buffer2 = 0;
+		if (isnumber($1) || isalpha($1[0]))
+		{
+			new_buffer1 = 1;
+		char num[5];
+		itoa(GetFreeRegister('t'), num,5);
+
+		strcat(buffer1, num);
+		char buff[50];
+		if (isalpha($1[0]))
+			sprintf(buff,"addi %s, $zero, %d",buffer1,$1[0]);
+		else
+			sprintf(buff,"addi %s, $zero, %s",buffer1,$1);
+		datafile = fopen("mips.txt", "a+");
+		fprintf(datafile, "\t%s\n",buff);
+		fclose(datafile);
+		}
+		else
+			sprintf(buffer1, "%s", $1);
+
+		if (isnumber($3) || isalpha($3[0]))
+		{
+			new_buffer2 = 1;
+			char num[5];
+			itoa(GetFreeRegister('t'), num,5);
+			strcat(buffer2, num);
+			char buff[50];
+			if (isalpha($3[0]))
+				sprintf(buff,"addi %s, $zero, %d",buffer2,$3[0]);
+			else
+				sprintf(buff,"addi %s, $zero, %s",buffer2,$3);
+			datafile = fopen("mips.txt", "a+");
+			fprintf(datafile, "\t%s\n",buff);
+			fclose(datafile);
+		}
+		else
+			sprintf(buffer2, "%s", $3);
+
+		char num[5];
+		itoa(GetFreeRegister('t'), num,5);
+		strcat(buffer3, num);
+
+		itoa(GetFreeRegister('t'), num,5);
+		strcat(buffer4, num);
+
+		datafile = fopen("mips.txt", "a+");
+		char buff[20];
+		sprintf(buff,"sgt %s,%s,$zero",buffer3,buffer1);
+		fprintf(datafile, "\t%s\n",buff);
+		sprintf(buff,"sgt %s,%s,$zero",buffer4,buffer2);
+		fprintf(datafile, "\t%s\n",buff);
+		sprintf(buff,"or %s, %s, %s",buffer4,buffer4,buffer3);
+		fprintf(datafile, "\t%s\n",buff);
+		fclose(datafile);
+
+		
+		if (new_buffer1)
+		freereg(buffer1);
+		if (new_buffer2)
+		freereg(buffer2);
+
+		freereg(buffer3);
+
+		sprintf($$,"%s",buffer4);
+	}
+	else{
+	char num[5];
+	itoa(GetFreeRegister('t'), num,5);
+	char buffer[10] = {'$','t'};
+	strcat(buffer, num);
+
+	itoa(GetFreeRegister('t'), num,5);
+	char buffer1[10] = {'$','t'};
+	strcat(buffer, num);
+
+	char buff[20];
+	datafile = fopen("mips.txt", "a+");
+	sprintf(buff,"sgt %s, %s, $zero",buffer,$1);
+	fprintf(datafile, "\t%s\n",buff);
+	sprintf(buff,"sgt %s, %s, ,$zero", buffer1, $3);
+	fprintf(datafile, "\t%s\n",buff);
+	sprintf(buff,"or %s, %s, %s", buffer1, buffer1, buffer);
+	fprintf(datafile, "\t%s\n",buff);
+
+	fclose(datafile);
+
+	freereg(buffer);
+
+	sprintf($$,"%s",buffer1);
+
+	}
+
+}|
+EXP LOG_OR EXP {
+	printf("logical or\n");
+	if (isnumber($1) || isalpha($1[0]) || isnumber($3) || isalpha($3[0]))
+	{
+		char buffer1[10] = {'$','t'};
+		char buffer2[10] = {'$','t'};
+		char buffer3[10] = {'$', 't'};
+		int new_buffer1 = 0;
+		int new_buffer2 = 0;
+		if (isnumber($1) || isalpha($1[0]))
+		{
+			new_buffer1 = 1;
+		char num[5];
+		itoa(GetFreeRegister('t'), num,5);
+
+		strcat(buffer1, num);
+		char buff[50];
+		if (isalpha($1[0]))
+			sprintf(buff,"addi %s, $zero, %d",buffer1,$1[0]);
+		else
+			sprintf(buff,"addi %s, $zero, %s",buffer1,$1);
+		datafile = fopen("mips.txt", "a+");
+		fprintf(datafile, "\t%s\n",buff);
+		fclose(datafile);
+		}
+		else
+			sprintf(buffer1, "%s", $1);
+
+		if (isnumber($3) || isalpha($3[0]))
+		{
+			new_buffer2 = 1;
+			char num[5];
+			itoa(GetFreeRegister('t'), num,5);
+			strcat(buffer2, num);
+			char buff[50];
+			if (isalpha($3[0]))
+				sprintf(buff,"addi %s, $zero, %d",buffer2,$3[0]);
+			else
+				sprintf(buff,"addi %s, $zero, %s",buffer2,$3);
+			datafile = fopen("mips.txt", "a+");
+			fprintf(datafile, "\t%s\n",buff);
+			fclose(datafile);
+		}
+		else
+			sprintf(buffer2, "%s", $3);
+
+		char num[5];
+		itoa(GetFreeRegister('t'), num,5);
+		strcat(buffer3, num);
+
+		char buff[20];
+		sprintf(buff,"and %s,%s,%s",buffer3,buffer1,buffer2);
+		if (new_buffer1)
+		freereg(buffer1);
+		if (new_buffer2)
+		freereg(buffer2);
+		datafile = fopen("mips.txt", "a+");
+
+
+
+		fprintf(datafile, "\t%s\n",buff);
+		fclose(datafile);
+
+		sprintf($$,"%s",buffer3);
+	}
+	else{
+	char num[5];
+	itoa(GetFreeRegister('t'), num,5);
+	char buffer[10] = {'$','t'};
+	strcat(buffer, num);
+
+	char buff[20];
+	sprintf(buff,"and %s,%s,%s",buffer,$1,$3);
+
+	datafile = fopen("mips.txt", "a+");
+	fprintf(datafile, "\t%s\n",buff);
+	fclose(datafile);
+
+
+	sprintf($$,"%s",buffer);
+
+	}
+
+} |
+EXP LOG_AND EXP {
+	printf("logical and\n");
+	if (isnumber($1) || isalpha($1[0]) || isnumber($3) || isalpha($3[0]))
+	{
+		char buffer1[10] = {'$','t'};
+		char buffer2[10] = {'$','t'};
+		char buffer3[10] = {'$', 't'};
+		int new_buffer1 = 0;
+		int new_buffer2 = 0;
+		if (isnumber($1) || isalpha($1[0]))
+		{
+			new_buffer1 = 1;
+		char num[5];
+		itoa(GetFreeRegister('t'), num,5);
+
+		strcat(buffer1, num);
+		char buff[50];
+		if (isalpha($1[0]))
+			sprintf(buff,"addi %s, $zero, %d",buffer1,$1[0]);
+		else
+			sprintf(buff,"addi %s, $zero, %s",buffer1,$1);
+		datafile = fopen("mips.txt", "a+");
+		fprintf(datafile, "\t%s\n",buff);
+		fclose(datafile);
+		}
+		else
+			sprintf(buffer1, "%s", $1);
+
+		if (isnumber($3) || isalpha($3[0]))
+		{
+			new_buffer2 = 1;
+			char num[5];
+			itoa(GetFreeRegister('t'), num,5);
+			strcat(buffer2, num);
+			char buff[50];
+			if (isalpha($3[0]))
+				sprintf(buff,"addi %s, $zero, %d",buffer2,$3[0]);
+			else
+				sprintf(buff,"addi %s, $zero, %s",buffer2,$3);
+			datafile = fopen("mips.txt", "a+");
+			fprintf(datafile, "\t%s\n",buff);
+			fclose(datafile);
+		}
+		else
+			sprintf(buffer2, "%s", $3);
+
+		char num[5];
+		itoa(GetFreeRegister('t'), num,5);
+		strcat(buffer3, num);
+
+		char buff[20];
+		sprintf(buff,"and %s,%s,%s",buffer3,buffer1,buffer2);
+		if (new_buffer1)
+		freereg(buffer1);
+		if (new_buffer2)
+		freereg(buffer2);
+		datafile = fopen("mips.txt", "a+");
+
+
+
+		fprintf(datafile, "\t%s\n",buff);
+		fclose(datafile);
+
+		sprintf($$,"%s",buffer3);
+	}
+	else{
+	char num[5];
+	itoa(GetFreeRegister('t'), num,5);
+	char buffer[10] = {'$','t'};
+	strcat(buffer, num);
+
+	char buff[20];
+	sprintf(buff,"and %s,%s,%s",buffer,$1,$3);
+
+	datafile = fopen("mips.txt", "a+");
+	fprintf(datafile, "\t%s\n",buff);
+	fclose(datafile);
+
+
+	sprintf($$,"%s",buffer);
+
+	}
+
+} |
+EXP LOG_XOR EXP {
+	printf("logical xor\n");
+	if (isnumber($1) || isalpha($1[0]) || isnumber($3) || isalpha($3[0]))
+	{
+		char buffer1[10] = {'$','t'};
+		char buffer2[10] = {'$','t'};
+		char buffer3[10] = {'$', 't'};
+		int new_buffer1 = 0;
+		int new_buffer2 = 0;
+		if (isnumber($1) || isalpha($1[0]))
+		{
+			new_buffer1 = 1;
+		char num[5];
+		itoa(GetFreeRegister('t'), num,5);
+
+		strcat(buffer1, num);
+		char buff[50];
+		if (isalpha($1[0]))
+			sprintf(buff,"addi %s, $zero, %d",buffer1,$1[0]);
+		else
+			sprintf(buff,"addi %s, $zero, %s",buffer1,$1);
+		datafile = fopen("mips.txt", "a+");
+		fprintf(datafile, "\t%s\n",buff);
+		fclose(datafile);
+		}
+		else
+			sprintf(buffer1, "%s", $1);
+
+		if (isnumber($3) || isalpha($3[0]))
+		{
+			new_buffer2 = 1;
+			char num[5];
+			itoa(GetFreeRegister('t'), num,5);
+			strcat(buffer2, num);
+			char buff[50];
+			if (isalpha($3[0]))
+				sprintf(buff,"addi %s, $zero, %d",buffer2,$3[0]);
+			else
+				sprintf(buff,"addi %s, $zero, %s",buffer2,$3);
+			datafile = fopen("mips.txt", "a+");
+			fprintf(datafile, "\t%s\n",buff);
+			fclose(datafile);
+		}
+		else
+			sprintf(buffer2, "%s", $3);
+
+		char num[5];
+		itoa(GetFreeRegister('t'), num,5);
+		strcat(buffer3, num);
+
+		char buff[20];
+		sprintf(buff,"xor %s,%s,%s",buffer3,buffer1,buffer2);
+		if (new_buffer1)
+		freereg(buffer1);
+		if (new_buffer2)
+		freereg(buffer2);
+		datafile = fopen("mips.txt", "a+");
+
+
+
+		fprintf(datafile, "\t%s\n",buff);
+		fclose(datafile);
+
+		sprintf($$,"%s",buffer3);
+	}
+	else{
+	char num[5];
+	itoa(GetFreeRegister('t'), num,5);
+	char buffer[10] = {'$','t'};
+	strcat(buffer, num);
+
+	char buff[20];
+	sprintf(buff,"xor %s,%s,%s",buffer,$1,$3);
+
+	datafile = fopen("mips.txt", "a+");
+	fprintf(datafile, "\t%s\n",buff);
+	fclose(datafile);
+
+
+	sprintf($$,"%s",buffer);
+
+	}
+
+} |
 NOT EXP {printf("logical not\n"); sprintf($$,"%d", !$2);} |
 '(' EXP ')' {printf("parantheses\n");  sprintf($$,"%s",$2);} |
 char_val {
