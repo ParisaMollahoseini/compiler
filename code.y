@@ -11,8 +11,8 @@ FILE* datafile;
 // Stack used to save the name of the register
 // that th variable is stored in
 char stack[30][10];
-int label_stack[30],label_stack_end[30];
-int stackSize=0,label_stack_size = 0,label_stack_size_end=0 ;
+int label_stack[30],label_stack_end[30], label_while_stack[30] ,label_while_stack_end[30] ;
+int stackSize=0,label_stack_size = 0,label_stack_size_end=0 , label_while_stack_size = 0 , label_while_stack_size_end = 0;
 
 char return_result[20];
 
@@ -147,7 +147,7 @@ start : {
 	datafile = fopen("mips.txt", "a+");
 	fprintf(datafile, "start: j main\n");
 	fclose(datafile)
-} PROGRAM 
+} PROGRAM
 PROGRAM: FTYPE ID {
 	strcpy(current_func,$2);
 	pushStack($2);
@@ -786,7 +786,34 @@ else
 
 //VAR_VALUE: EXP | char_val;
 
-WHILE_STMT: WHILE {printf("while begin\n");} '(' EXP  ')' '{' STMTS '}' {printf("while end\n");} STMTS;
+WHILE_STMT: WHILE {
+	char buff[10];
+	label_while_stack_end[label_while_stack_size_end++]=count_label_end;
+	printf("while %d begin\n",count_label_end);
+	sprintf(buff,"while%d",count_label_end++);
+	pushStack(buff);
+
+	datafile = fopen("mips.txt", "a+");
+	fprintf(datafile, "\t%s:\n",buff);
+	fclose(datafile);
+	}
+	 '(' EXP  ')' {
+
+		 datafile = fopen("mips.txt", "a+");
+
+		 label_while_stack[label_while_stack_size++]=count_label;
+		 fprintf(datafile, "\tbeq %s,$zero,afterwhile%d\n",$4,count_label++);
+		 fclose(datafile);
+		 }
+		  '{' STMTS '}' {
+
+				datafile = fopen("mips.txt", "a+");
+	 		 fprintf(datafile, "\tj while%d\n",label_while_stack_end[label_while_stack_size_end-1]);
+			 fprintf(datafile, "\tafterwhile%d:\n",label_while_stack[label_while_stack_size-1]);
+
+	 		 fclose(datafile);
+		 printf("while end\n");}
+		  STMTS;
 
 IF_STMT: IF {
 	char buff[10];

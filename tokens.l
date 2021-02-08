@@ -18,7 +18,6 @@ ints ([1-9])+([0-9])*
 "void" {  printf("%s\n",yytext); return VOID; }
 "for" {  printf("%s\n",yytext); return FOR; }
 "elseif" {  printf("%s\n",yytext); return ELSEIF;  }
-
 "if" {  printf("%s\n",yytext); return IF; }
 "else" {  printf("%s\n",yytext); return ELSE; }
 "int" {strcpy(yylval.sval,yytext); printf("int\n"); return INT;}
