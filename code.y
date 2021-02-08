@@ -2739,6 +2739,7 @@ int main()
 void yyerror(const char *s)
 {
 	printf("-Error- %s",s);
+	remove("mips.txt");
 
 }
 struct var* findvar_inscope(char var_name[10],char this_scope[10])
