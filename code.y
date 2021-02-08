@@ -672,7 +672,7 @@ ASSIGN_STMT: ID EQ EXP '$' {
 
 		if(findvar_inscope($1)){
 
-	struct var *newvar = findvar_inscope($1));
+	struct var *newvar = findvar_inscope($1);
 		datafile = fopen("mips.txt", "a+");
 		printf("type is %s...\n",newvar->type);
 		if(isnumber($3))
@@ -771,7 +771,7 @@ FUNC_CALL: ID {
 		fclose(datafile);
 
 		popStack();
-		strcpy(current_func,popStack);
+		strcpy(current_func,popStack());
 		pushStack(current_func);
 
 	} STMTS;
