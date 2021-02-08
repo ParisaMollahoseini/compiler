@@ -163,7 +163,7 @@ PROGRAM: FTYPE ID {
 
 	 fun_names[func_count].num = $5;
 	 strcpy(fun_names[func_count].name,current_func);
-	 strcpy(fun_names[functions_count++].type, $1);
+	 strcpy(fun_names[func_count++].type, $1);
 		}
 		')'  '{'  STMTS  '}' {
 
@@ -838,7 +838,7 @@ FUNC_CALL: ID {
 	}
 	STMTS {
 		int i = 0;
-		for (; i < functions_count; i++)
+		for (; i < func_count; i++)
 		{
 			if (strcmp(fun_names[i].name, $1) == 0)
 				break;
