@@ -19,13 +19,13 @@ int func1(int a)
 return 0$
 
 }
-
+int func1(int a)
+{
+return 1$
+}
 int main()
 {
 int c $
 c = func1(3)$
 return 7$
-}
-int func2(int a)
-{
 }

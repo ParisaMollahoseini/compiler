@@ -184,10 +184,22 @@ PROGRAM: FTYPE FUNNAME {
 	 fclose(datafile);
 
 	 printf("Param value : %d\n",$5);
-
+////
+		int k=0;
+		for( ; k<func_count; k++)
+		{
+			if(strcmp(fun_names[k].name,$2)==0 && strcmp(fun_names[k].type,$1)==0 && fun_names[k].num == $5)
+			{
+				char error[30] = "replicate function  .... ";
+							yyerror(error);
+							YYERROR;
+			}
+		}
+////
 	 fun_names[func_count].num = $5;
 	 strcpy(fun_names[func_count].name,current_func);
 	 strcpy(fun_names[func_count++].type, $1);
+
 		}
 		')'  '{'  STMTS  '}' {
 
