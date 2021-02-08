@@ -1,19 +1,20 @@
 void func1(int a)
 
 {
-    #*int main = 2 && 3 || 4$
+    int w1 = 2 && 3 || 4$
     int c = 3$
 
     while(2)
     {
+      return 1$
     c = -c / 'j'$
     }
 
-    a = -a - 1$*#
+    a = -a - 1$
 
 
 
-  return 1$
+
 
 }
 
