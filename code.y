@@ -45,7 +45,7 @@ struct var
 {
 	union intchar intchar_union;
 	char name[10];
-	char current_func[20] ;
+	char current_func[20] ;//current scope
 	char which_reg[3];
 	char type[10];//char or int
 	struct var* next;
@@ -62,7 +62,8 @@ char currtype[4] ;
 int yyparse();
 void yyerror(const char *s);
 
-struct var* findvar_inscope(char var_name[10]);
+
+struct var* findvar_inscope(char var_name[10],char this_scope[10]);
 struct var* findvar_WithFunc(struct var* first, char* funcName);
 struct var* addvar(struct var** first, struct var** last, char* name, char *type);
 void vardelete(struct var** first, struct var** last, char* func_name);
@@ -179,9 +180,9 @@ VTYPE   ID {
 	itoa(GetFreeRegister('a'),num,5);
 	char buffer[10] = {'$', 'a'};
 	strcpy(newvar -> which_reg , strcat(buffer,num));
-	datafile = fopen("mips.txt", "a+");
+	/* datafile = fopen("mips.txt", "a+");
 	fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,0);
-	fclose(datafile);
+	fclose(datafile); */
 		$$ = 1;
 		printf("1 parameters %d\n",$$);
 }
@@ -204,9 +205,9 @@ VTYPE   ID {
 	itoa(GetFreeRegister('a'),num,5);
 	char buffer[10] = {'$', 'a'};
 	strcpy(newvar -> which_reg , strcat(buffer,num));
-	datafile = fopen("mips.txt", "a+");
+	/* datafile = fopen("mips.txt", "a+");
 	fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,0);
-	fclose(datafile);
+	fclose(datafile); */
 	$$ = 2;
 	printf("2 parameters\n");
 } |
@@ -229,9 +230,9 @@ THREE_ID THREE_ID_COMMA ','  VTYPE   ID {
 	itoa(GetFreeRegister('a'),num,5);
 	char buffer[10] = {'$', 'a'};
 	strcpy(newvar -> which_reg , strcat(buffer,num));
-	datafile = fopen("mips.txt", "a+");
+	/* datafile = fopen("mips.txt", "a+");
 	fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,0);
-	fclose(datafile);
+	fclose(datafile); */
 	$$ = 3;
 	printf("3 parameters\n");
 } |
@@ -254,9 +255,9 @@ THREE_ID THREE_ID_COMMA THREE_ID_COMMA ','   VTYPE   ID {
  	itoa(GetFreeRegister('a'),num,5);
  	char buffer[10] = {'$', 'a'};
  	strcpy(newvar -> which_reg , strcat(buffer,num));
- 	datafile = fopen("mips.txt", "a+");
+ 	/* datafile = fopen("mips.txt", "a+");
  	fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,0);
- 	fclose(datafile);
+ 	fclose(datafile); */
 	$$ = 4;
 	printf("4 parameters\n");
  } ;
@@ -283,9 +284,9 @@ VTYPE  ID {
  itoa(GetFreeRegister('a'),num,5);
  char buffer[10] = {'$', 'a'};
  strcpy(newvar -> which_reg , strcat(buffer,num));
- datafile = fopen("mips.txt", "a+");
+ /* datafile = fopen("mips.txt", "a+");
  fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,0);
- fclose(datafile);
+ fclose(datafile); */
 };
 
 THREE_ID_COMMA :
@@ -307,9 +308,9 @@ THREE_ID_COMMA :
 	itoa(GetFreeRegister('a'),num,5);
 	char buffer[10] = {'$', 'a'};
 	strcpy(newvar -> which_reg , strcat(buffer,num));
-	datafile = fopen("mips.txt", "a+");
+	/* datafile = fopen("mips.txt", "a+");
 	fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,0);
-	fclose(datafile);
+	fclose(datafile); */
 };
 
 STMTS: DECLARE_STMT |
@@ -322,7 +323,11 @@ RETURN_STMT |
 
 DECLARE_STMT: INT ID {
 	if(first != NULL){
-	if(!findvar_inscope($2)){
+		char this_scope[10];
+		strcpy(this_scope,popStack());
+		pushStack(this_scope);
+
+	if(!findvar_inscope($2,this_scope)){
 		printf("declare %s %s\n",$1,$2);
 
 
@@ -379,9 +384,11 @@ fclose(datafile);
 IDS '$' STMTS |
 INT ID EQ EXP {
 	if(first != NULL){
+		char this_scope[10];
+		strcpy(this_scope,popStack());
+		pushStack(this_scope);
 
-
-		if(!findvar_inscope($2)){
+		if(!findvar_inscope($2,this_scope)){
 
 		printf("declare and assign int %s = %d\n",$2,atoi($4));
 	struct var *newvar = addvar(&first, &last,$2, $1);
@@ -468,9 +475,11 @@ else
 }'$' STMTS |
 CHAR ID {
 	if(first != NULL){
+		char this_scope[10];
+		strcpy(this_scope,popStack());
+		pushStack(this_scope);
 
-
-	if(!findvar_inscope($2)){
+	if(!findvar_inscope($2,this_scope)){
 		printf("declare %s %s\n","char",$2);
 
 		strcpy(currtype,$1);
@@ -523,8 +532,11 @@ fclose(datafile);
 IDS '$' STMTS |
 CHAR ID EQ EXP {
 	if(first != NULL){
+		char this_scope[10];
+		strcpy(this_scope,popStack());
+		pushStack(this_scope);
 
-	if(!findvar_inscope($2)){
+	if(!findvar_inscope($2,this_scope)){
 			printf("declare and assign char %s = %s\n",$2,$4);
 
 		struct var *newvar = addvar(&first, &last,$2, $1);
@@ -618,8 +630,11 @@ CHAR ID EQ EXP {
 IDS: | ',' ID {
 		if(first != NULL){
 
+			char this_scope[10];
+			strcpy(this_scope,popStack());
+			pushStack(this_scope);
 
-		if(!findvar_inscope($2)){
+		if(!findvar_inscope($2,this_scope)){
 		printf("declare more id %s %s\n",currtype,$2);
 	struct var *newvar = addvar(&first, &last,$2, currtype);
 	strcpy(newvar -> current_func ,current_func);
@@ -669,10 +684,13 @@ fclose(datafile);
 
 ASSIGN_STMT: ID EQ EXP '$' {
 		if(first != NULL){
+			char this_scope[10];
+			strcpy(this_scope,popStack());
+			pushStack(this_scope);
 
-		if(findvar_inscope($1)){
+		if(findvar_inscope($1,this_scope)){
 
-	struct var *newvar = findvar_inscope($1);
+	struct var *newvar = findvar_inscope($1,this_scope);
 		datafile = fopen("mips.txt", "a+");
 		printf("type is %s...\n",newvar->type);
 		if(isnumber($3))
@@ -1059,31 +1077,73 @@ void yyerror(const char *s)
 	printf("-Error- %s",s);
 
 }
-struct var* findvar_inscope(char var_name[10])
+struct var* findvar_inscope(char var_name[10],char this_scope[10])
 {
 	///
-	int size = stackSize;
-	char scope[size][10];
-	for(int k=0;k<size;k++)
+	int size = 0 , sizeofStack = stackSize;
+	char scope[sizeofStack][10];
+	for(int k=0 ; k<func_count; k++)
 	{
-		strcpy(scope[k],popStack());
+		if(strcmp(fun_names[k].name,this_scope)==0)
+		{
+			size = 1;
+			strcpy(this_scope,fun_names[k].name);
+			break;
+		}
 	}
-	for(int k=0;k<size;k++)
+	if(size == 0 )
 	{
-		if(findvar(first,var_name,scope[k]))
+		for(int k=0;k<sizeofStack;k++)
+		{
+			strcpy(scope[k],popStack());
+			//find func
+			for(int q=0 ; q<func_count; q++)
 			{
-				for(int k1=size-1;k1>=0;k1--)
+				if(strcmp(fun_names[q].name,this_scope)==0)
 				{
-					pushStack(scope[k1]);
+					size = k+1 ;
+					break;
 				}
-				return findvar(first,var_name,scope[k]);
+			}
+			if(size != 0)
+			{
+				break;
+			}
+			//find func
+		}
+		///
+		for(int k=0;k<size;k++)
+		{
+			if(findvar(first,var_name,scope[k]))
+				{
+					for(int k1=size-1;k1>=0;k1--)
+					{
+						pushStack(scope[k1]);
+					}
+					return findvar(first,var_name,scope[k]);
+				}
+		}
+		for(int k=size-1;k>=0;k--)
+		{
+			pushStack(scope[k]);
+		}
+		return NULL;
+		///
+
+	}
+	else
+	{
+		if(findvar(first,var_name,this_scope))
+			{
+				return findvar(first,var_name,this_scope);
+			}
+			else
+			{
+				return NULL;
 			}
 	}
-	for(int k=size-1;k>=0;k--)
-	{
-		pushStack(scope[k]);
-	}
-	return NULL;
+
+
 	///
 }
 void vardelete(struct var** first, struct var** last, char* func_name){
