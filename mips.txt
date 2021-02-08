@@ -14,12 +14,22 @@ func1:
 	while0:
 	sub $t2,$t0,$t1
 	beq $t2,$zero,afterwhile0
-	addi $t3,$a0,1
-	add $a0, $zero , $t3 
+	while1:
+	beq 1,$zero,afterwhile1
+	while2:
+	beq 2,$zero,afterwhile2
+	addi $t3,$t1,1
+	add $t1, $zero , $t3 
+	j while2
+	afterwhile2:
+	j while1
+	afterwhile1:
+	addi $t4,$a0,1
+	add $a0, $zero , $t4 
 	j while0
 	afterwhile0:
-	addi $t4, $zero, 1
-	move $v0, $t4
+	addi $t10, $zero, 1
+	move $v0, $t10
 	lw $t0, 0($sp)
 	lw $t1, 4($sp)
 	lw $t2, 8($sp)
@@ -40,10 +50,10 @@ me:
 	sw $t5, 20($sp)
 	sw $t6, 24($sp)
 	sw $t7, 28($sp)
-	addi $t4, $zero , 0 
+	addi $t1, $zero , 0 
 	addi $a0,$zero,7
 	jal func1
-	move $t4, $v0
+	move $t1, $v0
 	lw $t0, 0($sp)
 	lw $t1, 4($sp)
 	lw $t2, 8($sp)

@@ -5,6 +5,13 @@ int func1(int a)
     int c = 3$
     while ( b == c)
     {
+    while ( 1 )
+    {
+    while(2)
+    {
+    c = c + 1$
+    }
+    }
     a = a + 1$
     }
 

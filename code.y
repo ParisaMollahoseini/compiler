@@ -810,7 +810,8 @@ WHILE_STMT: WHILE {
 				datafile = fopen("mips.txt", "a+");
 	 		 fprintf(datafile, "\tj while%d\n",label_while_stack_end[label_while_stack_size_end-1]);
 			 fprintf(datafile, "\tafterwhile%d:\n",label_while_stack[label_while_stack_size-1]);
-
+			 label_while_stack_size_end--;
+			 label_while_stack_size--;
 	 		 fclose(datafile);
 		 printf("while end\n");}
 		  STMTS;
