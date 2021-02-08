@@ -6,6 +6,6 @@ func1:
 	addi $t0, $zero , 0 
 	addi $t1, $zero , 0 
 	addi $t2,$a0,5
-	addi $t1, $zero , 5 
+	addi $t1, $zero , $t2 
 	addi $t3, $zero , 8 
-	addi $a0, $zero , 0 
+	addi $a0, $zero , 1 

@@ -67,6 +67,7 @@ void vardelete(struct var** first, struct var** last, char* func_name);
 void freereg(char* reg_name);
 int GetFreeRegister(char register);
 struct var* findvar(struct var* first, char* name,char* curr_func);
+_Bool isnumber(char* reg);
 struct var* first ;
 struct var* last;
 
@@ -591,7 +592,18 @@ ASSIGN_STMT: ID EQ EXP '$' {
 	struct var *newvar = findvar(first,$1,current_func);
 		datafile = fopen("mips.txt", "a+");
 		printf("type is %s...\n",newvar->type);
-	if(strcmp(newvar -> type ,"char")==0)
+		if(isnumber($3) || isalpha($3[0]))
+		{
+			printf("assign  %s = %d\n",$1,atoi($3));
+			newvar -> intchar_union.value_int = atoi($3);
+			fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,newvar -> intchar_union.value_int);
+		}
+		else
+		{
+			fprintf(datafile, "\taddi %s, $zero , %s \n", newvar->which_reg,$3);
+		}
+
+	/* if(strcmp(newvar -> type ,"char")==0)
 	{
 		printf("assign  %s = %s\n",$1,$3);
 		char buff3[2] ;
@@ -606,7 +618,7 @@ ASSIGN_STMT: ID EQ EXP '$' {
 		newvar -> intchar_union.value_int = atoi($3);
 		fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,newvar -> intchar_union.value_int);
 
-	}
+	} */
 
 	fclose(datafile);
 }
@@ -682,9 +694,8 @@ EXP '+' EXP {
 	fprintf(datafile, "\t%s\n",buff);
 	fclose(datafile);
 
-	char buff2[10];
-	sprintf(buff2,"%d",atoi($1) + atoi($3));
-	strcpy($$,buff2);
+
+	strcpy($$,buffer);
 }
 | EXP '-' EXP {
 		char num[5];
@@ -873,4 +884,16 @@ struct var* findvar_WithFunc(struct var* first, char* funcName){
 	}
 
 	return NULL;
+}
+_Bool isnumber(char* reg){
+	if(reg[0] == '-' || (reg[0] >= '0' && reg[0] <= '9')){
+
+		for(int i=1; i<strlen(reg); i++){
+			if(!(reg[i] >= '0' && reg[i] <= '9'))
+				return 0;
+		}
+
+		return 1;
+	}
+	return 0;
 }

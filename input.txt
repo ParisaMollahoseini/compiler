@@ -5,5 +5,5 @@ f = 'a' $
 int s $
 s = a + 5 $
 int o = 8 $
-a = s $
+a = 1 $
 }
