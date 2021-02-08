@@ -1,7 +1,7 @@
-int func1(int a)
+void func1(int a)
 
 {
-    int b = 2 && 3 || 4$
+    #*int main = 2 && 3 || 4$
     int c = 3$
 
     while(2)
@@ -9,7 +9,7 @@ int func1(int a)
     c = -c / 'j'$
     }
 
-    a = -a - 1$
+    a = -a - 1$*#
 
 
 
@@ -20,5 +20,5 @@ int func1(int a)
 void me()
 {
 int a $
-a = func1(7)$
+func1(3)$
 }
