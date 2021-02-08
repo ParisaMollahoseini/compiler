@@ -1211,6 +1211,7 @@ EXP  {
 };
 
 RETURN_STMT: RETURN EXP '$' {
+<<<<<<< HEAD
 
   int k=0;
   for( ; k<func_count; k++)
@@ -1227,6 +1228,25 @@ RETURN_STMT: RETURN EXP '$' {
     yyerror(error);
     YYERROR;
   }
+=======
+	
+	int k=0;
+	for( ; k<func_count; k++)
+	{
+		if(strcmp(fun_names[k].name,current_func)==0)
+		{
+			strcpy(current_func,fun_names[k].name);
+			break;
+		}
+	}
+	
+	if (strcmp(fun_names[k].type,"void")==0)
+	{
+		char error[30] = "you cant return in void";
+		yyerror(error);
+		YYERROR;
+	}
+>>>>>>> c76d99de4056c1e9ccb09863be10cdc083ae2513
 
 	printf("return\n");
 	if (isnumber($2) || isalpha($2[0]))
