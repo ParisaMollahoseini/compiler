@@ -63,7 +63,7 @@ int count = 0 ,func_count = 0;
 char current_func[20],founded_func[20];
 int founded_func_num = 0;
 char currtype[4] ;
-int count_label = 0 ;
+int count_label = 0 ,int count_label_end =  0 ;
 
 //struct func function_types[10000];
 //int functions_count = 0;
@@ -792,12 +792,16 @@ IF_STMT: IF {
 		}
 '{' STMTS  '}' {
 	datafile = fopen("mips.txt", "a+");
+	popStack();
+	fprintf(datafile, "\tj afterif%d:\n",count_label_end);
 	fprintf(datafile, "\telse%d:\n",count_label++);
 	fclose(datafile);
 }
 	ELSEIF_STMT ELSE_STMT {
 		printf("if end\n");
-		
+		datafile = fopen("mips.txt", "a+");
+ 	 fprintf(datafile, "\tafterif%d:\n",count_label_end++);
+ 	 fclose(datafile);
 		} STMTS;
 
 ELSEIF_STMT: ELSEIF {
@@ -810,15 +814,19 @@ ELSEIF_STMT: ELSEIF {
 	 fclose(datafile);
 	 }
 	 '{' STMTS '}' {
+		 popStack();
 	 	datafile = fopen("mips.txt", "a+");
+		fprintf(datafile, "\tj afterif%d:\n",count_label_end);
 	 	fprintf(datafile, "\telseif%d:\n",count_label++);
 	 	fclose(datafile);
 	 } ELSEIF_STMT | ;
 
 ELSE_STMT: ELSE {
+	pushStack(strcat("else",atoi(count_label)));
 	printf("else begin\n");
 	}
 	'{' STMTS  '}' {
+		popStack();
 		printf("else end\n");
 		} | ;
 
