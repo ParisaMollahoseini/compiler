@@ -7,5 +7,6 @@ void func1(int a)
 int me()
 {
 int a1 = 2$
-func1(3)$
+func1(a1)$
+a1 = 6 $
 }
