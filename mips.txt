@@ -9,28 +9,30 @@ func1:
 	sw $t5, 20($sp)
 	sw $t6, 24($sp)
 	sw $t7, 28($sp)
-	addi $t0, $zero , 2 
+	addi $t0, $zero, 2
+	addi $t1, $zero, 3
+	sgt $t2,$t0,$zero
+	sgt $t3,$t1,$zero
+	and $t3, $t3, $t2
+	addi $t0, $zero, 4
+	sgt $t1,$t3,$zero
+	sgt $t2,$t0,$zero
+	or $t2, $t2, $t1
+	add $t0, $zero , $t2 
 	addi $t1, $zero , 3 
 	while0:
-	sub $t2,$t0,$t1
-	beq $t2,$zero,afterwhile0
-	while1:
-	beq 1,$zero,afterwhile1
-	while2:
-	beq 2,$zero,afterwhile2
-	addi $t4,$zero,106
-	div $t3,$t1,$t4
-	add $t1, $zero , $t3 
-	j while2
-	afterwhile2:
-	j while1
-	afterwhile1:
-	subi $t10,$a0,1
-	add $a0, $zero , $t10 
+	beq 2,$zero,afterwhile0
+	addi $t10,$zero,106
+	div $t4,$t1,$t10
+	sub $t11,$zero,$t4
+	add $t1, $zero , $t11 
 	j while0
 	afterwhile0:
-	addi $t11, $zero, 1
-	move $v0, $t11
+	sub $t12,$zero,$a0
+	subi $t13,$t12,1
+	add $a0, $zero , $t13 
+	addi $t14, $zero, 1
+	move $v0, $t14
 	lw $t0, 0($sp)
 	lw $t1, 4($sp)
 	lw $t2, 8($sp)
