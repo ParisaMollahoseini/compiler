@@ -981,7 +981,44 @@ EXP  {
 	$$=1; printf("1 args passed\n");
 };
 
-RETURN_STMT: RETURN EXP '$' STMTS;
+RETURN_STMT: RETURN EXP '$' {
+
+	
+	printf("return\n");
+	if (isnumber($2) || isalpha($2[0]))
+	{		
+		printf("jeeeeeee\n");
+		char num[5];
+		itoa(GetFreeRegister('t'), num,5);
+		char buffer[10] = {'$','t'};
+		strcat(buffer, num);
+		char buff[50];
+		if (isalpha($2[0]))
+			sprintf(buff,"addi %s, $zero, %d",buffer,$2[0]);
+		else
+			sprintf(buff,"addi %s, $zero, %s",buffer,$2);
+		datafile = fopen("mips.txt", "a+");
+		fprintf(datafile, "\t%s\n",buff);
+		fclose(datafile);
+		
+		sprintf(buff,"move $v0, %s",buffer);
+
+		datafile = fopen("mips.txt", "a+");
+		fprintf(datafile, "\t%s\n",buff);
+		fclose(datafile);
+	
+	}
+	else{
+
+	
+	char buff[20];
+	sprintf(buff,"move $v0, %s",$2);
+
+	datafile = fopen("mips.txt", "a+");
+	fprintf(datafile, "\t%s\n",buff);
+	fclose(datafile);
+	}
+} STMTS;
 
 EXP: EXP ISEQ EXP {printf("equality\n"); sprintf($$,"%d",$1 == $3);} |
 EXP ISNOTEQ EXP {printf("notequality\n"); sprintf($$,"%d",$1 != $3);} |
