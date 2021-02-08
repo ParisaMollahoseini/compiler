@@ -2547,6 +2547,7 @@ void yyerror(const char *s)
 }
 struct var* findvar_inscope(char var_name[10],char this_scope[10])
 {
+
 	///
 	int size = 0 , sizeofStack = stackSize;
 	char scope[sizeofStack][10];
