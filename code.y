@@ -8,7 +8,7 @@ extern int yylex();
 extern FILE* yyin;
 FILE* datafile;
 
-int seen_main_flag =  0;
+int seen_main_flag =  0,seen_return_int=0;
 // Stack used to save the name of the register
 // that th variable is stored in
 char stack[30][10];
@@ -185,7 +185,16 @@ PROGRAM: FTYPE FUNNAME {
 		')'  '{'  STMTS  '}' {
 
 		vardelete(&first,&last,popStack());
+		printf("----------name:%s\n",fun_names[func_count-1].name);
+		if(strcmp(fun_names[func_count-1].type,"int")==0 && seen_return_int==0)
+		{
+			char error[50] = " function should return int : ";
+						strcat(error,$2);
+						yyerror(error);
+						YYERROR;
+		}
 
+		seen_return_int=0;
 
 		datafile = fopen("mips.txt", "a+");
 		for(int w=0;w<8;w++)
@@ -200,7 +209,9 @@ PROGRAM: FTYPE FUNNAME {
 		printf("delete variables after function\n");
 	}
 	PROGRAM |  ;
+
 FUNNAME : ID | MAIN {seen_main_flag = 1;};
+
 FTYPE: VOID {strcpy($$, "void");} | INT {strcpy($$,"int");};
 
 PARAMS: {$$ = 0; printf("no parameters\n");} |
@@ -1372,7 +1383,7 @@ EXP  {
 };
 
 RETURN_STMT: RETURN EXP '$' {
-
+	seen_return_int = 1;
   int k=0;
   for( ; k<func_count; k++)
   {
@@ -1789,7 +1800,6 @@ EXP '+' EXP {
 					if($3[0]==0 || atoi($3)==0)
 					{
 						char error[30] = "division by zero ...";
-									strcat(error);
 									yyerror(error);
 									YYERROR;
 					}
