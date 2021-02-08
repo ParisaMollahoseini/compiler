@@ -58,6 +58,7 @@ int count = 0 ,func_count = 0;
 char current_func[20],founded_func[20];
 int founded_func_num = 0;
 char currtype[4] ;
+int count_label = 0 ;
 
 int yyparse();
 void yyerror(const char *s);
@@ -769,9 +770,16 @@ IF_STMT: IF {
 	printf("if begin\n");
 	}
 	'(' EXP ')' {
-
-	}
-'{' STMTS  '}' ELSEIF_STMT ELSE_STMT {printf("if end\n");} STMTS;
+		datafile = fopen("mips.txt", "a+");
+		fprintf(datafile, "\tbeq %s,$zero,else%d\n",$4,count_label);
+		fclose(datafile);
+		}
+'{' STMTS  '}' {
+	datafile = fopen("mips.txt", "a+");
+	fprintf(datafile, "\telse%d:\n",count_label++);
+	fclose(datafile);
+}
+	ELSEIF_STMT ELSE_STMT {printf("if end\n");} STMTS;
 
 ELSEIF_STMT: ELSEIF {printf("elseif begin\n");} '(' EXP ')' '{' STMTS '}' {printf("elseif end\n");} ELSEIF | ;
 

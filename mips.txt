@@ -12,6 +12,8 @@ func1:
 	addi $t1, $zero , 3 
 	addi $t2, $zero, 98
 	sub $t3,$t2,$t0
+	beq $t3,$zero,else0
+	else0:
 	addi $t2, $zero, 1
 	move $v0, $t2
 	lw $t0, 0($sp)
