@@ -826,6 +826,7 @@ WHILE_STMT: WHILE {
 		 }
 		  '{' STMTS '}' {
 
+				popStack();
 				datafile = fopen("mips.txt", "a+");
 	 		 fprintf(datafile, "\tj while%d\n",label_while_stack_end[label_while_stack_size_end-1]);
 			 fprintf(datafile, "\tafterwhile%d:\n",label_while_stack[label_while_stack_size-1]);
