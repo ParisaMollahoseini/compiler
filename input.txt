@@ -1,4 +1,4 @@
-void func1()
+void func1(int a)
 
 {
 
@@ -7,4 +7,5 @@ void func1()
 int me()
 {
 int a1 = 2$
+func1(3)$
 }

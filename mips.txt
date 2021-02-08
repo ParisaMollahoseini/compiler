@@ -1,5 +1,8 @@
+	addi $a0, $zero , 0 
 func1:
 	jr $ra
 me:
 	addi $t0, $zero , 2 
+	addi $a0,$zero,3
+	jal func1
 	jr $ra
