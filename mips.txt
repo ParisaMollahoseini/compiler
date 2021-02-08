@@ -11,29 +11,26 @@ func1:
 	sw $t7, 28($sp)
 	addi $t0, $zero , 2 
 	addi $t1, $zero , 3 
+	while0:
 	sub $t2,$t0,$t1
-	beq $t2,$zero,else0
-	addi $t3, $zero, 3
-	addi $t4, $zero, 2
-	sub $t10,$t3,$t4
-	beq $t10,$zero,else1
-	addi $t1, $zero , 9 
-	j afterif1:
-	else1:
-	addi $t3, $zero, 1
-	addi $t4, $zero, 3
-	sub $t11,$t3,$t4
-	beq $t11,$zero,else2
-	add $t0, $zero , $a0 
-	j afterif1:
-	else2:
-	add $t0, $zero , $t1 
-	afterif1:
-	j afterif0:
-	else0:
-	afterif0:
-	addi $t3, $zero, 1
-	move $v0, $t3
+	beq $t2,$zero,afterwhile0
+	while1:
+	beq 1,$zero,afterwhile1
+	while2:
+	beq 2,$zero,afterwhile2
+	addi $t4,$zero,1
+	div $t3,$t1,$t4
+	add $t1, $zero , $t3 
+	j while2
+	afterwhile2:
+	j while1
+	afterwhile1:
+	addi $t10,$a0,1
+	add $a0, $zero , $t10 
+	j while0
+	afterwhile0:
+	addi $t11, $zero, 1
+	move $v0, $t11
 	lw $t0, 0($sp)
 	lw $t1, 4($sp)
 	lw $t2, 8($sp)
@@ -54,10 +51,10 @@ me:
 	sw $t5, 20($sp)
 	sw $t6, 24($sp)
 	sw $t7, 28($sp)
-	addi $t0, $zero , 0 
+	addi $t1, $zero , 0 
 	addi $a0,$zero,7
 	jal func1
-	move $t0, $v0
+	move $t1, $v0
 	lw $t0, 0($sp)
 	lw $t1, 4($sp)
 	lw $t2, 8($sp)

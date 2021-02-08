@@ -11,8 +11,8 @@ FILE* datafile;
 // Stack used to save the name of the register
 // that th variable is stored in
 char stack[30][10];
-int label_stack[30],label_stack_end[30];
-int stackSize=0,label_stack_size = 0,label_stack_size_end=0 ;
+int label_stack[30],label_stack_end[30], label_while_stack[30] ,label_while_stack_end[30] ;
+int stackSize=0,label_stack_size = 0,label_stack_size_end=0 , label_while_stack_size = 0 , label_while_stack_size_end = 0;
 
 char return_result[20];
 
@@ -147,7 +147,7 @@ start : {
 	datafile = fopen("mips.txt", "a+");
 	fprintf(datafile, "start: j main\n");
 	fclose(datafile)
-} PROGRAM 
+} PROGRAM
 PROGRAM: FTYPE ID {
 	strcpy(current_func,$2);
 	pushStack($2);
@@ -786,7 +786,35 @@ else
 
 //VAR_VALUE: EXP | char_val;
 
-WHILE_STMT: WHILE {printf("while begin\n");} '(' EXP  ')' '{' STMTS '}' {printf("while end\n");} STMTS;
+WHILE_STMT: WHILE {
+	char buff[10];
+	label_while_stack_end[label_while_stack_size_end++]=count_label_end;
+	printf("while %d begin\n",count_label_end);
+	sprintf(buff,"while%d",count_label_end++);
+	pushStack(buff);
+
+	datafile = fopen("mips.txt", "a+");
+	fprintf(datafile, "\t%s:\n",buff);
+	fclose(datafile);
+	}
+	 '(' EXP  ')' {
+
+		 datafile = fopen("mips.txt", "a+");
+
+		 label_while_stack[label_while_stack_size++]=count_label;
+		 fprintf(datafile, "\tbeq %s,$zero,afterwhile%d\n",$4,count_label++);
+		 fclose(datafile);
+		 }
+		  '{' STMTS '}' {
+
+				datafile = fopen("mips.txt", "a+");
+	 		 fprintf(datafile, "\tj while%d\n",label_while_stack_end[label_while_stack_size_end-1]);
+			 fprintf(datafile, "\tafterwhile%d:\n",label_while_stack[label_while_stack_size-1]);
+			 label_while_stack_size_end--;
+			 label_while_stack_size--;
+	 		 fclose(datafile);
+		 printf("while end\n");}
+		  STMTS;
 
 IF_STMT: IF {
 	char buff[10];
@@ -1416,7 +1444,13 @@ EXP '+' EXP {
 
 	printf("addition\n");
 	char buff[20];
-	sprintf(buff,"addi %s,%s,%s",buffer,$1,$3);
+	if(isnumber($3) || isalpha($3[0]))
+	{
+		sprintf(buff,"addi %s,%s,%s",buffer,$1,$3);
+	}
+	else{
+		sprintf(buff,"add %s,%s,%s",buffer,$1,$3);
+	}
 
 	datafile = fopen("mips.txt", "a+");
 	fprintf(datafile, "\t%s\n",buff);
@@ -1433,7 +1467,14 @@ EXP '+' EXP {
 
 		printf("subtraction\n");
 		char buff[20];
-		sprintf(buff,"sub %s,%s,%s",buffer,$1,$3);
+		if(isnumber($3) || isalpha($3[0]))
+		{
+			sprintf(buff,"subi %s,%s,%s",buffer,$1,$3);
+		}
+		else{
+			sprintf(buff,"sub %s,%s,%s",buffer,$1,$3);
+		}
+
 
 		datafile = fopen("mips.txt", "a+");
 		fprintf(datafile, "\t%s\n",buff);
@@ -1441,9 +1482,95 @@ EXP '+' EXP {
 
 		char buff2[10];
 		sprintf(buff2,"%d",atoi($1) + atoi($3));
-		strcpy($$,buff2);
+		strcpy($$,buffer);
 
 	} |
+	EXP '*' EXP {
+			datafile = fopen("mips.txt", "a+");
+
+			char num[5];
+			itoa(GetFreeRegister('t'), num,5);
+			char buffer[10] = {'$','t'};
+			strcat(buffer, num);
+
+			printf("multiplication\n");
+			char buff1[10] = {'$','t'};
+			char buff2[10] = {'$','t'};
+
+			if(isnumber($1) || isalpha($1[0]))
+			{
+				char num1[5];
+				itoa(GetFreeRegister('t'), num1,5);
+				strcat(buff1, num1);
+				fprintf(datafile,"\taddi %s,$zero,%s\n",buff1,$1);
+			}
+			else
+				strcpy(buff1,$1);
+
+			if(isnumber($3) || isalpha($3[0]))
+			{
+				char num2[5];
+				itoa(GetFreeRegister('t'), num2,5);
+				strcat(buff2, num2);
+				fprintf(datafile,"\taddi %s,$zero,%s\n",buff2,$3);
+			}
+			else
+				strcpy(buff2,$3);
+
+			char buff[20];
+			sprintf(buff,"mul %s,%s,%s",buffer,buff1,buff2);
+
+
+			fprintf(datafile, "\t%s\n",buff);
+			fclose(datafile);
+
+
+			strcpy($$,buffer);
+
+		} |
+		EXP '/' EXP {
+				datafile = fopen("mips.txt", "a+");
+
+				char num[5];
+				itoa(GetFreeRegister('t'), num,5);
+				char buffer[10] = {'$','t'};
+				strcat(buffer, num);
+
+				printf("division\n");
+				char buff1[10] = {'$','t'};
+				char buff2[10] = {'$','t'};
+
+				if(isnumber($1) || isalpha($1[0]))
+				{
+					char num1[5];
+					itoa(GetFreeRegister('t'), num1,5);
+					strcat(buff1, num1);
+					fprintf(datafile,"\taddi %s,$zero,%s\n",buff1,$1);
+				}
+				else
+					strcpy(buff1,$1);
+
+				if(isnumber($3) || isalpha($3[0]))
+				{
+					char num2[5];
+					itoa(GetFreeRegister('t'), num2,5);
+					strcat(buff2, num2);
+					fprintf(datafile,"\taddi %s,$zero,%s\n",buff2,$3);
+				}
+				else
+					strcpy(buff2,$3);
+
+				char buff[20];
+				sprintf(buff,"div %s,%s,%s",buffer,buff1,buff2);
+
+
+				fprintf(datafile, "\t%s\n",buff);
+				fclose(datafile);
+
+
+				strcpy($$,buffer);
+
+			} |
 INTVAL {
 	printf("int literal\n");
 	char buff[10];
@@ -2276,7 +2403,7 @@ EXP LOG_XOR EXP {
 
 } |
 NOT EXP {printf("logical not\n"); sprintf($$,"%d", !$2);} |
-'(' EXP ')' {printf("parantheses\n");  sprintf($$,"%d",$2);} |
+'(' EXP ')' {printf("parantheses\n");  sprintf($$,"%s",$2);} |
 char_val {
 	printf("character literal\n");
 	char buff[2];
