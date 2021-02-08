@@ -987,7 +987,6 @@ RETURN_STMT: RETURN EXP '$' {
 	printf("return\n");
 	if (isnumber($2) || isalpha($2[0]))
 	{		
-		printf("jeeeeeee\n");
 		char num[5];
 		itoa(GetFreeRegister('t'), num,5);
 		char buffer[10] = {'$','t'};
@@ -1002,7 +1001,7 @@ RETURN_STMT: RETURN EXP '$' {
 		fclose(datafile);
 		
 		sprintf(buff,"move $v0, %s",buffer);
-
+		freereg(buffer);
 		datafile = fopen("mips.txt", "a+");
 		fprintf(datafile, "\t%s\n",buff);
 		fclose(datafile);
@@ -1020,7 +1019,87 @@ RETURN_STMT: RETURN EXP '$' {
 	}
 } STMTS;
 
-EXP: EXP ISEQ EXP {printf("equality\n"); sprintf($$,"%d",$1 == $3);} |
+EXP: EXP ISEQ EXP {
+	printf("equality condition\n"); 
+	if (isnumber($1) || isalpha($1[0]) || isnumber($3) || isalpha($3[0]))
+	{		
+		char buffer1[10] = {'$','t'};
+		char buffer2[10] = {'$','t'};
+		char buffer3[10] = {'$', 't'};
+		int new_buffer1 = 0;
+		int new_buffer2 = 0;
+		if (isnumber($1) || isalpha($1[0]))
+		{
+			new_buffer1 = 1;
+		char num[5];
+		itoa(GetFreeRegister('t'), num,5);
+		
+		strcat(buffer1, num);
+		char buff[50];
+		if (isalpha($1[0]))
+			sprintf(buff,"addi %s, $zero, %d",buffer1,$1[0]);
+		else
+			sprintf(buff,"addi %s, $zero, %s",buffer1,$1);
+		datafile = fopen("mips.txt", "a+");
+		fprintf(datafile, "\t%s\n",buff);
+		fclose(datafile);
+		}
+		else
+			sprintf(buffer1, "%s", $1);
+
+		if (isnumber($3) || isalpha($3[0]))
+		{
+			new_buffer2 = 1;
+			char num[5];
+			itoa(GetFreeRegister('t'), num,5);
+			strcat(buffer2, num);
+			char buff[50];
+			if (isalpha($3[0]))
+				sprintf(buff,"addi %s, $zero, %d",buffer2,$3[0]);
+			else
+				sprintf(buff,"addi %s, $zero, %s",buffer2,$3);
+			datafile = fopen("mips.txt", "a+");
+			fprintf(datafile, "\t%s\n",buff);
+			fclose(datafile);
+		}
+		else
+			sprintf(buffer2, "%s", $3);
+
+		char num[5];
+		itoa(GetFreeRegister('t'), num,5);
+		strcat(buffer3, num);
+
+		char buff[20];
+		sprintf(buff,"sub %s,%s,%s",buffer3,buffer1,buffer2);
+		if (new_buffer1)
+		freereg(buffer1);
+		if (new_buffer2)
+		freereg(buffer2);
+		datafile = fopen("mips.txt", "a+");
+		fprintf(datafile, "\t%s\n",buff);
+		fclose(datafile);
+
+		pushStack(buffer3);
+	
+	}
+	else{
+	char num[5];
+	itoa(GetFreeRegister('t'), num,5);
+	char buffer[10] = {'$','t'};
+	strcat(buffer, num);
+
+	char buff[20];
+	sprintf(buff,"sub %s,%s,%s",buffer,$1,$3);
+
+	datafile = fopen("mips.txt", "a+");
+	fprintf(datafile, "\t%s\n",buff);
+	fclose(datafile);
+
+	pushStack(buffer);
+
+	sprintf($$,"%d",$1 == $3);
+	}
+} |
 EXP ISNOTEQ EXP {printf("notequality\n"); sprintf($$,"%d",$1 != $3);} |
 EXP '+' EXP {
 	char num[5];

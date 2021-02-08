@@ -1,8 +1,13 @@
 void func1(int a)
 
 {
- int a1 = a + 2 $
- return a$
+    int b = 2$
+    int c = 3$
+    if ('b' == b)
+    {
+
+    }
+   
 }
 
 int me()
