@@ -138,6 +138,12 @@ PROGRAM: FTYPE ID {
 
 	 datafile = fopen("mips.txt", "a+");
 	 fprintf(datafile, "%s:\n", current_func);
+	 fprintf(datafile, "\taddi $sp, $sp , -32\n");
+	 for(int w=0;w<8;w++)
+	 {
+		 fprintf(datafile, "\tsw $t%d, %d($sp)\n", w,w*4);
+	 }
+
 	 fclose(datafile);
 
 	 printf("Param value : %d\n",$5);
@@ -151,6 +157,12 @@ PROGRAM: FTYPE ID {
 
 
 		datafile = fopen("mips.txt", "a+");
+		for(int w=0;w<8;w++)
+		{
+			fprintf(datafile, "\tlw $t%d, %d($sp)\n", w,w*4);
+		}
+		fprintf(datafile, "\taddi $sp, $sp , 32\n");
+
 		fprintf(datafile, "\tjr $ra\n");
 		fclose(datafile);
 
