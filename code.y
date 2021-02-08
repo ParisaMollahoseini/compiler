@@ -140,9 +140,14 @@ _Bool a_state[4] = {0,0,0,0};
 %nterm <sval> FUNC_CALL
 
 %nterm <ival> ARGS_IN
-%start PROGRAM
+%start start
 
 %%
+start : {
+	datafile = fopen("mips.txt", "a+");
+	fprintf(datafile, "start: j main\n");
+	fclose(datafile)
+} PROGRAM 
 PROGRAM: FTYPE ID {
 	strcpy(current_func,$2);
 	pushStack($2);
@@ -896,7 +901,7 @@ FUNC_CALL: ID {
 		strcpy(current_func,popStack());
 		pushStack(current_func);
 
-	} 
+	}
 	STMTS {
 		int i = 0;
 		for (; i < func_count; i++)
@@ -944,9 +949,9 @@ FUNC_CALL: ID {
 		strcpy(current_func,popStack());
 		pushStack(current_func);
 
-	} 
+	}
 	{
-		
+
 	int i = 0;
 		for (; i < func_count; i++)
 		{
@@ -955,7 +960,7 @@ FUNC_CALL: ID {
 		}
 
 		if (strcmp(fun_names[i].type, "void") == 0)
-		
+
 	{
 		char error[40] = "void function has no return value ...";
 		yyerror(error);
@@ -974,7 +979,7 @@ FUNC_CALL: ID {
 
 		struct var *newvar = findvar_inscope($1,this_scope);
 		char buff[20];
-		
+
 		sprintf(buff,"move %s, $v0", newvar->which_reg);
 
 		datafile = fopen("mips.txt", "a+");
@@ -1201,8 +1206,8 @@ RETURN_STMT: RETURN EXP '$' {
 		datafile = fopen("mips.txt", "a+");
 		fprintf(datafile, "\t%s\n",buff);
 		fclose(datafile);
-				
-		
+
+
 		sprintf(return_result,"%s", $2);
 
 
@@ -1213,7 +1218,7 @@ RETURN_STMT: RETURN EXP '$' {
 
 	datafile = fopen("mips.txt", "a+");
 	fprintf(datafile, "\t%s\n",buff);
-	
+
 	char fscope[30];
 	strcpy(fscope, popStack());
 	pushStack(fscope);
@@ -1225,10 +1230,10 @@ RETURN_STMT: RETURN EXP '$' {
 			sprintf(return_result, "%s", res_var->intchar_union.value_int);
 	else
 			sprintf(return_result, "%c", res_var->intchar_union.value_char);
-	
 
-	
-	
+
+
+
 	sprintf(return_result,"%d", res_var->intchar_union.value_int);
 	*/
 	fclose(datafile);
@@ -1585,7 +1590,7 @@ struct var* findvar_withreg(char* reg, char* funcName)
 {
 	if (first == NULL)
 		return NULL;
-	
+
 	for(struct var* t = first; t; t = t->next){
 		if(strcmp(t->current_func,funcName)==0 && strcmp(t->which_reg, reg) == 0)
 			return t;

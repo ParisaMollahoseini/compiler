@@ -1,3 +1,4 @@
+start: j main
 func1:
 	addi $sp, $sp , -32
 	sw $t0, 0($sp)
