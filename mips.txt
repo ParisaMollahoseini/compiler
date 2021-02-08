@@ -43,7 +43,7 @@ func1:
 	lw $t7, 28($sp)
 	addi $sp, $sp , 32
 	jr $ra
-int:
+main:
 	addi $sp, $sp , -32
 	sw $t0, 0($sp)
 	sw $t1, 4($sp)

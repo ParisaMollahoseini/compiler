@@ -1756,7 +1756,7 @@ yyreduce:
 
 /* Line 1455 of yacc.c  */
 #line 213 "code.y"
-    {seen_main_flag = 1;;}
+    {seen_main_flag = 1; strcpy((yyval.sval),"main");;}
     break;
 
   case 11:

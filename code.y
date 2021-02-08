@@ -210,7 +210,7 @@ PROGRAM: FTYPE FUNNAME {
 	}
 	PROGRAM |  ;
 
-FUNNAME : ID | MAIN {seen_main_flag = 1;};
+FUNNAME : ID | MAIN {seen_main_flag = 1; strcpy($$,"main");};
 
 FTYPE: VOID {strcpy($$, "void");} | INT {strcpy($$,"int");};
 
