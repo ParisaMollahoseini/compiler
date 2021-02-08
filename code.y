@@ -8,6 +8,7 @@ extern int yylex();
 extern FILE* yyin;
 FILE* datafile;
 
+int seen_main_flag =  0;
 // Stack used to save the name of the register
 // that th variable is stored in
 char stack[30][10];
@@ -135,7 +136,7 @@ _Bool a_state[4] = {0,0,0,0};
 %token <ival> NUM
 %token <sval> ID
 %nterm <sval> FTYPE
-%nterm <sval> VTYPE
+%nterm <sval> VTYPE FUNNAME
 %nterm <ival> PARAMS
 %nterm <sval> FUNC_CALL
 
@@ -147,8 +148,17 @@ start : {
 	datafile = fopen("mips.txt", "a+");
 	fprintf(datafile, "start: j main\n");
 	fclose(datafile)
-} PROGRAM
-PROGRAM: FTYPE ID {
+}
+PROGRAM {
+		if(seen_main_flag == 0)
+		{
+			char error[30] = "PROGRAM has no main .... ";
+						
+						yyerror(error);
+						YYERROR;
+		}
+}
+PROGRAM: FTYPE FUNNAME {
 	strcpy(current_func,$2);
 	pushStack($2);
 
@@ -190,7 +200,7 @@ PROGRAM: FTYPE ID {
 		printf("delete variables after function\n");
 	}
 	PROGRAM |  ;
-
+FUNNAME : ID | MAIN {seen_main_flag = 1;};
 FTYPE: VOID {strcpy($$, "void");} | INT {strcpy($$,"int");};
 
 PARAMS: {$$ = 0; printf("no parameters\n");} |
