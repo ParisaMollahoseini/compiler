@@ -8,6 +8,10 @@ int func1(int a)
       int d1 = 10$
 
     }
+    else
+    {
+     a = 3 $
+    }
     return 1$
 
 }

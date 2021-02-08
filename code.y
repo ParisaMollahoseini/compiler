@@ -63,7 +63,7 @@ int count = 0 ,func_count = 0;
 char current_func[20],founded_func[20];
 int founded_func_num = 0;
 char currtype[4] ;
-int count_label = 0 ,int count_label_end =  0 ;
+int count_label = 0 ,count_label_end =  0 ;
 
 //struct func function_types[10000];
 //int functions_count = 0;
@@ -783,8 +783,8 @@ WHILE_STMT: WHILE {printf("while begin\n");} '(' EXP  ')' '{' STMTS '}' {printf(
 
 IF_STMT: IF {
 	char buff[10];
-	sprintf(buff,"%d",count_label);
-	pushStack(strcat("if",buff));
+	sprintf(buff,"if%d",count_label);
+	pushStack(buff);
 	printf("if %d begin\n",count_label);
 	}
 	'(' EXP ')' {
@@ -808,8 +808,8 @@ IF_STMT: IF {
 
 ELSEIF_STMT: ELSEIF {
 	char buff[10];
-	sprintf(buff,"%d",count_label);
-	pushStack(strcat("elseif",buff));
+	sprintf(buff,"elseif%d",count_label);
+	pushStack(buff);
 	printf("else if %d begin\n",count_label);
 	}
  '(' EXP ')' {
@@ -827,8 +827,8 @@ ELSEIF_STMT: ELSEIF {
 
 ELSE_STMT: ELSE {
 	char buff[10];
-	sprintf(buff,"%d",count_label);
-	pushStack(strcat("else",buff));
+	sprintf(buff,"else%d",count_label);
+	pushStack(buff);
 	printf("else begin\n");
 	}
 	'{' STMTS  '}' {

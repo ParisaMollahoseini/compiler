@@ -14,7 +14,10 @@ func1:
 	sub $t3,$t2,$t0
 	beq $t3,$zero,else0
 	addi $t2, $zero , 10 
+	j afterif0:
 	else0:
+	addi $a0, $zero , 3 
+	afterif0:
 	addi $t4, $zero, 1
 	move $v0, $t4
 	lw $t0, 0($sp)
@@ -37,10 +40,10 @@ me:
 	sw $t5, 20($sp)
 	sw $t6, 24($sp)
 	sw $t7, 28($sp)
-	addi $t4, $zero , 2 
+	addi $t0, $zero , 2 
 	addi $a0,$zero,12
 	jal func1
-	addi $t4, $zero , 6 
+	addi $t0, $zero , 6 
 	lw $t0, 0($sp)
 	lw $t1, 4($sp)
 	lw $t2, 8($sp)
