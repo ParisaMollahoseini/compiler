@@ -17,6 +17,8 @@ ints ([1-9])+([0-9])*
 "while"  {  printf("%s\n",yytext); return WHILE;}
 "void" {  printf("%s\n",yytext); return VOID; }
 "for" {  printf("%s\n",yytext); return FOR; }
+"elseif" {  printf("%s\n",yytext); return ELSEIF;  }
+
 "if" {  printf("%s\n",yytext); return IF; }
 "else" {  printf("%s\n",yytext); return ELSE; }
 "int" {strcpy(yylval.sval,yytext); printf("int\n"); return INT;}
@@ -25,7 +27,6 @@ ints ([1-9])+([0-9])*
 "return" {  printf("%s\n",yytext); return RETURN;  }
 "main" {  printf("%s\n",yytext); return MAIN;  }
 "char" {strcpy(yylval.sval,yytext);  printf("%s\n",yytext);  return CHAR; }
-"elseif" {  printf("%s\n",yytext); return ELSEIF;  }
 [A-Za-z"_"]+[0-9A-Za-z"_"]* { printf("%s\n",yytext);strcpy(yylval.sval,yytext);   return ID; }
 "#".*"\n" {  printf("%s\n",yytext);}
 "#*".*"*#" {   printf("%s\n",yytext);     }
