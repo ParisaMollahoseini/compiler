@@ -782,8 +782,8 @@ else
 WHILE_STMT: WHILE {printf("while begin\n");} '(' EXP  ')' '{' STMTS '}' {printf("while end\n");} STMTS;
 
 IF_STMT: IF {
-	pushStack("if");
-	printf("if begin\n");
+	pushStack(strcat("if",atoi(count_label)));
+	printf("if %d begin\n",count_label);
 	}
 	'(' EXP ')' {
 		datafile = fopen("mips.txt", "a+");
@@ -795,11 +795,32 @@ IF_STMT: IF {
 	fprintf(datafile, "\telse%d:\n",count_label++);
 	fclose(datafile);
 }
-	ELSEIF_STMT ELSE_STMT {printf("if end\n");} STMTS;
+	ELSEIF_STMT ELSE_STMT {
+		printf("if end\n");
+		
+		} STMTS;
 
-ELSEIF_STMT: ELSEIF {printf("elseif begin\n");} '(' EXP ')' '{' STMTS '}' {printf("elseif end\n");} ELSEIF | ;
+ELSEIF_STMT: ELSEIF {
+	pushStack(strcat("elseif",atoi(count_label)));
+	printf("else if %d begin\n",count_label);
+	}
+ '(' EXP ')' {
+	 datafile = fopen("mips.txt", "a+");
+	 fprintf(datafile, "\tbeq %s,$zero,elseif%d\n",$4,count_label);
+	 fclose(datafile);
+	 }
+	 '{' STMTS '}' {
+	 	datafile = fopen("mips.txt", "a+");
+	 	fprintf(datafile, "\telseif%d:\n",count_label++);
+	 	fclose(datafile);
+	 } ELSEIF_STMT | ;
 
-ELSE_STMT: ELSE {printf("else begin\n");} '{' STMTS  '}' {printf("else end\n");} | ;
+ELSE_STMT: ELSE {
+	printf("else begin\n");
+	}
+	'{' STMTS  '}' {
+		printf("else end\n");
+		} | ;
 
 FUNC_CALL: ID {
 	int flag = -1 ;

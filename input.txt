@@ -1,7 +1,13 @@
 int func1(int a)
 
 {
+    int b = 2$
+    int c = 3$
+    if ('b' == b)
+    {
+      int d1 = 10$
 
+    }
     return 1$
 
 }
@@ -9,6 +15,6 @@ int func1(int a)
 int me()
 {
 int a1 = 2$
-a1 = func1(12) $
-
+func1(12) $
+a1 = 6 $
 }

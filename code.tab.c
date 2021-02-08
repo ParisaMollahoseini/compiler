@@ -1639,7 +1639,7 @@ yyreduce:
 
 	 fun_names[func_count].num = (yyvsp[(5) - (5)].ival);
 	 strcpy(fun_names[func_count].name,current_func);
-	 strcpy(fun_names[functions_count++].type, (yyvsp[(1) - (5)].sval));
+	 strcpy(fun_names[func_count++].type, (yyvsp[(1) - (5)].sval));
 		;}
     break;
 
@@ -2462,7 +2462,7 @@ else
 #line 839 "code.y"
     {
 		int i = 0;
-		for (; i < functions_count; i++)
+		for (; i < func_count; i++)
 		{
 			if (strcmp(fun_names[i].name, (yyvsp[(1) - (8)].sval)) == 0)
 				break;

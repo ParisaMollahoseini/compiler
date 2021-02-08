@@ -8,8 +8,15 @@ func1:
 	sw $t5, 20($sp)
 	sw $t6, 24($sp)
 	sw $t7, 28($sp)
-	addi $t0, $zero, 1
-	move $v0, $t0
+	addi $t0, $zero , 2 
+	addi $t1, $zero , 3 
+	addi $t2, $zero, 98
+	sub $t3,$t2,$t0
+	beq $t3,$zero,else0
+	addi $t2, $zero , 10 
+	else0:
+	addi $t4, $zero, 1
+	move $v0, $t4
 	lw $t0, 0($sp)
 	lw $t1, 4($sp)
 	lw $t2, 8($sp)
@@ -30,7 +37,17 @@ me:
 	sw $t5, 20($sp)
 	sw $t6, 24($sp)
 	sw $t7, 28($sp)
-	addi $t0, $zero , 2 
+	addi $t4, $zero , 2 
 	addi $a0,$zero,12
 	jal func1
-	addi $s0,$zero,1
+	addi $t4, $zero , 6 
+	lw $t0, 0($sp)
+	lw $t1, 4($sp)
+	lw $t2, 8($sp)
+	lw $t3, 12($sp)
+	lw $t4, 16($sp)
+	lw $t5, 20($sp)
+	lw $t6, 24($sp)
+	lw $t7, 28($sp)
+	addi $sp, $sp , 32
+	jr $ra
