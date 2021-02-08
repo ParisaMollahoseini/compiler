@@ -1354,22 +1354,46 @@ EXP: EXP ISEQ EXP {
 } |
 EXP ISNOTEQ EXP {printf("notequality\n"); sprintf($$,"%d",$1 != $3);} |
 EXP '+' EXP {
+	datafile = fopen("mips.txt", "a+");
 	char num[5];
 	itoa(GetFreeRegister('t'), num,5);
 	char buffer[10] = {'$','t'};
 	strcat(buffer, num);
 
 	printf("addition\n");
-	char buff[20];
+	char buff[20] = {'$','t'};
+	char b1[10] = {'$','t'};
+	if(isnumber($1) || isalpha($1[0]))
+	{
+		char num1[10];
+		itoa(GetFreeRegister('t'), num1,5);
+
+		strcat(b1, num1);
+		if(isalpha($1[0]))
+			fprintf(datafile,"\taddi %s,$zero,%d\n",b1,$1[0]);
+		else
+			fprintf(datafile,"\taddi %s,$zero,%d\n",b1,atoi($1));
+	}
+	else
+		sprintf(b1,"%s",$1);
+
+
+
 	if(isnumber($3) || isalpha($3[0]))
 	{
-		sprintf(buff,"addi %s,%s,%s",buffer,$1,$3);
+		if(isalpha($3[0]))
+			sprintf(buff,"addi %s,%s,%d",buffer,b1,$3[0]);
+		else
+			sprintf(buff,"addi %s,%s,%d",buffer,b1,atoi($3));
+
 	}
-	else{
-		sprintf(buff,"add %s,%s,%s",buffer,$1,$3);
+	else
+	{
+		sprintf(buff,"add %s,%s,%s",buffer,b1,$3);
 	}
 
-	datafile = fopen("mips.txt", "a+");
+
+
 	fprintf(datafile, "\t%s\n",buff);
 	fclose(datafile);
 
@@ -1377,28 +1401,47 @@ EXP '+' EXP {
 	strcpy($$,buffer);
 }
 | EXP '-' EXP {
+		datafile = fopen("mips.txt", "a+");
+
 		char num[5];
 		itoa(GetFreeRegister('t'), num,5);
 		char buffer[10] = {'$','t'};
 		strcat(buffer, num);
 
 		printf("subtraction\n");
-		char buff[20];
+		char buff[20] = {'$','t'};
+		char b1[10] = {'$','t'};
+		if(isnumber($1) || isalpha($1[0]))
+		{
+			char num1[5];
+			itoa(GetFreeRegister('t'), num1,5);
+
+			strcat(b1, num1);
+			if(isalpha($1[0]))
+				fprintf(datafile,"\taddi %s,$zero,%d\n",b1,$1[0]);
+			else
+				fprintf(datafile,"\taddi %s,$zero,%d\n",b1,atoi($1));
+		}
+		else
+			sprintf(b1,"%s",$1);
+
 		if(isnumber($3) || isalpha($3[0]))
 		{
-			sprintf(buff,"subi %s,%s,%s",buffer,$1,$3);
+			if(isalpha($3[0]))
+				sprintf(buff,"subi %s,%s,%d",buffer,b1,$3[0]);
+			else
+				sprintf(buff,"subi %s,%s,%d",buffer,b1,atoi($3));
+
 		}
-		else{
-			sprintf(buff,"sub %s,%s,%s",buffer,$1,$3);
+		else
+		{
+			sprintf(buff,"sub %s,%s,%s",buffer,b1,$3);
 		}
 
 
-		datafile = fopen("mips.txt", "a+");
 		fprintf(datafile, "\t%s\n",buff);
 		fclose(datafile);
 
-		char buff2[10];
-		sprintf(buff2,"%d",atoi($1) + atoi($3));
 		strcpy($$,buffer);
 
 	} |
@@ -1419,7 +1462,11 @@ EXP '+' EXP {
 				char num1[5];
 				itoa(GetFreeRegister('t'), num1,5);
 				strcat(buff1, num1);
-				fprintf(datafile,"\taddi %s,$zero,%s\n",buff1,$1);
+				if(isalpha($1[0]))
+					fprintf(datafile,"\taddi %s,$zero,%d\n",buff1,$1[0]);
+				else
+					fprintf(datafile,"\taddi %s,$zero,%d\n",buff1,atoi($1));
+
 			}
 			else
 				strcpy(buff1,$1);
@@ -1429,7 +1476,10 @@ EXP '+' EXP {
 				char num2[5];
 				itoa(GetFreeRegister('t'), num2,5);
 				strcat(buff2, num2);
-				fprintf(datafile,"\taddi %s,$zero,%s\n",buff2,$3);
+				if(isalpha($3[0]))
+					fprintf(datafile,"\taddi %s,$zero,%d\n",buff2,$3[0]);
+					else
+					fprintf(datafile,"\taddi %s,$zero,%d\n",buff2,atoi($3));
 			}
 			else
 				strcpy(buff2,$3);
@@ -1462,7 +1512,11 @@ EXP '+' EXP {
 					char num1[5];
 					itoa(GetFreeRegister('t'), num1,5);
 					strcat(buff1, num1);
-					fprintf(datafile,"\taddi %s,$zero,%s\n",buff1,$1);
+					if(isalpha($1[0]))
+						fprintf(datafile,"\taddi %s,$zero,%d\n",buff1,$1[0]);
+						else
+						fprintf(datafile,"\taddi %s,$zero,%d\n",buff1,atoi($1));
+
 				}
 				else
 					strcpy(buff1,$1);
@@ -1472,7 +1526,10 @@ EXP '+' EXP {
 					char num2[5];
 					itoa(GetFreeRegister('t'), num2,5);
 					strcat(buff2, num2);
-					fprintf(datafile,"\taddi %s,$zero,%s\n",buff2,$3);
+					if(isalpha($3[0]))
+						fprintf(datafile,"\taddi %s,$zero,%d\n",buff2,$3[0]);
+						else
+						fprintf(datafile,"\taddi %s,$zero,%d\n",buff2,atoi($3));
 				}
 				else
 					strcpy(buff2,$3);
@@ -1535,7 +1592,38 @@ char error[30] = "no such variable exists ...";
 			YYERROR;
 }
 }
-| '-' EXP {printf("negative num\n"); sprintf($$,"%d", -atoi($2));} ;
+| '-' EXP {
+	printf("negative num\n");
+	datafile = fopen("mips.txt", "a+");
+
+	char num[5];
+	itoa(GetFreeRegister('t'), num,5);
+	char buffer[10] = {'$','t'};
+	strcat(buffer, num);
+
+
+
+	if(isnumber($2) || isalpha($2[0]))
+	{
+		if(isalpha($2[0]))
+			fprintf(datafile,"\tsubi %s,$zero,%d\n",buffer,$2[0]);
+		else
+			fprintf(datafile,"\tsubi %s,$zero,%d\n",buffer,atoi($2));
+	}
+	else
+
+				fprintf(datafile,"\tsub %s,$zero,%s\n",buffer,$2);
+
+
+
+
+
+	fclose(datafile);
+
+
+	strcpy($$,buffer);
+
+} ;
 
 
 %%

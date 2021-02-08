@@ -18,14 +18,14 @@ func1:
 	beq 1,$zero,afterwhile1
 	while2:
 	beq 2,$zero,afterwhile2
-	addi $t4,$zero,1
+	addi $t4,$zero,106
 	div $t3,$t1,$t4
 	add $t1, $zero , $t3 
 	j while2
 	afterwhile2:
 	j while1
 	afterwhile1:
-	addi $t10,$a0,1
+	subi $t10,$a0,1
 	add $a0, $zero , $t10 
 	j while0
 	afterwhile0:
