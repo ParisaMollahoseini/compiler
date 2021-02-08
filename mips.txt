@@ -9,38 +9,16 @@ func1:
 	sw $t5, 20($sp)
 	sw $t6, 24($sp)
 	sw $t7, 28($sp)
-	addi $t0, $zero, 1
-	move $v0, $t0
-	lw $t0, 0($sp)
-	lw $t1, 4($sp)
-	lw $t2, 8($sp)
-	lw $t3, 12($sp)
-	lw $t4, 16($sp)
-	lw $t5, 20($sp)
-	lw $t6, 24($sp)
-	lw $t7, 28($sp)
-	addi $sp, $sp , 32
-	jr $ra
-me:
-	addi $sp, $sp , -32
-	sw $t0, 0($sp)
-	sw $t1, 4($sp)
-	sw $t2, 8($sp)
-	sw $t3, 12($sp)
-	sw $t4, 16($sp)
-	sw $t5, 20($sp)
-	sw $t6, 24($sp)
-	sw $t7, 28($sp)
-	addi $t0, $zero , 0 
-	addi $a0,$zero,3
-	jal func1
-	lw $t0, 0($sp)
-	lw $t1, 4($sp)
-	lw $t2, 8($sp)
-	lw $t3, 12($sp)
-	lw $t4, 16($sp)
-	lw $t5, 20($sp)
-	lw $t6, 24($sp)
-	lw $t7, 28($sp)
-	addi $sp, $sp , 32
-	jr $ra
+	addi $t0, $zero, 2
+	addi $t1, $zero, 3
+	sgt $t2,$t0,$zero
+	sgt $t3,$t1,$zero
+	and $t3, $t3, $t2
+	addi $t0, $zero, 4
+	sgt $t1,$t3,$zero
+	sgt $t2,$t0,$zero
+	or $t2, $t2, $t1
+	add $t0, $zero , $t2 
+	addi $t1, $zero , 3 
+	while0:
+	beq 2,$zero,afterwhile0
