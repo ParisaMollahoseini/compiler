@@ -383,9 +383,26 @@ INT ID EQ EXP {
 	char buffer[10] = {'$', 't'};
 	strcpy(newvar -> which_reg , strcat(buffer,num));
 
-	newvar -> intchar_union.value_int = atoi($4);
 	datafile = fopen("mips.txt", "a+");
-	fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,atoi($4));
+	if(isnumber($4))
+	{
+
+		printf("assign  %s = %d\n",$1,atoi($4));
+		newvar -> intchar_union.value_int = atoi($4);
+		fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,newvar -> intchar_union.value_int);
+	}
+	else if(isalpha($4[0]))
+	{
+		printf("assign  %s = %c\n",$1,$4[0]);
+		newvar -> intchar_union.value_char = $4[0];
+		fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,newvar -> intchar_union.value_char);
+
+	}
+	else
+	{
+
+		fprintf(datafile, "\taddi %s, $zero , %s \n", newvar->which_reg,$4);
+	}
 	fclose(datafile);
 }
 else
@@ -405,7 +422,6 @@ else{
 
 	strcpy(first->name ,$2);
 	strcpy(first->type,"int");
-	first->intchar_union.value_int = atoi($4);
 	strcpy(first -> current_func ,current_func);
 
 		first->next = NULL;
@@ -419,8 +435,25 @@ else{
 strcpy(first -> which_reg , buffer);
 last = first;
 datafile = fopen("mips.txt", "a+");
-fprintf(datafile, "\taddi %s, $zero , %d \n", first->which_reg,first -> intchar_union.value_int);
-fclose(datafile);
+if(isnumber($4))
+{
+
+	printf("assign  %s = %d\n",$1,atoi($4));
+	first -> intchar_union.value_int = atoi($4);
+	fprintf(datafile, "\taddi %s, $zero , %d \n", first->which_reg,first -> intchar_union.value_int);
+}
+else if(isalpha($4[0]))
+{
+	printf("assign  %s = %c\n",$1,$4[0]);
+	first -> intchar_union.value_char = $4[0];
+	fprintf(datafile, "\taddi %s, $zero , %d \n", first->which_reg,first -> intchar_union.value_char);
+
+}
+else
+{
+
+	fprintf(datafile, "\taddi %s, $zero , %s \n", first->which_reg,$4);
+}fclose(datafile);
 }
 }'$' STMTS |
 CHAR ID {
@@ -490,12 +523,27 @@ CHAR ID EQ EXP {
 		char buffer[10] = {'$', 't'};
 		strcpy(newvar -> which_reg , strcat(buffer,num));
 
-		char buff3[2] ;
-		strcpy(buff3,$4);
-		newvar -> intchar_union.value_char = buff3[0];
-
 		datafile = fopen("mips.txt", "a+");
-		fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,newvar -> intchar_union.value_char);
+		if(isnumber($4))
+		{
+
+			printf("assign  %s = %d\n",$1,atoi($4));
+			newvar -> intchar_union.value_int = atoi($4);
+			fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,newvar -> intchar_union.value_int);
+		}
+		else if(isalpha($4[0]))
+		{
+			printf("assign  %s = %c\n",$1,$4[0]);
+			newvar -> intchar_union.value_char = $4[0];
+			fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,newvar -> intchar_union.value_char);
+
+		}
+		else
+		{
+
+			fprintf(datafile, "\taddi %s, $zero , %s \n", newvar->which_reg,$4);
+		}
+
 		fclose(datafile);
 	}
 	else
@@ -515,7 +563,6 @@ CHAR ID EQ EXP {
 		strcpy(first->name ,$2);
 		char buff3[2] ;
 		strcpy(buff3,$4);
-		first->intchar_union.value_char = buff3[0];
 		strcpy(first->type,"char");
 		strcpy(first -> current_func ,current_func);
 
@@ -530,7 +577,27 @@ CHAR ID EQ EXP {
 	strcpy(first -> which_reg , buffer);
 	last = first;
 	datafile = fopen("mips.txt", "a+");
-	fprintf(datafile, "\taddi %s, $zero , %d \n", first->which_reg,first -> intchar_union.value_char);
+
+	if(isnumber($4))
+	{
+
+		printf("assign  %s = %d\n",$1,atoi($4));
+		first -> intchar_union.value_int = atoi($4);
+		fprintf(datafile, "\taddi %s, $zero , %d \n", first->which_reg,first -> intchar_union.value_int);
+	}
+	else if(isalpha($4[0]))
+	{
+		printf("assign  %s = %c\n",$1,$4[0]);
+		first -> intchar_union.value_char = $4[0];
+		fprintf(datafile, "\taddi %s, $zero , %d \n", first->which_reg,first -> intchar_union.value_char);
+
+	}
+	else
+	{
+
+		fprintf(datafile, "\taddi %s, $zero , %s \n", first->which_reg,$4);
+	}
+
 	fclose(datafile);
 	}
 	}'$' STMTS;
@@ -592,11 +659,19 @@ ASSIGN_STMT: ID EQ EXP '$' {
 	struct var *newvar = findvar(first,$1,current_func);
 		datafile = fopen("mips.txt", "a+");
 		printf("type is %s...\n",newvar->type);
-		if(isnumber($3) || isalpha($3[0]))
+		if(isnumber($3))
 		{
+
 			printf("assign  %s = %d\n",$1,atoi($3));
 			newvar -> intchar_union.value_int = atoi($3);
 			fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,newvar -> intchar_union.value_int);
+		}
+		else if(isalpha($3[0]))
+		{
+			printf("assign  %s = %c\n",$1,$3[0]);
+			newvar -> intchar_union.value_char = $3[0];
+			fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,newvar -> intchar_union.value_char);
+
 		}
 		else
 		{
