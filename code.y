@@ -747,7 +747,14 @@ FUNC_CALL: ID {
 		founded_func_num = fun_names[flag].num;
 	}
 }
-'(' ARGS_IN ')' '$' STMTS;
+'(' ARGS_IN ')' '$' {
+		char buff[20];
+	  datafile = fopen("mips.txt", "a+");
+		sprintf(buff,"jal %s",founded_func);
+		fprintf(datafile, "\t%s\n",buff);
+		fclose(datafile);
+
+	} STMTS;
 
 ARGS_IN: {
 	if(founded_func_num != 0 )

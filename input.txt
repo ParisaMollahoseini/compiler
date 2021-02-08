@@ -1,9 +1,10 @@
-void func1( int a , char b, int x)
+void func1()
+
 {
-char f = 'k' $
-f = 'a' $
-int s $
-s = a + 5 $
-int o = 8 $
-a = 1 $
+
+}
+
+int main()
+{
+int a1 = 2$
 }
