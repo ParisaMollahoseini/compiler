@@ -11,7 +11,8 @@ FILE* datafile;
 // Stack used to save the name of the register
 // that th variable is stored in
 char stack[30][10];
-int stackSize=0;
+int label_stack[30],label_stack_end[30];
+int stackSize=0,label_stack_size = 0,label_stack_size_end=0 ;
 
 char return_result[20];
 
@@ -785,56 +786,77 @@ IF_STMT: IF {
 	char buff[10];
 	sprintf(buff,"if%d",count_label);
 	pushStack(buff);
+
 	printf("if %d begin\n",count_label);
 	}
 	'(' EXP ')' {
 		datafile = fopen("mips.txt", "a+");
-		fprintf(datafile, "\tbeq %s,$zero,else%d\n",$4,count_label);
+		label_stack_end[label_stack_size_end++]=count_label_end++;
+		label_stack[label_stack_size++]=count_label;
+		fprintf(datafile, "\tbeq %s,$zero,else%d\n",$4,count_label++);
 		fclose(datafile);
 		}
 '{' STMTS  '}' {
 	datafile = fopen("mips.txt", "a+");
 	popStack();
-	fprintf(datafile, "\tj afterif%d:\n",count_label_end);
-	fprintf(datafile, "\telse%d:\n",count_label++);
+
+	fprintf(datafile, "\tj afterif%d:\n",label_stack_end[label_stack_size_end-1]);
+
 	fclose(datafile);
 }
-	ELSEIF_STMT ELSE_STMT {
+	ELSEIF_STMT  {
 		printf("if end\n");
 		datafile = fopen("mips.txt", "a+");
- 	 fprintf(datafile, "\tafterif%d:\n",count_label_end++);
+ 	 fprintf(datafile, "\tafterif%d:\n",label_stack_end[label_stack_size_end-1]);
+	 label_stack_size_end--;
  	 fclose(datafile);
-		} STMTS;
+ } STMTS ;
 
 ELSEIF_STMT: ELSEIF {
+	datafile = fopen("mips.txt", "a+");
+	fprintf(datafile, "\telse%d:\n",label_stack[label_stack_size-1]);
+	label_stack_size--;
+
 	char buff[10];
-	sprintf(buff,"elseif%d",count_label);
+	sprintf(buff,"else%d",count_label);
 	pushStack(buff);
 	printf("else if %d begin\n",count_label);
 	}
  '(' EXP ')' {
 	 datafile = fopen("mips.txt", "a+");
-	 fprintf(datafile, "\tbeq %s,$zero,elseif%d\n",$4,count_label);
+	 label_stack[label_stack_size++]=count_label;
+	 fprintf(datafile, "\tbeq %s,$zero,else%d\n",$4,count_label++);
 	 fclose(datafile);
 	 }
 	 '{' STMTS '}' {
 		 popStack();
 	 	datafile = fopen("mips.txt", "a+");
-		fprintf(datafile, "\tj afterif%d:\n",count_label_end);
-	 	fprintf(datafile, "\telseif%d:\n",count_label++);
+		fprintf(datafile, "\tj afterif%d:\n",label_stack_end[label_stack_size_end-1]);
+
 	 	fclose(datafile);
-	 } ELSEIF_STMT | ;
+	 } ELSEIF_STMT | ELSE_STMT;
 
 ELSE_STMT: ELSE {
+	datafile = fopen("mips.txt", "a+");
+	fprintf(datafile, "\telse%d:\n",label_stack[label_stack_size-1]);
+	label_stack_size--;
+	fclose(datafile);
+
 	char buff[10];
 	sprintf(buff,"else%d",count_label);
 	pushStack(buff);
-	printf("else begin\n");
+	printf("else begin \n");
 	}
 	'{' STMTS  '}' {
 		popStack();
 		printf("else end\n");
-		} | ;
+		}
+		| {
+			datafile = fopen("mips.txt", "a+");
+			fprintf(datafile, "\telse%d:\n",label_stack[label_stack_size-1]);
+			label_stack_size--;
+			fclose(datafile);
+		};
 
 FUNC_CALL: ID {
 	int flag = -1 ;

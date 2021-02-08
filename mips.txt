@@ -13,13 +13,20 @@ func1:
 	addi $t2, $zero, 98
 	sub $t3,$t2,$t0
 	beq $t3,$zero,else0
-	addi $t2, $zero , 10 
+	addi $t2, $zero, 3
+	addi $t4, $zero, 2
+	sub $t10,$t2,$t4
+	beq $t10,$zero,else1
+	addi $t1, $zero , 9 
+	j afterif1:
+	else1:
+	afterif1:
+	addi $t1, $zero , 20 
 	j afterif0:
 	else0:
-	addi $a0, $zero , 3 
+	addi $t2,$t1,2
+	add $t0, $zero , $t2 
 	afterif0:
-	addi $t4, $zero, 1
-	move $v0, $t4
 	lw $t0, 0($sp)
 	lw $t1, 4($sp)
 	lw $t2, 8($sp)
