@@ -1,1 +1,2 @@
 func1:
+	jr $ra

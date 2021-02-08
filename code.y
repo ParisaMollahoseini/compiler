@@ -142,9 +142,16 @@ PROGRAM: FTYPE ID {
 
 	 fun_names[func_count].num = $5;
 	 strcpy(fun_names[func_count++].name,current_func);
-		}')'  '{'  STMTS  '}'  {
+		}
+		')'  '{'  STMTS  '}' {
 
 		vardelete(&first,&last,current_func);
+
+
+		datafile = fopen("mips.txt", "a+");
+		fprintf(datafile, "\tjr $ra\n");
+		fclose(datafile);
+
 		printf("delete variables after function\n");
 	}
 	PROGRAM |  ;
