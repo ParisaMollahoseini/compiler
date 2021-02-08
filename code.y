@@ -74,6 +74,7 @@ void yyerror(const char *s);
 
 struct var* findvar_inscope(char var_name[10],char this_scope[10]);
 struct var* findvar_WithFunc(struct var* first, char* funcName);
+struct var* findvar_withreg(char* reg, char* funcName);
 struct var* addvar(struct var** first, struct var** last, char* name, char *type);
 void vardelete(struct var** first, struct var** last, char* func_name);
 void freereg(char* reg_name);
@@ -189,7 +190,7 @@ FTYPE: VOID {strcpy($$, "void");} | INT {strcpy($$,"int");};
 PARAMS: {$$ = 0; printf("no parameters\n");} |
 VTYPE   ID {
 
-
+	printf("jooooooooooooooo %s\n", $1);
 	struct var *newvar = addvar(&first, &last,$2, $1);
 	strcpy(newvar -> current_func ,current_func);
 
@@ -288,7 +289,7 @@ THREE_ID THREE_ID_COMMA THREE_ID_COMMA ','   VTYPE   ID {
 	printf("4 parameters\n");
  } ;
 
-VTYPE: CHAR | INT;
+VTYPE: CHAR {strcpy($$, "char");} | INT { strcpy($$, "int");};
 
 
 THREE_ID :
@@ -824,7 +825,7 @@ FUNC_CALL: ID {
 		founded_func_num = fun_names[flag].num;
 	}
 }
-'(' ARGS_IN ')' '$' {
+'(' ARGS_IN ')' '$'  {
 		char buff[20];
 	  datafile = fopen("mips.txt", "a+");
 		sprintf(buff,"jal %s",founded_func);
@@ -835,7 +836,7 @@ FUNC_CALL: ID {
 		strcpy(current_func,popStack());
 		pushStack(current_func);
 
-	}
+	} 
 	STMTS {
 		int i = 0;
 		for (; i < func_count; i++)
@@ -848,7 +849,100 @@ FUNC_CALL: ID {
 			strcpy($$, "void");
 		else
 			strcpy($$, "int");
-		};
+		}
+	| ID EQ ID {
+	int flag = -1 ;
+	for(int i=0;i<func_count;i++)
+	{
+		if(strcmp($3,fun_names[i].name)==0)
+		{
+			flag = i;
+		}
+	}
+	if(flag == -1 )
+	{
+		char error[30] = "no such function exists ...";
+					strcat(error, $3);
+					yyerror(error);
+					YYERROR;
+	}
+	else
+	{
+		pushStack($3);
+		strcpy(founded_func,$3);
+		founded_func_num = fun_names[flag].num;
+	}
+}
+	 '(' ARGS_IN ')' '$' {
+		char buff[20];
+	  datafile = fopen("mips.txt", "a+");
+		sprintf(buff,"jal %s",founded_func);
+		fprintf(datafile, "\t%s\n",buff);
+		fclose(datafile);
+
+		popStack();
+		strcpy(current_func,popStack());
+		pushStack(current_func);
+
+	} 
+	{
+		
+	int i = 0;
+		for (; i < func_count; i++)
+		{
+			if (strcmp(fun_names[i].name, $3) == 0)
+				break;
+		}
+
+		if (strcmp(fun_names[i].type, "void") == 0)
+		
+	{
+		char error[40] = "void function has no return value ...";
+		yyerror(error);
+		YYERROR;
+	}
+	else
+	{
+		if (findvar(first,$1, current_func))
+		{
+			struct var* this_var = findvar(first,$1, current_func);
+		//printf("%s\n", return_result);
+		char this_scope[10];
+		strcpy(this_scope,popStack());
+		pushStack(this_scope);
+
+
+		struct var *newvar = findvar_inscope($1,this_scope);
+		char buff[20];
+		
+		sprintf(buff,"move %s, $v0", newvar->which_reg);
+
+		datafile = fopen("mips.txt", "a+");
+		fprintf(datafile, "\t%s\n",buff);
+		fclose(datafile);
+		}
+		else
+		{
+			char error[40] = "id not defined ...";
+			yyerror(error);
+			YYERROR;
+		}
+	}
+	}  STMTS{
+		int i = 0;
+		for (; i < func_count; i++)
+		{
+			if (strcmp(fun_names[i].name, $1) == 0)
+				break;
+		}
+
+		if (strcmp(fun_names[i].type, "void") == 0)
+			strcpy($$, "void");
+		else
+			strcpy($$, "int");
+
+};
+
 
 ARGS_IN: {
 	if(founded_func_num != 0 )
@@ -1047,7 +1141,8 @@ RETURN_STMT: RETURN EXP '$' {
 		datafile = fopen("mips.txt", "a+");
 		fprintf(datafile, "\t%s\n",buff);
 		fclose(datafile);
-
+				
+		
 		sprintf(return_result,"%s", $2);
 
 
@@ -1058,7 +1153,24 @@ RETURN_STMT: RETURN EXP '$' {
 
 	datafile = fopen("mips.txt", "a+");
 	fprintf(datafile, "\t%s\n",buff);
-	sprintf(return_result,"%s", $2);
+	
+	char fscope[30];
+	strcpy(fscope, popStack());
+	pushStack(fscope);
+
+	struct var* res_var = findvar_withreg($2,current_func);
+	printf("jeeee\n%sjeeee\n", $2);
+	//printf("jeeee\n%s %d %s jeeee\n", res_var->name,  res_var->intchar_union.value_int, res_var->type);
+ 	/*if ( strcmp(res_var->type, "int") == 0 )
+			sprintf(return_result, "%s", res_var->intchar_union.value_int);
+	else
+			sprintf(return_result, "%c", res_var->intchar_union.value_char);
+	
+
+	
+	
+	sprintf(return_result,"%d", res_var->intchar_union.value_int);
+	*/
 	fclose(datafile);
 	}
 } STMTS ;
@@ -1231,27 +1343,7 @@ char error[30] = "no such variable exists ...";
 			YYERROR;
 }
 }
-| '-' EXP {printf("negative num\n"); sprintf($$,"%d", -atoi($2));}
-| FUNC_CALL  {
-
-	if (strcmp($1, "void") == 0)
-	{
-		char error[40] = "void function has no return value ...";
-		yyerror(error);
-		YYERROR;
-	}
-	else
-	{
-		printf("%s\n", return_result);
-		char buff[20];
-		sprintf(buff,"addi %s,%s,%s","$s0","$zero",return_result);
-
-		datafile = fopen("mips.txt", "a+");
-		fprintf(datafile, "\t%s\n",buff);
-		fclose(datafile);
-		sprintf($$, "%s" , return_result);
-	}
-} ;
+| '-' EXP {printf("negative num\n"); sprintf($$,"%d", -atoi($2));} ;
 
 
 %%
@@ -1429,6 +1521,17 @@ struct var* findvar(struct var* first, char* name,char* curr_func){
 
 	return NULL;
 }
+struct var* findvar_withreg(char* reg, char* funcName)
+{
+	if (first == NULL)
+		return NULL;
+	
+	for(struct var* t = first; t; t = t->next){
+		if(strcmp(t->current_func,funcName)==0 && strcmp(t->which_reg, reg) == 0)
+			return t;
+	}
+}
+
 struct var* findvar_WithFunc(struct var* first, char* funcName){
 
 	if(first == NULL)
