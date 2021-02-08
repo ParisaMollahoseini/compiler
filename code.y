@@ -1361,7 +1361,13 @@ EXP '+' EXP {
 
 	printf("addition\n");
 	char buff[20];
-	sprintf(buff,"addi %s,%s,%s",buffer,$1,$3);
+	if(isnumber($3) || isalpha($3[0]))
+	{
+		sprintf(buff,"addi %s,%s,%s",buffer,$1,$3);
+	}
+	else{
+		sprintf(buff,"add %s,%s,%s",buffer,$1,$3);
+	}
 
 	datafile = fopen("mips.txt", "a+");
 	fprintf(datafile, "\t%s\n",buff);
@@ -1378,7 +1384,14 @@ EXP '+' EXP {
 
 		printf("subtraction\n");
 		char buff[20];
-		sprintf(buff,"sub %s,%s,%s",buffer,$1,$3);
+		if(isnumber($3) || isalpha($3[0]))
+		{
+			sprintf(buff,"subi %s,%s,%s",buffer,$1,$3);
+		}
+		else{
+			sprintf(buff,"sub %s,%s,%s",buffer,$1,$3);
+		}
+
 
 		datafile = fopen("mips.txt", "a+");
 		fprintf(datafile, "\t%s\n",buff);
@@ -1389,6 +1402,49 @@ EXP '+' EXP {
 		strcpy($$,buffer);
 
 	} |
+	EXP '*' EXP {
+			datafile = fopen("mips.txt", "a+");
+
+			char num[5];
+			itoa(GetFreeRegister('t'), num,5);
+			char buffer[10] = {'$','t'};
+			strcat(buffer, num);
+
+			printf("multiplication\n");
+			char buff1[10] = {'$','t'};
+			char buff2[10] = {'$','t'};
+
+			if(isnumber($1) || isalpha($1[0]))
+			{
+				char num1[5];
+				itoa(GetFreeRegister('t'), num1,5);
+				strcat(buff1, num1);
+				fprintf(datafile,"\taddi %s,$zero,%s\n",buff1,$1);
+			}
+			else
+				strcpy(buff1,$1);
+
+			if(isnumber($3) || isalpha($3[0]))
+			{
+				char num2[5];
+				itoa(GetFreeRegister('t'), num2,5);
+				strcat(buff2, num2);
+				fprintf(datafile,"\taddi %s,$zero,%s\n",buff2,$3);
+			}
+			else
+				strcpy(buff2,$3);
+
+			char buff[20];
+			sprintf(buff,"mul %s,%s,%s",buffer,buff1,buff2);
+
+
+			fprintf(datafile, "\t%s\n",buff);
+			fclose(datafile);
+
+
+			strcpy($$,buffer);
+
+		} |
 INTVAL {
 	printf("int literal\n");
 	char buff[10];
