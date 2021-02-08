@@ -470,16 +470,16 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  3
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   319
+#define YYLAST   353
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  47
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  47
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  87
+#define YYNRULES  91
 /* YYNRULES -- Number of states.  */
-#define YYNSTATES  174
+#define YYNSTATES  182
 
 /* YYTRANSLATE(YYLEX) -- Bison symbol number corresponding to YYLEX.  */
 #define YYUNDEFTOK  2
@@ -535,7 +535,8 @@ static const yytype_uint16 yyprhs[] =
      157,   158,   159,   171,   173,   174,   180,   181,   182,   183,
      192,   193,   194,   195,   207,   208,   216,   222,   226,   228,
      229,   235,   239,   243,   247,   251,   255,   259,   261,   265,
-     269,   273,   277,   281,   284,   288,   290,   292
+     269,   273,   277,   281,   285,   289,   293,   297,   300,   304,
+     306,   308
 };
 
 /* YYRHS -- A `-1'-separated list of the rules' RHS.  */
@@ -567,24 +568,27 @@ static const yytype_int8 yyrhs[] =
       48,    26,    93,    62,    -1,    48,    12,    48,    -1,    48,
       11,    48,    -1,    48,    17,    48,    -1,    48,    18,    48,
       -1,    48,    19,    48,    -1,    48,    20,    48,    -1,     3,
-      -1,    48,     7,    48,    -1,    48,     6,    48,    -1,    48,
-       8,    48,    -1,    48,    10,    48,    -1,    48,     9,    48,
-      -1,    21,    48,    -1,    22,    48,    23,    -1,     4,    -1,
-      44,    -1,    18,    48,    -1
+      -1,    48,    16,    48,    -1,    48,    14,    48,    -1,    48,
+      15,    48,    -1,    48,    13,    48,    -1,    48,     7,    48,
+      -1,    48,     6,    48,    -1,    48,     8,    48,    -1,    48,
+      10,    48,    -1,    48,     9,    48,    -1,    21,    48,    -1,
+      22,    48,    23,    -1,     4,    -1,    44,    -1,    18,    48,
+      -1
 };
 
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
        0,   146,   146,   146,   151,   156,   175,   151,   192,   194,
-     194,   196,   197,   222,   247,   272,   298,   298,   302,   326,
-     349,   350,   351,   352,   353,   354,   354,   357,   357,   418,
-     418,   509,   509,   566,   566,   663,   663,   663,   718,   718,
-     789,   800,   808,   789,   819,   826,   833,   841,   819,   849,
-     861,   867,   849,   873,   875,   875,   890,   898,   921,   898,
-     946,   969,   981,   946,  1040,  1051,  1104,  1149,  1187,  1215,
-    1215,  1271,  1355,  1356,  1403,  1448,  1498,  1548,  1554,  1555,
-    1556,  1557,  1558,  1559,  1560,  1561,  1568,  1595
+     194,   196,   197,   220,   245,   270,   296,   296,   300,   324,
+     347,   348,   349,   350,   351,   352,   352,   355,   355,   416,
+     416,   507,   507,   564,   564,   661,   661,   661,   716,   716,
+     787,   798,   806,   787,   817,   824,   831,   839,   817,   847,
+     859,   865,   847,   871,   873,   873,   888,   896,   919,   896,
+     944,   967,   979,   944,  1038,  1049,  1102,  1147,  1185,  1213,
+    1213,  1269,  1353,  1437,  1484,  1529,  1579,  1629,  1635,  1719,
+    1802,  1903,  2004,  2106,  2208,  2292,  2376,  2460,  2461,  2462,
+    2469,  2496
 };
 #endif
 
@@ -633,7 +637,8 @@ static const yytype_uint8 yyr1[] =
       83,    84,    81,    81,    86,    85,    85,    87,    88,    52,
       89,    90,    91,    52,    53,    53,    53,    53,    53,    93,
       92,    48,    48,    48,    48,    48,    48,    48,    48,    48,
-      48,    48,    48,    48,    48,    48,    48,    48
+      48,    48,    48,    48,    48,    48,    48,    48,    48,    48,
+      48,    48
 };
 
 /* YYR2[YYN] -- Number of symbols composing right hand side of rule YYN.  */
@@ -647,7 +652,8 @@ static const yytype_uint8 yyr2[] =
        0,     0,    11,     1,     0,     5,     0,     0,     0,     8,
        0,     0,     0,    11,     0,     7,     5,     3,     1,     0,
        5,     3,     3,     3,     3,     3,     3,     1,     3,     3,
-       3,     3,     3,     2,     3,     1,     1,     2
+       3,     3,     3,     3,     3,     3,     3,     2,     3,     1,
+       1,     2
 };
 
 /* YYDEFACT[STATE-NAME] -- Default rule to reduce with in state
@@ -659,65 +665,67 @@ static const yytype_uint8 yydefact[] =
       11,    16,    17,     0,     5,     0,    12,     0,     0,     0,
        0,     0,     0,     0,    26,    13,     0,     0,     0,     0,
        0,    40,    44,    57,    24,     0,    20,    21,    22,    23,
-      25,    14,     0,    31,    27,    77,    85,     0,     0,     0,
-      86,     0,     0,     0,     0,     0,     6,    15,     0,    35,
-       0,    35,    87,    83,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,    69,     0,     0,    86,
-       0,    64,     8,    33,     0,     0,    29,     0,    84,    79,
-      78,    80,    82,    81,    72,    71,    73,    74,    75,    76,
-      26,     0,     0,     0,    38,    68,     0,     7,     0,    36,
-      26,     0,    26,    70,    41,    45,    64,    26,     0,     0,
-      26,    35,    32,    26,    28,     0,     0,     0,    39,    67,
-      58,    34,    37,    30,    26,    26,     0,     0,    26,     0,
-       0,    61,    66,    59,    42,    46,    62,     0,    26,    56,
-      26,    65,    43,    54,    49,    47,    53,    63,     0,     0,
-      26,    26,     0,    48,     0,     0,    55,    50,     0,    26,
-       0,    51,    56,    52
+      25,    14,     0,    31,    27,    77,    89,     0,     0,     0,
+      90,     0,     0,     0,     0,     0,     6,    15,     0,    35,
+       0,    35,    91,    87,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+      69,     0,     0,    90,     0,    64,     8,    33,     0,     0,
+      29,     0,    88,    83,    82,    84,    86,    85,    72,    71,
+      81,    79,    80,    78,    73,    74,    75,    76,    26,     0,
+       0,     0,    38,    68,     0,     7,     0,    36,    26,     0,
+      26,    70,    41,    45,    64,    26,     0,     0,    26,    35,
+      32,    26,    28,     0,     0,     0,    39,    67,    58,    34,
+      37,    30,    26,    26,     0,     0,    26,     0,     0,    61,
+      66,    59,    42,    46,    62,     0,    26,    56,    26,    65,
+      43,    54,    49,    47,    53,    63,     0,     0,    26,    26,
+       0,    48,     0,     0,    55,    50,     0,    26,     0,    51,
+      56,    52
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int16 yydefgoto[] =
 {
-      -1,   105,     6,    13,    14,    34,   106,     1,     2,     7,
-       9,    17,    82,    15,    19,    35,    36,    61,   111,    59,
-     108,    85,   121,    37,   117,    38,    52,   125,   148,    39,
-      53,   126,   149,   160,   155,   159,   168,   172,   156,   158,
-      55,   138,   103,   146,   150,    40,   100
+      -1,   113,     6,    13,    14,    34,   114,     1,     2,     7,
+       9,    17,    86,    15,    19,    35,    36,    61,   119,    59,
+     116,    89,   129,    37,   125,    38,    52,   133,   156,    39,
+      53,   134,   157,   168,   163,   167,   176,   180,   164,   166,
+      55,   146,   111,   154,   158,    40,   108
 };
 
 /* YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
    STATE-NUM.  */
-#define YYPACT_NINF -60
+#define YYPACT_NINF -61
 static const yytype_int16 yypact[] =
 {
-     -60,     4,   -29,   -60,   -60,   -60,   -36,   -60,   -60,   -11,
-     -25,   -60,   -60,   -10,   -60,    26,    41,    27,   -25,    46,
-       9,    12,   -25,    52,   -19,    53,    16,   -25,    19,    20,
-      11,   -60,   -60,    37,   -60,    22,   -60,   -60,   -60,   -60,
-     -60,    53,    42,    57,    61,   -60,   -60,    11,    11,    11,
-     -60,    94,    68,    69,    49,    70,   -60,   -60,    11,    89,
-      11,    89,     1,   -60,   137,    11,    11,    11,    11,    11,
-      11,    11,    11,    11,    11,    11,   -60,    11,    11,    73,
-     116,    11,   -29,   257,    54,    82,   257,    90,   -60,   271,
-     284,   288,   299,    62,    58,    58,     1,     1,   -60,   -60,
-     -19,   155,   173,    74,   -60,   210,    92,   -60,    93,   -60,
-     -19,    95,   -19,   -60,   -60,   -60,    11,   -19,    11,   103,
-     -19,    89,   -60,   -19,   -60,    85,    86,   114,   -60,   226,
-     -60,   -60,   -60,   -60,   -19,   -19,   112,    11,   -19,   104,
-     105,   -60,   242,   -60,   -60,   -60,   -60,    11,   -19,   -13,
-     -19,   257,   -60,   -60,   -60,   -60,   -60,   -60,    96,   117,
-     -19,   -19,    11,   -60,   106,   191,   -60,   -60,   108,   -19,
-     113,   -60,   -13,   -60
+     -61,    21,   -12,   -61,   -61,   -61,   -17,   -61,   -61,     9,
+      27,   -61,   -61,   -10,   -61,    51,    60,    63,    27,    82,
+      48,    53,    27,    90,   -19,    94,    57,    27,    58,    59,
+      11,   -61,   -61,    76,   -61,    62,   -61,   -61,   -61,   -61,
+     -61,    94,    65,    77,    78,   -61,   -61,    11,    11,    11,
+     -61,   135,    85,    91,    50,    92,   -61,   -61,    11,   107,
+      11,   107,    44,   -61,   177,    11,    11,    11,    11,    11,
+      11,    11,    11,    11,    11,    11,    11,    11,    11,    11,
+     -61,    11,    11,    95,   156,    11,   -12,   297,    74,    96,
+     297,    97,   -61,   119,   310,   322,   333,    -9,    61,    61,
+      72,    72,    72,    72,    44,    44,   -61,   -61,   -19,   195,
+     213,    98,   -61,   250,    93,   -61,   130,   -61,   -19,   131,
+     -19,   -61,   -61,   -61,    11,   -19,    11,   132,   -19,   107,
+     -61,   -19,   -61,    79,   114,   137,   -61,   266,   -61,   -61,
+     -61,   -61,   -19,   -19,   151,    11,   -19,    75,   133,   -61,
+     282,   -61,   -61,   -61,   -61,    11,   -19,    43,   -19,   297,
+     -61,   -61,   -61,   -61,   -61,   -61,   136,   158,   -19,   -19,
+      11,   -61,   152,   231,   -61,   -61,   154,   -19,   170,   -61,
+      43,   -61
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int16 yypgoto[] =
 {
-     -60,   -30,   -60,   -17,   -60,   -60,    24,   -60,   -60,    76,
-     -60,   -60,   -60,   -60,   149,   -51,   -60,   -60,   -60,   -60,
-     -60,   -59,   -60,   -60,   -60,   -60,   -60,   -60,   -60,   -60,
-     -60,   -60,   -60,   -60,    -3,   -60,   -60,   -60,   -60,   -60,
-     -60,   -60,   -60,   -60,   -60,   -60,   -60
+     -61,   -30,   -61,    39,   -61,   -61,    54,   -61,   -61,   148,
+     -61,   -61,   -61,   -61,   198,   -58,   -61,   -61,   -61,   -61,
+     -61,   -60,   -61,   -61,   -61,   -61,   -61,   -61,   -61,   -61,
+     -61,   -61,   -61,   -61,    55,   -61,   -61,   -61,   -61,   -61,
+     -61,   -61,   -61,   -61,   -61,   -61,   -61
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]].  What to do in state STATE-NUM.  If
@@ -727,74 +735,82 @@ static const yytype_int16 yypgoto[] =
 #define YYTABLE_NINF -61
 static const yytype_int16 yytable[] =
 {
-      51,    21,    87,     4,     3,    26,    11,    12,     8,     5,
-      42,    10,    28,    29,    45,    46,    30,    62,    63,    64,
-      74,    75,    31,    32,    80,    33,   153,   154,    83,    47,
-      86,    18,    48,    49,    16,    89,    90,    91,    92,    93,
-      94,    95,    96,    97,    98,    99,   -18,   101,   102,   113,
-      20,    22,    45,    46,    24,    50,    25,    27,   -19,   122,
-      41,   124,   132,    43,    44,    54,   128,    47,    56,   131,
-      48,    49,   133,    70,    71,    72,    73,    74,    75,    72,
-      73,    74,    75,   139,   140,    58,    57,   143,   129,    60,
-      77,    78,    81,    79,    84,   -60,   116,   152,   109,   157,
-      65,    66,    67,    68,    69,    70,    71,   142,   110,   163,
-     164,    72,    73,    74,    75,   119,   112,   151,   170,   120,
-      76,   123,    65,    66,    67,    68,    69,    70,    71,   130,
-     134,   135,   165,    72,    73,    74,    75,   136,   141,   162,
-     127,   161,   104,    65,    66,    67,    68,    69,    70,    71,
-     144,   145,   166,   169,    72,    73,    74,    75,   107,   171,
-      88,    65,    66,    67,    68,    69,    70,    71,    23,   173,
-       0,     0,    72,    73,    74,    75,     0,     0,   114,    65,
-      66,    67,    68,    69,    70,    71,     0,     0,     0,     0,
-      72,    73,    74,    75,     0,     0,   115,    65,    66,    67,
-      68,    69,    70,    71,     0,     0,     0,     0,    72,    73,
-      74,    75,     0,     0,   167,   118,    65,    66,    67,    68,
-      69,    70,    71,     0,     0,     0,     0,    72,    73,    74,
-      75,   137,    65,    66,    67,    68,    69,    70,    71,     0,
-       0,     0,     0,    72,    73,    74,    75,   147,    65,    66,
-      67,    68,    69,    70,    71,     0,     0,     0,     0,    72,
-      73,    74,    75,    65,    66,    67,    68,    69,    70,    71,
-       0,     0,     0,     0,    72,    73,    74,    75,    66,    67,
-      68,    69,    70,    71,     0,     0,     0,     0,    72,    73,
-      74,    75,    67,    68,    69,    70,    71,    68,    69,    70,
-      71,    72,    73,    74,    75,    72,    73,    74,    75,    69,
-      70,    71,     0,     0,     0,     0,    72,    73,    74,    75
+      51,    91,    70,    71,    72,    73,    74,    75,    76,    77,
+      78,    79,    28,    29,    45,    46,    30,    62,    63,    64,
+       4,     3,    31,    32,    84,    33,     5,     8,    87,    47,
+      90,    10,    48,    49,    16,    93,    94,    95,    96,    97,
+      98,    99,   100,   101,   102,   103,   104,   105,   106,   107,
+     121,   109,   110,    45,    46,    50,    18,    21,    11,    12,
+     130,    26,   132,    78,    79,   -18,    42,   136,    47,   140,
+     139,    48,    49,   141,    72,    73,    74,    75,    76,    77,
+      78,    79,   161,   162,   147,   148,    20,    22,   151,    76,
+      77,    78,    79,    24,    83,    27,   137,    25,   160,   -19,
+     165,    41,    43,    44,    54,    58,    60,    81,    56,    57,
+     171,   172,    88,    82,    85,   150,   127,   -60,   117,   178,
+     124,   152,   118,   120,   142,   159,    66,    67,    68,    69,
+      70,    71,    72,    73,    74,    75,    76,    77,    78,    79,
+     173,    65,    66,    67,    68,    69,    70,    71,    72,    73,
+      74,    75,    76,    77,    78,    79,   128,   131,   138,   143,
+     144,    80,    65,    66,    67,    68,    69,    70,    71,    72,
+      73,    74,    75,    76,    77,    78,    79,   149,   135,   153,
+     170,   169,   112,    65,    66,    67,    68,    69,    70,    71,
+      72,    73,    74,    75,    76,    77,    78,    79,   174,   177,
+      92,    65,    66,    67,    68,    69,    70,    71,    72,    73,
+      74,    75,    76,    77,    78,    79,   179,    23,   122,    65,
+      66,    67,    68,    69,    70,    71,    72,    73,    74,    75,
+      76,    77,    78,    79,   115,   181,   123,    65,    66,    67,
+      68,    69,    70,    71,    72,    73,    74,    75,    76,    77,
+      78,    79,     0,     0,   175,   126,    65,    66,    67,    68,
+      69,    70,    71,    72,    73,    74,    75,    76,    77,    78,
+      79,   145,    65,    66,    67,    68,    69,    70,    71,    72,
+      73,    74,    75,    76,    77,    78,    79,   155,    65,    66,
+      67,    68,    69,    70,    71,    72,    73,    74,    75,    76,
+      77,    78,    79,    65,    66,    67,    68,    69,    70,    71,
+      72,    73,    74,    75,    76,    77,    78,    79,    67,    68,
+      69,    70,    71,    72,    73,    74,    75,    76,    77,    78,
+      79,    68,    69,    70,    71,    72,    73,    74,    75,    76,
+      77,    78,    79,    69,    70,    71,    72,    73,    74,    75,
+      76,    77,    78,    79
 };
 
 static const yytype_int16 yycheck[] =
 {
-      30,    18,    61,    32,     0,    22,    31,    32,    44,    38,
-      27,    22,    31,    32,     3,     4,    35,    47,    48,    49,
-      19,    20,    41,    42,    54,    44,    39,    40,    58,    18,
-      60,     5,    21,    22,    44,    65,    66,    67,    68,    69,
-      70,    71,    72,    73,    74,    75,     5,    77,    78,   100,
-      23,     5,     3,     4,    45,    44,    44,     5,     5,   110,
-      44,   112,   121,    44,    44,    28,   117,    18,    46,   120,
-      21,    22,   123,    11,    12,    17,    18,    19,    20,    17,
-      18,    19,    20,   134,   135,    28,    44,   138,   118,    28,
-      22,    22,    22,    44,     5,    22,    22,   148,    44,   150,
-       6,     7,     8,     9,    10,    11,    12,   137,    26,   160,
-     161,    17,    18,    19,    20,    23,    26,   147,   169,    26,
-      26,    26,     6,     7,     8,     9,    10,    11,    12,    26,
-      45,    45,   162,    17,    18,    19,    20,    23,    26,    22,
-     116,    45,    26,     6,     7,     8,     9,    10,    11,    12,
-      46,    46,    46,    45,    17,    18,    19,    20,    82,    46,
-      23,     6,     7,     8,     9,    10,    11,    12,    19,   172,
-      -1,    -1,    17,    18,    19,    20,    -1,    -1,    23,     6,
-       7,     8,     9,    10,    11,    12,    -1,    -1,    -1,    -1,
-      17,    18,    19,    20,    -1,    -1,    23,     6,     7,     8,
-       9,    10,    11,    12,    -1,    -1,    -1,    -1,    17,    18,
+      30,    61,    11,    12,    13,    14,    15,    16,    17,    18,
+      19,    20,    31,    32,     3,     4,    35,    47,    48,    49,
+      32,     0,    41,    42,    54,    44,    38,    44,    58,    18,
+      60,    22,    21,    22,    44,    65,    66,    67,    68,    69,
+      70,    71,    72,    73,    74,    75,    76,    77,    78,    79,
+     108,    81,    82,     3,     4,    44,     5,    18,    31,    32,
+     118,    22,   120,    19,    20,     5,    27,   125,    18,   129,
+     128,    21,    22,   131,    13,    14,    15,    16,    17,    18,
+      19,    20,    39,    40,   142,   143,    23,     5,   146,    17,
+      18,    19,    20,    45,    44,     5,   126,    44,   156,     5,
+     158,    44,    44,    44,    28,    28,    28,    22,    46,    44,
+     168,   169,     5,    22,    22,   145,    23,    22,    44,   177,
+      22,    46,    26,    26,    45,   155,     7,     8,     9,    10,
+      11,    12,    13,    14,    15,    16,    17,    18,    19,    20,
+     170,     6,     7,     8,     9,    10,    11,    12,    13,    14,
+      15,    16,    17,    18,    19,    20,    26,    26,    26,    45,
+      23,    26,     6,     7,     8,     9,    10,    11,    12,    13,
+      14,    15,    16,    17,    18,    19,    20,    26,   124,    46,
+      22,    45,    26,     6,     7,     8,     9,    10,    11,    12,
+      13,    14,    15,    16,    17,    18,    19,    20,    46,    45,
+      23,     6,     7,     8,     9,    10,    11,    12,    13,    14,
+      15,    16,    17,    18,    19,    20,    46,    19,    23,     6,
+       7,     8,     9,    10,    11,    12,    13,    14,    15,    16,
+      17,    18,    19,    20,    86,   180,    23,     6,     7,     8,
+       9,    10,    11,    12,    13,    14,    15,    16,    17,    18,
       19,    20,    -1,    -1,    23,     5,     6,     7,     8,     9,
-      10,    11,    12,    -1,    -1,    -1,    -1,    17,    18,    19,
-      20,     5,     6,     7,     8,     9,    10,    11,    12,    -1,
-      -1,    -1,    -1,    17,    18,    19,    20,     5,     6,     7,
-       8,     9,    10,    11,    12,    -1,    -1,    -1,    -1,    17,
+      10,    11,    12,    13,    14,    15,    16,    17,    18,    19,
+      20,     5,     6,     7,     8,     9,    10,    11,    12,    13,
+      14,    15,    16,    17,    18,    19,    20,     5,     6,     7,
+       8,     9,    10,    11,    12,    13,    14,    15,    16,    17,
       18,    19,    20,     6,     7,     8,     9,    10,    11,    12,
-      -1,    -1,    -1,    -1,    17,    18,    19,    20,     7,     8,
-       9,    10,    11,    12,    -1,    -1,    -1,    -1,    17,    18,
-      19,    20,     8,     9,    10,    11,    12,     9,    10,    11,
-      12,    17,    18,    19,    20,    17,    18,    19,    20,    10,
-      11,    12,    -1,    -1,    -1,    -1,    17,    18,    19,    20
+      13,    14,    15,    16,    17,    18,    19,    20,     8,     9,
+      10,    11,    12,    13,    14,    15,    16,    17,    18,    19,
+      20,     9,    10,    11,    12,    13,    14,    15,    16,    17,
+      18,    19,    20,    10,    11,    12,    13,    14,    15,    16,
+      17,    18,    19,    20
 };
 
 /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
@@ -808,17 +824,18 @@ static const yytype_uint8 yystos[] =
       92,    44,    50,    44,    44,     3,     4,    18,    21,    22,
       44,    48,    73,    77,    28,    87,    46,    44,    28,    66,
       28,    64,    48,    48,    48,     6,     7,     8,     9,    10,
-      11,    12,    17,    18,    19,    20,    26,    22,    22,    44,
-      48,    22,    59,    48,     5,    68,    48,    68,    23,    48,
-      48,    48,    48,    48,    48,    48,    48,    48,    48,    48,
-      93,    48,    48,    89,    26,    48,    53,    56,    67,    44,
-      26,    65,    26,    62,    23,    23,    22,    71,     5,    23,
-      26,    69,    62,    26,    62,    74,    78,    53,    62,    48,
-      26,    62,    68,    62,    45,    45,    23,     5,    88,    62,
-      62,    26,    48,    62,    46,    46,    90,     5,    75,    79,
-      91,    48,    62,    39,    40,    81,    85,    62,    86,    82,
-      80,    45,    22,    62,    62,    48,    46,    23,    83,    45,
-      62,    46,    84,    81
+      11,    12,    13,    14,    15,    16,    17,    18,    19,    20,
+      26,    22,    22,    44,    48,    22,    59,    48,     5,    68,
+      48,    68,    23,    48,    48,    48,    48,    48,    48,    48,
+      48,    48,    48,    48,    48,    48,    48,    48,    93,    48,
+      48,    89,    26,    48,    53,    56,    67,    44,    26,    65,
+      26,    62,    23,    23,    22,    71,     5,    23,    26,    69,
+      62,    26,    62,    74,    78,    53,    62,    48,    26,    62,
+      68,    62,    45,    45,    23,     5,    88,    62,    62,    26,
+      48,    62,    46,    46,    90,     5,    75,    79,    91,    48,
+      62,    39,    40,    81,    85,    62,    86,    82,    80,    45,
+      22,    62,    62,    48,    46,    23,    83,    45,    62,    46,
+      84,    81
 };
 
 #define yyerrok		(yyerrstatus = 0)
@@ -1743,9 +1760,7 @@ yyreduce:
 	itoa(GetFreeRegister('a'),num,5);
 	char buffer[10] = {'$', 'a'};
 	strcpy(newvar -> which_reg , strcat(buffer,num));
-	/* datafile = fopen("mips.txt", "a+");
-	fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,0);
-	fclose(datafile); */
+
 		(yyval.ival) = 1;
 		printf("1 parameters %d\n",(yyval.ival));
 ;}
@@ -1754,7 +1769,7 @@ yyreduce:
   case 13:
 
 /* Line 1455 of yacc.c  */
-#line 222 "code.y"
+#line 220 "code.y"
     {
 
 
@@ -1785,7 +1800,7 @@ yyreduce:
   case 14:
 
 /* Line 1455 of yacc.c  */
-#line 247 "code.y"
+#line 245 "code.y"
     {
 
 
@@ -1816,7 +1831,7 @@ yyreduce:
   case 15:
 
 /* Line 1455 of yacc.c  */
-#line 272 "code.y"
+#line 270 "code.y"
     {
 
 
@@ -1847,21 +1862,21 @@ yyreduce:
   case 16:
 
 /* Line 1455 of yacc.c  */
-#line 298 "code.y"
+#line 296 "code.y"
     {strcpy((yyval.sval), "char");;}
     break;
 
   case 17:
 
 /* Line 1455 of yacc.c  */
-#line 298 "code.y"
+#line 296 "code.y"
     { strcpy((yyval.sval), "int");;}
     break;
 
   case 18:
 
 /* Line 1455 of yacc.c  */
-#line 302 "code.y"
+#line 300 "code.y"
     {
 
  struct var *newvar = addvar(&first, &last,(yyvsp[(2) - (2)].sval), (yyvsp[(1) - (2)].sval));
@@ -1889,7 +1904,7 @@ yyreduce:
   case 19:
 
 /* Line 1455 of yacc.c  */
-#line 326 "code.y"
+#line 324 "code.y"
     {
 
 	struct var *newvar = addvar(&first, &last,(yyvsp[(3) - (3)].sval), (yyvsp[(2) - (3)].sval));
@@ -1917,7 +1932,7 @@ yyreduce:
   case 27:
 
 /* Line 1455 of yacc.c  */
-#line 357 "code.y"
+#line 355 "code.y"
     {
 	if(first != NULL){
 		char this_scope[10];
@@ -1983,7 +1998,7 @@ fclose(datafile);
   case 29:
 
 /* Line 1455 of yacc.c  */
-#line 418 "code.y"
+#line 416 "code.y"
     {
 	if(first != NULL){
 		char this_scope[10];
@@ -2080,7 +2095,7 @@ else
   case 31:
 
 /* Line 1455 of yacc.c  */
-#line 509 "code.y"
+#line 507 "code.y"
     {
 	if(first != NULL){
 		char this_scope[10];
@@ -2142,7 +2157,7 @@ fclose(datafile);
   case 33:
 
 /* Line 1455 of yacc.c  */
-#line 566 "code.y"
+#line 564 "code.y"
     {
 	if(first != NULL){
 		char this_scope[10];
@@ -2244,7 +2259,7 @@ fclose(datafile);
   case 36:
 
 /* Line 1455 of yacc.c  */
-#line 663 "code.y"
+#line 661 "code.y"
     {
 		if(first != NULL){
 
@@ -2304,7 +2319,7 @@ fclose(datafile);
   case 38:
 
 /* Line 1455 of yacc.c  */
-#line 718 "code.y"
+#line 716 "code.y"
     {
 
 		if(first != NULL)
@@ -2378,7 +2393,7 @@ else
   case 40:
 
 /* Line 1455 of yacc.c  */
-#line 789 "code.y"
+#line 787 "code.y"
     {
 	char buff[10];
 	label_while_stack_end[label_while_stack_size_end++]=count_label_end;
@@ -2395,7 +2410,7 @@ else
   case 41:
 
 /* Line 1455 of yacc.c  */
-#line 800 "code.y"
+#line 798 "code.y"
     {
 
 		 datafile = fopen("mips.txt", "a+");
@@ -2409,7 +2424,7 @@ else
   case 42:
 
 /* Line 1455 of yacc.c  */
-#line 808 "code.y"
+#line 806 "code.y"
     {
 
 				datafile = fopen("mips.txt", "a+");
@@ -2424,7 +2439,7 @@ else
   case 44:
 
 /* Line 1455 of yacc.c  */
-#line 819 "code.y"
+#line 817 "code.y"
     {
 	char buff[10];
 	sprintf(buff,"if%d",count_label);
@@ -2437,7 +2452,7 @@ else
   case 45:
 
 /* Line 1455 of yacc.c  */
-#line 826 "code.y"
+#line 824 "code.y"
     {
 		datafile = fopen("mips.txt", "a+");
 		label_stack_end[label_stack_size_end++]=count_label_end++;
@@ -2450,7 +2465,7 @@ else
   case 46:
 
 /* Line 1455 of yacc.c  */
-#line 833 "code.y"
+#line 831 "code.y"
     {
 	datafile = fopen("mips.txt", "a+");
 	popStack();
@@ -2464,7 +2479,7 @@ else
   case 47:
 
 /* Line 1455 of yacc.c  */
-#line 841 "code.y"
+#line 839 "code.y"
     {
 		printf("if end\n");
 		datafile = fopen("mips.txt", "a+");
@@ -2477,7 +2492,7 @@ else
   case 49:
 
 /* Line 1455 of yacc.c  */
-#line 849 "code.y"
+#line 847 "code.y"
     {
 	datafile = fopen("mips.txt", "a+");
 
@@ -2495,7 +2510,7 @@ else
   case 50:
 
 /* Line 1455 of yacc.c  */
-#line 861 "code.y"
+#line 859 "code.y"
     {
 	 datafile = fopen("mips.txt", "a+");
 	 label_stack[label_stack_size++]=count_label;
@@ -2507,7 +2522,7 @@ else
   case 51:
 
 /* Line 1455 of yacc.c  */
-#line 867 "code.y"
+#line 865 "code.y"
     {
 		 popStack();
 	 	datafile = fopen("mips.txt", "a+");
@@ -2520,7 +2535,7 @@ else
   case 54:
 
 /* Line 1455 of yacc.c  */
-#line 875 "code.y"
+#line 873 "code.y"
     {
 	datafile = fopen("mips.txt", "a+");
 	fprintf(datafile, "\telse%d:\n",label_stack[label_stack_size-1]);
@@ -2537,7 +2552,7 @@ else
   case 55:
 
 /* Line 1455 of yacc.c  */
-#line 886 "code.y"
+#line 884 "code.y"
     {
 		popStack();
 		printf("else end\n");
@@ -2547,7 +2562,7 @@ else
   case 56:
 
 /* Line 1455 of yacc.c  */
-#line 890 "code.y"
+#line 888 "code.y"
     {
 			datafile = fopen("mips.txt", "a+");
 			printf("--------------------\n");
@@ -2560,7 +2575,7 @@ else
   case 57:
 
 /* Line 1455 of yacc.c  */
-#line 898 "code.y"
+#line 896 "code.y"
     {
 	int flag = -1 ;
 	for(int i=0;i<func_count;i++)
@@ -2589,7 +2604,7 @@ else
   case 58:
 
 /* Line 1455 of yacc.c  */
-#line 921 "code.y"
+#line 919 "code.y"
     {
 		char buff[20];
 	  datafile = fopen("mips.txt", "a+");
@@ -2607,7 +2622,7 @@ else
   case 59:
 
 /* Line 1455 of yacc.c  */
-#line 933 "code.y"
+#line 931 "code.y"
     {
 		int i = 0;
 		for (; i < func_count; i++)
@@ -2626,7 +2641,7 @@ else
   case 60:
 
 /* Line 1455 of yacc.c  */
-#line 946 "code.y"
+#line 944 "code.y"
     {
 	int flag = -1 ;
 	for(int i=0;i<func_count;i++)
@@ -2655,7 +2670,7 @@ else
   case 61:
 
 /* Line 1455 of yacc.c  */
-#line 969 "code.y"
+#line 967 "code.y"
     {
 		char buff[20];
 	  datafile = fopen("mips.txt", "a+");
@@ -2673,7 +2688,7 @@ else
   case 62:
 
 /* Line 1455 of yacc.c  */
-#line 981 "code.y"
+#line 979 "code.y"
     {
 
 	int i = 0;
@@ -2723,7 +2738,7 @@ else
   case 63:
 
 /* Line 1455 of yacc.c  */
-#line 1024 "code.y"
+#line 1022 "code.y"
     {
 		int i = 0;
 		for (; i < func_count; i++)
@@ -2743,7 +2758,7 @@ else
   case 64:
 
 /* Line 1455 of yacc.c  */
-#line 1040 "code.y"
+#line 1038 "code.y"
     {
 	if(founded_func_num != 0 )
 	{
@@ -2760,7 +2775,7 @@ else
   case 65:
 
 /* Line 1455 of yacc.c  */
-#line 1051 "code.y"
+#line 1049 "code.y"
     {
 	if(founded_func_num != 4 )
 	{
@@ -2819,7 +2834,7 @@ else
   case 66:
 
 /* Line 1455 of yacc.c  */
-#line 1104 "code.y"
+#line 1102 "code.y"
     {
 	if(founded_func_num != 3 )
 	{
@@ -2870,7 +2885,7 @@ else
   case 67:
 
 /* Line 1455 of yacc.c  */
-#line 1149 "code.y"
+#line 1147 "code.y"
     {
 	if(founded_func_num != 2 )
 	{
@@ -2914,7 +2929,7 @@ else
   case 68:
 
 /* Line 1455 of yacc.c  */
-#line 1187 "code.y"
+#line 1185 "code.y"
     {
 	if(founded_func_num != 1 )
 	{
@@ -2947,7 +2962,7 @@ else
   case 69:
 
 /* Line 1455 of yacc.c  */
-#line 1215 "code.y"
+#line 1213 "code.y"
     {
 	printf("return\n");
 	if (isnumber((yyvsp[(2) - (3)].sval)) || isalpha((yyvsp[(2) - (3)].sval)[0]))
@@ -3008,9 +3023,99 @@ else
   case 71:
 
 /* Line 1455 of yacc.c  */
-#line 1271 "code.y"
+#line 1269 "code.y"
     {
 	printf("equality condition\n");
+	if (isnumber((yyvsp[(1) - (3)].sval)) || isalpha((yyvsp[(1) - (3)].sval)[0]) || isnumber((yyvsp[(3) - (3)].sval)) || isalpha((yyvsp[(3) - (3)].sval)[0]))
+	{
+		char buffer1[10] = {'$','t'};
+		char buffer2[10] = {'$','t'};
+		char buffer3[10] = {'$', 't'};
+		int new_buffer1 = 0;
+		int new_buffer2 = 0;
+		if (isnumber((yyvsp[(1) - (3)].sval)) || isalpha((yyvsp[(1) - (3)].sval)[0]))
+		{
+			new_buffer1 = 1;
+		char num[5];
+		itoa(GetFreeRegister('t'), num,5);
+
+		strcat(buffer1, num);
+		char buff[50];
+		if (isalpha((yyvsp[(1) - (3)].sval)[0]))
+			sprintf(buff,"addi %s, $zero, %d",buffer1,(yyvsp[(1) - (3)].sval)[0]);
+		else
+			sprintf(buff,"addi %s, $zero, %s",buffer1,(yyvsp[(1) - (3)].sval));
+		datafile = fopen("mips.txt", "a+");
+		fprintf(datafile, "\t%s\n",buff);
+		fclose(datafile);
+		}
+		else
+			sprintf(buffer1, "%s", (yyvsp[(1) - (3)].sval));
+
+		if (isnumber((yyvsp[(3) - (3)].sval)) || isalpha((yyvsp[(3) - (3)].sval)[0]))
+		{
+			new_buffer2 = 1;
+			char num[5];
+			itoa(GetFreeRegister('t'), num,5);
+			strcat(buffer2, num);
+			char buff[50];
+			if (isalpha((yyvsp[(3) - (3)].sval)[0]))
+				sprintf(buff,"addi %s, $zero, %d",buffer2,(yyvsp[(3) - (3)].sval)[0]);
+			else
+				sprintf(buff,"addi %s, $zero, %s",buffer2,(yyvsp[(3) - (3)].sval));
+			datafile = fopen("mips.txt", "a+");
+			fprintf(datafile, "\t%s\n",buff);
+			fclose(datafile);
+		}
+		else
+			sprintf(buffer2, "%s", (yyvsp[(3) - (3)].sval));
+
+		char num[5];
+		itoa(GetFreeRegister('t'), num,5);
+		strcat(buffer3, num);
+
+		char buff[20];
+		sprintf(buff,"seq %s,%s,%s",buffer3,buffer1,buffer2);
+		if (new_buffer1)
+		freereg(buffer1);
+		if (new_buffer2)
+		freereg(buffer2);
+		datafile = fopen("mips.txt", "a+");
+
+
+
+		fprintf(datafile, "\t%s\n",buff);
+		fclose(datafile);
+
+		sprintf((yyval.sval),"%s",buffer3);
+	}
+	else{
+	char num[5];
+	itoa(GetFreeRegister('t'), num,5);
+	char buffer[10] = {'$','t'};
+	strcat(buffer, num);
+
+	char buff[20];
+	sprintf(buff,"seq %s,%s,%s",buffer,(yyvsp[(1) - (3)].sval),(yyvsp[(3) - (3)].sval));
+
+	datafile = fopen("mips.txt", "a+");
+	fprintf(datafile, "\t%s\n",buff);
+	fclose(datafile);
+
+
+	sprintf((yyval.sval),"%s",buffer);
+
+	}
+
+;}
+    break;
+
+  case 72:
+
+/* Line 1455 of yacc.c  */
+#line 1353 "code.y"
+    {
+	printf("inequality condition\n");
 	if (isnumber((yyvsp[(1) - (3)].sval)) || isalpha((yyvsp[(1) - (3)].sval)[0]) || isnumber((yyvsp[(3) - (3)].sval)) || isalpha((yyvsp[(3) - (3)].sval)[0]))
 	{
 		char buffer1[10] = {'$','t'};
@@ -3095,17 +3200,10 @@ else
 ;}
     break;
 
-  case 72:
-
-/* Line 1455 of yacc.c  */
-#line 1355 "code.y"
-    {printf("notequality\n"); sprintf((yyval.sval),"%d",(yyvsp[(1) - (3)].sval) != (yyvsp[(3) - (3)].sval));;}
-    break;
-
   case 73:
 
 /* Line 1455 of yacc.c  */
-#line 1356 "code.y"
+#line 1437 "code.y"
     {
 	datafile = fopen("mips.txt", "a+");
 	char num[5];
@@ -3158,7 +3256,7 @@ else
   case 74:
 
 /* Line 1455 of yacc.c  */
-#line 1403 "code.y"
+#line 1484 "code.y"
     {
 		datafile = fopen("mips.txt", "a+");
 
@@ -3209,7 +3307,7 @@ else
   case 75:
 
 /* Line 1455 of yacc.c  */
-#line 1448 "code.y"
+#line 1529 "code.y"
     {
 			datafile = fopen("mips.txt", "a+");
 
@@ -3265,7 +3363,7 @@ else
   case 76:
 
 /* Line 1455 of yacc.c  */
-#line 1498 "code.y"
+#line 1579 "code.y"
     {
 				datafile = fopen("mips.txt", "a+");
 
@@ -3321,7 +3419,7 @@ else
   case 77:
 
 /* Line 1455 of yacc.c  */
-#line 1548 "code.y"
+#line 1629 "code.y"
     {
 	printf("int literal\n");
 	char buff[10];
@@ -3333,56 +3431,901 @@ else
   case 78:
 
 /* Line 1455 of yacc.c  */
-#line 1554 "code.y"
-    {printf("conditional and\n");  sprintf((yyval.sval),"%d",(yyvsp[(1) - (3)].sval) && (yyvsp[(3) - (3)].sval));;}
+#line 1635 "code.y"
+    {
+	printf("less than condition\n");
+	if (isnumber((yyvsp[(1) - (3)].sval)) || isalpha((yyvsp[(1) - (3)].sval)[0]) || isnumber((yyvsp[(3) - (3)].sval)) || isalpha((yyvsp[(3) - (3)].sval)[0]))
+	{
+		char buffer1[10] = {'$','t'};
+		char buffer2[10] = {'$','t'};
+		char buffer3[10] = {'$', 't'};
+		int new_buffer1 = 0;
+		int new_buffer2 = 0;
+		if (isnumber((yyvsp[(1) - (3)].sval)) || isalpha((yyvsp[(1) - (3)].sval)[0]))
+		{
+			new_buffer1 = 1;
+		char num[5];
+		itoa(GetFreeRegister('t'), num,5);
+
+		strcat(buffer1, num);
+		char buff[50];
+		if (isalpha((yyvsp[(1) - (3)].sval)[0]))
+			sprintf(buff,"addi %s, $zero, %d",buffer1,(yyvsp[(1) - (3)].sval)[0]);
+		else
+			sprintf(buff,"addi %s, $zero, %s",buffer1,(yyvsp[(1) - (3)].sval));
+		datafile = fopen("mips.txt", "a+");
+		fprintf(datafile, "\t%s\n",buff);
+		fclose(datafile);
+		}
+		else
+			sprintf(buffer1, "%s", (yyvsp[(1) - (3)].sval));
+
+		if (isnumber((yyvsp[(3) - (3)].sval)) || isalpha((yyvsp[(3) - (3)].sval)[0]))
+		{
+			new_buffer2 = 1;
+			char num[5];
+			itoa(GetFreeRegister('t'), num,5);
+			strcat(buffer2, num);
+			char buff[50];
+			if (isalpha((yyvsp[(3) - (3)].sval)[0]))
+				sprintf(buff,"addi %s, $zero, %d",buffer2,(yyvsp[(3) - (3)].sval)[0]);
+			else
+				sprintf(buff,"addi %s, $zero, %s",buffer2,(yyvsp[(3) - (3)].sval));
+			datafile = fopen("mips.txt", "a+");
+			fprintf(datafile, "\t%s\n",buff);
+			fclose(datafile);
+		}
+		else
+			sprintf(buffer2, "%s", (yyvsp[(3) - (3)].sval));
+
+		char num[5];
+		itoa(GetFreeRegister('t'), num,5);
+		strcat(buffer3, num);
+
+		char buff[20];
+		sprintf(buff,"slt %s,%s,%s",buffer3,buffer1,buffer2);
+		if (new_buffer1)
+		freereg(buffer1);
+		if (new_buffer2)
+		freereg(buffer2);
+		datafile = fopen("mips.txt", "a+");
+
+
+
+		fprintf(datafile, "\t%s\n",buff);
+		fclose(datafile);
+
+		sprintf((yyval.sval),"%s",buffer3);
+	}
+	else{
+	char num[5];
+	itoa(GetFreeRegister('t'), num,5);
+	char buffer[10] = {'$','t'};
+	strcat(buffer, num);
+
+	char buff[20];
+	sprintf(buff,"slt %s,%s,%s",buffer,(yyvsp[(1) - (3)].sval),(yyvsp[(3) - (3)].sval));
+
+	datafile = fopen("mips.txt", "a+");
+	fprintf(datafile, "\t%s\n",buff);
+	fclose(datafile);
+
+
+	sprintf((yyval.sval),"%s",buffer);
+
+	}
+
+;}
     break;
 
   case 79:
 
 /* Line 1455 of yacc.c  */
-#line 1555 "code.y"
-    {printf("nonditional or\n"); sprintf((yyval.sval),"%d",(yyvsp[(1) - (3)].sval) || (yyvsp[(3) - (3)].sval));;}
+#line 1719 "code.y"
+    {
+	printf("greater than condition\n");
+	if (isnumber((yyvsp[(1) - (3)].sval)) || isalpha((yyvsp[(1) - (3)].sval)[0]) || isnumber((yyvsp[(3) - (3)].sval)) || isalpha((yyvsp[(3) - (3)].sval)[0]))
+	{
+		char buffer1[10] = {'$','t'};
+		char buffer2[10] = {'$','t'};
+		char buffer3[10] = {'$', 't'};
+		int new_buffer1 = 0;
+		int new_buffer2 = 0;
+		if (isnumber((yyvsp[(1) - (3)].sval)) || isalpha((yyvsp[(1) - (3)].sval)[0]))
+		{
+			new_buffer1 = 1;
+		char num[5];
+		itoa(GetFreeRegister('t'), num,5);
+
+		strcat(buffer1, num);
+		char buff[50];
+		if (isalpha((yyvsp[(1) - (3)].sval)[0]))
+			sprintf(buff,"addi %s, $zero, %d",buffer1,(yyvsp[(1) - (3)].sval)[0]);
+		else
+			sprintf(buff,"addi %s, $zero, %s",buffer1,(yyvsp[(1) - (3)].sval));
+		datafile = fopen("mips.txt", "a+");
+		fprintf(datafile, "\t%s\n",buff);
+		fclose(datafile);
+		}
+		else
+			sprintf(buffer1, "%s", (yyvsp[(1) - (3)].sval));
+
+		if (isnumber((yyvsp[(3) - (3)].sval)) || isalpha((yyvsp[(3) - (3)].sval)[0]))
+		{
+			new_buffer2 = 1;
+			char num[5];
+			itoa(GetFreeRegister('t'), num,5);
+			strcat(buffer2, num);
+			char buff[50];
+			if (isalpha((yyvsp[(3) - (3)].sval)[0]))
+				sprintf(buff,"addi %s, $zero, %d",buffer2,(yyvsp[(3) - (3)].sval)[0]);
+			else
+				sprintf(buff,"addi %s, $zero, %s",buffer2,(yyvsp[(3) - (3)].sval));
+			datafile = fopen("mips.txt", "a+");
+			fprintf(datafile, "\t%s\n",buff);
+			fclose(datafile);
+		}
+		else
+			sprintf(buffer2, "%s", (yyvsp[(3) - (3)].sval));
+
+		char num[5];
+		itoa(GetFreeRegister('t'), num,5);
+		strcat(buffer3, num);
+
+		char buff[20];
+		sprintf(buff,"sgt %s,%s,%s",buffer3,buffer1,buffer2);
+		if (new_buffer1)
+		freereg(buffer1);
+		if (new_buffer2)
+		freereg(buffer2);
+		datafile = fopen("mips.txt", "a+");
+
+
+
+		fprintf(datafile, "\t%s\n",buff);
+		fclose(datafile);
+
+		sprintf((yyval.sval),"%s",buffer3);
+	}
+	else{
+	char num[5];
+	itoa(GetFreeRegister('t'), num,5);
+	char buffer[10] = {'$','t'};
+	strcat(buffer, num);
+
+	char buff[20];
+	sprintf(buff,"sgt %s,%s,%s",buffer,(yyvsp[(1) - (3)].sval),(yyvsp[(3) - (3)].sval));
+
+	datafile = fopen("mips.txt", "a+");
+	fprintf(datafile, "\t%s\n",buff);
+	fclose(datafile);
+
+
+	sprintf((yyval.sval),"%s",buffer);
+
+	}
+
+;}
     break;
 
   case 80:
 
 /* Line 1455 of yacc.c  */
-#line 1556 "code.y"
-    {printf("logical or\n"); sprintf((yyval.sval),"%d",atoi((yyvsp[(1) - (3)].sval)) | atoi((yyvsp[(3) - (3)].sval)));;}
+#line 1802 "code.y"
+    {
+	printf("greater than or equal to condition\n");
+	if (isnumber((yyvsp[(1) - (3)].sval)) || isalpha((yyvsp[(1) - (3)].sval)[0]) || isnumber((yyvsp[(3) - (3)].sval)) || isalpha((yyvsp[(3) - (3)].sval)[0]))
+	{
+		char buffer1[10] = {'$','t'};
+		char buffer2[10] = {'$','t'};
+		char buffer3[10] = {'$', 't'};
+		char buffer4[10] = {'$', 't'};
+		int new_buffer1 = 0;
+		int new_buffer2 = 0;
+		if (isnumber((yyvsp[(1) - (3)].sval)) || isalpha((yyvsp[(1) - (3)].sval)[0]))
+		{
+			new_buffer1 = 1;
+		char num[5];
+		itoa(GetFreeRegister('t'), num,5);
+
+		strcat(buffer1, num);
+		char buff[50];
+		if (isalpha((yyvsp[(1) - (3)].sval)[0]))
+			sprintf(buff,"addi %s, $zero, %d",buffer1,(yyvsp[(1) - (3)].sval)[0]);
+		else
+			sprintf(buff,"addi %s, $zero, %s",buffer1,(yyvsp[(1) - (3)].sval));
+		datafile = fopen("mips.txt", "a+");
+		fprintf(datafile, "\t%s\n",buff);
+		fclose(datafile);
+		}
+		else
+			sprintf(buffer1, "%s", (yyvsp[(1) - (3)].sval));
+
+		if (isnumber((yyvsp[(3) - (3)].sval)) || isalpha((yyvsp[(3) - (3)].sval)[0]))
+		{
+			new_buffer2 = 1;
+			char num[5];
+			itoa(GetFreeRegister('t'), num,5);
+			strcat(buffer2, num);
+			char buff[50];
+			if (isalpha((yyvsp[(3) - (3)].sval)[0]))
+				sprintf(buff,"addi %s, $zero, %d",buffer2,(yyvsp[(3) - (3)].sval)[0]);
+			else
+				sprintf(buff,"addi %s, $zero, %s",buffer2,(yyvsp[(3) - (3)].sval));
+			datafile = fopen("mips.txt", "a+");
+			fprintf(datafile, "\t%s\n",buff);
+			fclose(datafile);
+		}
+		else
+			sprintf(buffer2, "%s", (yyvsp[(3) - (3)].sval));
+
+		char num[5];
+		itoa(GetFreeRegister('t'), num,5);
+		strcat(buffer3, num);
+
+		itoa(GetFreeRegister('t'), num,5);
+		strcat(buffer4, num);
+
+		datafile = fopen("mips.txt", "a+");
+		char buff[20];
+		sprintf(buff,"slt %s,%s,%s",buffer3,buffer1,buffer2);
+		fprintf(datafile, "\t%s\n",buff);
+		sprintf(buff,"seq %s,%s,%s",buffer4,buffer1,buffer2);
+		fprintf(datafile, "\t%s\n",buff);
+		sprintf(buff,"or %s,%s,%s", buffer4, buffer3, buffer4);
+		fprintf(datafile, "\t%s\n",buff);
+		fclose(datafile);
+
+		if (new_buffer1)
+		freereg(buffer1);
+		if (new_buffer2)
+		freereg(buffer2);
+
+		freereg(buffer3);
+
+
+		sprintf((yyval.sval),"%s",buffer4);
+	}
+	else{
+	char num[5];
+	itoa(GetFreeRegister('t'), num,5);
+	char buffer1[10] = {'$','t'};
+	strcat(buffer1, num);
+
+	itoa(GetFreeRegister('t'), num,5);
+	char buffer2[10] = {'$','t'};
+	strcat(buffer2, num);
+
+	datafile = fopen("mips.txt", "a+");
+
+	char buff[20];
+	sprintf(buff,"slt %s,%s,%s",buffer1,(yyvsp[(1) - (3)].sval),(yyvsp[(3) - (3)].sval));
+	fprintf(datafile, "\t%s\n",buff);
+	sprintf(buff,"seq %s,%s,%s",buffer2,(yyvsp[(1) - (3)].sval),(yyvsp[(3) - (3)].sval));
+	fprintf(datafile, "\t%s\n",buff);
+	sprintf(buff,"or %s,%s,%s",buffer2, buffer1, buffer2);
+	fprintf(datafile, "\t%s\n",buff);
+	fclose(datafile);
+
+	freereg(buffer1);
+	sprintf((yyval.sval),"%s",buffer2);
+
+	}
+
+;}
     break;
 
   case 81:
 
 /* Line 1455 of yacc.c  */
-#line 1557 "code.y"
-    {printf("logical and\n"); sprintf((yyval.sval),"%d",atoi((yyvsp[(1) - (3)].sval)) & atoi((yyvsp[(3) - (3)].sval)));;}
+#line 1903 "code.y"
+    {
+	printf("greater than or equal to condition\n");
+	if (isnumber((yyvsp[(1) - (3)].sval)) || isalpha((yyvsp[(1) - (3)].sval)[0]) || isnumber((yyvsp[(3) - (3)].sval)) || isalpha((yyvsp[(3) - (3)].sval)[0]))
+	{
+		char buffer1[10] = {'$','t'};
+		char buffer2[10] = {'$','t'};
+		char buffer3[10] = {'$', 't'};
+		char buffer4[10] = {'$', 't'};
+		int new_buffer1 = 0;
+		int new_buffer2 = 0;
+		if (isnumber((yyvsp[(1) - (3)].sval)) || isalpha((yyvsp[(1) - (3)].sval)[0]))
+		{
+			new_buffer1 = 1;
+		char num[5];
+		itoa(GetFreeRegister('t'), num,5);
+
+		strcat(buffer1, num);
+		char buff[50];
+		if (isalpha((yyvsp[(1) - (3)].sval)[0]))
+			sprintf(buff,"addi %s, $zero, %d",buffer1,(yyvsp[(1) - (3)].sval)[0]);
+		else
+			sprintf(buff,"addi %s, $zero, %s",buffer1,(yyvsp[(1) - (3)].sval));
+		datafile = fopen("mips.txt", "a+");
+		fprintf(datafile, "\t%s\n",buff);
+		fclose(datafile);
+		}
+		else
+			sprintf(buffer1, "%s", (yyvsp[(1) - (3)].sval));
+
+		if (isnumber((yyvsp[(3) - (3)].sval)) || isalpha((yyvsp[(3) - (3)].sval)[0]))
+		{
+			new_buffer2 = 1;
+			char num[5];
+			itoa(GetFreeRegister('t'), num,5);
+			strcat(buffer2, num);
+			char buff[50];
+			if (isalpha((yyvsp[(3) - (3)].sval)[0]))
+				sprintf(buff,"addi %s, $zero, %d",buffer2,(yyvsp[(3) - (3)].sval)[0]);
+			else
+				sprintf(buff,"addi %s, $zero, %s",buffer2,(yyvsp[(3) - (3)].sval));
+			datafile = fopen("mips.txt", "a+");
+			fprintf(datafile, "\t%s\n",buff);
+			fclose(datafile);
+		}
+		else
+			sprintf(buffer2, "%s", (yyvsp[(3) - (3)].sval));
+
+		char num[5];
+		itoa(GetFreeRegister('t'), num,5);
+		strcat(buffer3, num);
+
+		itoa(GetFreeRegister('t'), num,5);
+		strcat(buffer4, num);
+
+		datafile = fopen("mips.txt", "a+");
+		char buff[20];
+		sprintf(buff,"sgt %s,%s,%s",buffer3,buffer1,buffer2);
+		fprintf(datafile, "\t%s\n",buff);
+		sprintf(buff,"seq %s,%s,%s",buffer4,buffer1,buffer2);
+		fprintf(datafile, "\t%s\n",buff);
+		sprintf(buff,"or %s,%s,%s", buffer4, buffer3, buffer4);
+		fprintf(datafile, "\t%s\n",buff);
+		fclose(datafile);
+
+		if (new_buffer1)
+		freereg(buffer1);
+		if (new_buffer2)
+		freereg(buffer2);
+
+		freereg(buffer3);
+
+
+		sprintf((yyval.sval),"%s",buffer4);
+	}
+	else{
+	char num[5];
+	itoa(GetFreeRegister('t'), num,5);
+	char buffer1[10] = {'$','t'};
+	strcat(buffer1, num);
+
+	itoa(GetFreeRegister('t'), num,5);
+	char buffer2[10] = {'$','t'};
+	strcat(buffer2, num);
+
+	datafile = fopen("mips.txt", "a+");
+
+	char buff[20];
+	sprintf(buff,"sgt %s,%s,%s",buffer1,(yyvsp[(1) - (3)].sval),(yyvsp[(3) - (3)].sval));
+	fprintf(datafile, "\t%s\n",buff);
+	sprintf(buff,"seq %s,%s,%s",buffer2,(yyvsp[(1) - (3)].sval),(yyvsp[(3) - (3)].sval));
+	fprintf(datafile, "\t%s\n",buff);
+	sprintf(buff,"or %s,%s,%s",buffer2, buffer1, buffer2);
+	fprintf(datafile, "\t%s\n",buff);
+	fclose(datafile);
+
+	freereg(buffer1);
+	sprintf((yyval.sval),"%s",buffer2);
+
+	}
+
+;}
     break;
 
   case 82:
 
 /* Line 1455 of yacc.c  */
-#line 1558 "code.y"
-    {printf("logical xor\n"); sprintf((yyval.sval),"%d",atoi((yyvsp[(1) - (3)].sval)) ^ atoi((yyvsp[(3) - (3)].sval)));;}
+#line 2004 "code.y"
+    {
+	printf("and conditions\n");
+	if (isnumber((yyvsp[(1) - (3)].sval)) || isalpha((yyvsp[(1) - (3)].sval)[0]) || isnumber((yyvsp[(3) - (3)].sval)) || isalpha((yyvsp[(3) - (3)].sval)[0]))
+	{
+		char buffer1[10] = {'$','t'};
+		char buffer2[10] = {'$','t'};
+		char buffer3[10] = {'$', 't'};
+		char buffer4[10] = {'$', 't'};
+		int new_buffer1 = 0;
+		int new_buffer2 = 0;
+		if (isnumber((yyvsp[(1) - (3)].sval)) || isalpha((yyvsp[(1) - (3)].sval)[0]))
+		{
+			new_buffer1 = 1;
+		char num[5];
+		itoa(GetFreeRegister('t'), num,5);
+
+		strcat(buffer1, num);
+		char buff[50];
+		if (isalpha((yyvsp[(1) - (3)].sval)[0]))
+			sprintf(buff,"addi %s, $zero, %d",buffer1,(yyvsp[(1) - (3)].sval)[0]);
+		else
+			sprintf(buff,"addi %s, $zero, %s",buffer1,(yyvsp[(1) - (3)].sval));
+		datafile = fopen("mips.txt", "a+");
+		fprintf(datafile, "\t%s\n",buff);
+		fclose(datafile);
+		}
+		else
+			sprintf(buffer1, "%s", (yyvsp[(1) - (3)].sval));
+
+		if (isnumber((yyvsp[(3) - (3)].sval)) || isalpha((yyvsp[(3) - (3)].sval)[0]))
+		{
+			new_buffer2 = 1;
+			char num[5];
+			itoa(GetFreeRegister('t'), num,5);
+			strcat(buffer2, num);
+			char buff[50];
+			if (isalpha((yyvsp[(3) - (3)].sval)[0]))
+				sprintf(buff,"addi %s, $zero, %d",buffer2,(yyvsp[(3) - (3)].sval)[0]);
+			else
+				sprintf(buff,"addi %s, $zero, %s",buffer2,(yyvsp[(3) - (3)].sval));
+			datafile = fopen("mips.txt", "a+");
+			fprintf(datafile, "\t%s\n",buff);
+			fclose(datafile);
+		}
+		else
+			sprintf(buffer2, "%s", (yyvsp[(3) - (3)].sval));
+
+		char num[5];
+		itoa(GetFreeRegister('t'), num,5);
+		strcat(buffer3, num);
+
+		itoa(GetFreeRegister('t'), num,5);
+		strcat(buffer4, num);
+
+		datafile = fopen("mips.txt", "a+");
+		char buff[20];
+		sprintf(buff,"sgt %s,%s,$zero",buffer3,buffer1);
+		fprintf(datafile, "\t%s\n",buff);
+		sprintf(buff,"sgt %s,%s,$zero",buffer4,buffer2);
+		fprintf(datafile, "\t%s\n",buff);
+		sprintf(buff,"and %s, %s, %s",buffer4,buffer4,buffer3);
+		fprintf(datafile, "\t%s\n",buff);
+		fclose(datafile);
+
+
+		if (new_buffer1)
+		freereg(buffer1);
+		if (new_buffer2)
+		freereg(buffer2);
+
+		freereg(buffer3);
+
+		sprintf((yyval.sval),"%s",buffer4);
+	}
+	else{
+	char num[5];
+	itoa(GetFreeRegister('t'), num,5);
+	char buffer[10] = {'$','t'};
+	strcat(buffer, num);
+
+	itoa(GetFreeRegister('t'), num,5);
+	char buffer1[10] = {'$','t'};
+	strcat(buffer, num);
+
+	char buff[20];
+	datafile = fopen("mips.txt", "a+");
+	sprintf(buff,"sgt %s, %s, $zero",buffer,(yyvsp[(1) - (3)].sval));
+	fprintf(datafile, "\t%s\n",buff);
+	sprintf(buff,"sgt %s, %s, ,$zero", buffer1, (yyvsp[(3) - (3)].sval));
+	fprintf(datafile, "\t%s\n",buff);
+	sprintf(buff,"and %s, %s, %s", buffer1, buffer1, buffer);
+	fprintf(datafile, "\t%s\n",buff);
+
+	fclose(datafile);
+
+	freereg(buffer);
+
+	sprintf((yyval.sval),"%s",buffer1);
+
+	}
+
+;}
     break;
 
   case 83:
 
 /* Line 1455 of yacc.c  */
-#line 1559 "code.y"
-    {printf("logical not\n"); sprintf((yyval.sval),"%d", !(yyvsp[(2) - (2)].sval));;}
+#line 2106 "code.y"
+    {
+	printf("and conditions\n");
+	if (isnumber((yyvsp[(1) - (3)].sval)) || isalpha((yyvsp[(1) - (3)].sval)[0]) || isnumber((yyvsp[(3) - (3)].sval)) || isalpha((yyvsp[(3) - (3)].sval)[0]))
+	{
+		char buffer1[10] = {'$','t'};
+		char buffer2[10] = {'$','t'};
+		char buffer3[10] = {'$', 't'};
+		char buffer4[10] = {'$', 't'};
+		int new_buffer1 = 0;
+		int new_buffer2 = 0;
+		if (isnumber((yyvsp[(1) - (3)].sval)) || isalpha((yyvsp[(1) - (3)].sval)[0]))
+		{
+			new_buffer1 = 1;
+		char num[5];
+		itoa(GetFreeRegister('t'), num,5);
+
+		strcat(buffer1, num);
+		char buff[50];
+		if (isalpha((yyvsp[(1) - (3)].sval)[0]))
+			sprintf(buff,"addi %s, $zero, %d",buffer1,(yyvsp[(1) - (3)].sval)[0]);
+		else
+			sprintf(buff,"addi %s, $zero, %s",buffer1,(yyvsp[(1) - (3)].sval));
+		datafile = fopen("mips.txt", "a+");
+		fprintf(datafile, "\t%s\n",buff);
+		fclose(datafile);
+		}
+		else
+			sprintf(buffer1, "%s", (yyvsp[(1) - (3)].sval));
+
+		if (isnumber((yyvsp[(3) - (3)].sval)) || isalpha((yyvsp[(3) - (3)].sval)[0]))
+		{
+			new_buffer2 = 1;
+			char num[5];
+			itoa(GetFreeRegister('t'), num,5);
+			strcat(buffer2, num);
+			char buff[50];
+			if (isalpha((yyvsp[(3) - (3)].sval)[0]))
+				sprintf(buff,"addi %s, $zero, %d",buffer2,(yyvsp[(3) - (3)].sval)[0]);
+			else
+				sprintf(buff,"addi %s, $zero, %s",buffer2,(yyvsp[(3) - (3)].sval));
+			datafile = fopen("mips.txt", "a+");
+			fprintf(datafile, "\t%s\n",buff);
+			fclose(datafile);
+		}
+		else
+			sprintf(buffer2, "%s", (yyvsp[(3) - (3)].sval));
+
+		char num[5];
+		itoa(GetFreeRegister('t'), num,5);
+		strcat(buffer3, num);
+
+		itoa(GetFreeRegister('t'), num,5);
+		strcat(buffer4, num);
+
+		datafile = fopen("mips.txt", "a+");
+		char buff[20];
+		sprintf(buff,"sgt %s,%s,$zero",buffer3,buffer1);
+		fprintf(datafile, "\t%s\n",buff);
+		sprintf(buff,"sgt %s,%s,$zero",buffer4,buffer2);
+		fprintf(datafile, "\t%s\n",buff);
+		sprintf(buff,"or %s, %s, %s",buffer4,buffer4,buffer3);
+		fprintf(datafile, "\t%s\n",buff);
+		fclose(datafile);
+
+
+		if (new_buffer1)
+		freereg(buffer1);
+		if (new_buffer2)
+		freereg(buffer2);
+
+		freereg(buffer3);
+
+		sprintf((yyval.sval),"%s",buffer4);
+	}
+	else{
+	char num[5];
+	itoa(GetFreeRegister('t'), num,5);
+	char buffer[10] = {'$','t'};
+	strcat(buffer, num);
+
+	itoa(GetFreeRegister('t'), num,5);
+	char buffer1[10] = {'$','t'};
+	strcat(buffer, num);
+
+	char buff[20];
+	datafile = fopen("mips.txt", "a+");
+	sprintf(buff,"sgt %s, %s, $zero",buffer,(yyvsp[(1) - (3)].sval));
+	fprintf(datafile, "\t%s\n",buff);
+	sprintf(buff,"sgt %s, %s, ,$zero", buffer1, (yyvsp[(3) - (3)].sval));
+	fprintf(datafile, "\t%s\n",buff);
+	sprintf(buff,"or %s, %s, %s", buffer1, buffer1, buffer);
+	fprintf(datafile, "\t%s\n",buff);
+
+	fclose(datafile);
+
+	freereg(buffer);
+
+	sprintf((yyval.sval),"%s",buffer1);
+
+	}
+
+;}
     break;
 
   case 84:
 
 /* Line 1455 of yacc.c  */
-#line 1560 "code.y"
-    {printf("parantheses\n");  sprintf((yyval.sval),"%s",(yyvsp[(2) - (3)].sval));;}
+#line 2208 "code.y"
+    {
+	printf("logical or\n");
+	if (isnumber((yyvsp[(1) - (3)].sval)) || isalpha((yyvsp[(1) - (3)].sval)[0]) || isnumber((yyvsp[(3) - (3)].sval)) || isalpha((yyvsp[(3) - (3)].sval)[0]))
+	{
+		char buffer1[10] = {'$','t'};
+		char buffer2[10] = {'$','t'};
+		char buffer3[10] = {'$', 't'};
+		int new_buffer1 = 0;
+		int new_buffer2 = 0;
+		if (isnumber((yyvsp[(1) - (3)].sval)) || isalpha((yyvsp[(1) - (3)].sval)[0]))
+		{
+			new_buffer1 = 1;
+		char num[5];
+		itoa(GetFreeRegister('t'), num,5);
+
+		strcat(buffer1, num);
+		char buff[50];
+		if (isalpha((yyvsp[(1) - (3)].sval)[0]))
+			sprintf(buff,"addi %s, $zero, %d",buffer1,(yyvsp[(1) - (3)].sval)[0]);
+		else
+			sprintf(buff,"addi %s, $zero, %s",buffer1,(yyvsp[(1) - (3)].sval));
+		datafile = fopen("mips.txt", "a+");
+		fprintf(datafile, "\t%s\n",buff);
+		fclose(datafile);
+		}
+		else
+			sprintf(buffer1, "%s", (yyvsp[(1) - (3)].sval));
+
+		if (isnumber((yyvsp[(3) - (3)].sval)) || isalpha((yyvsp[(3) - (3)].sval)[0]))
+		{
+			new_buffer2 = 1;
+			char num[5];
+			itoa(GetFreeRegister('t'), num,5);
+			strcat(buffer2, num);
+			char buff[50];
+			if (isalpha((yyvsp[(3) - (3)].sval)[0]))
+				sprintf(buff,"addi %s, $zero, %d",buffer2,(yyvsp[(3) - (3)].sval)[0]);
+			else
+				sprintf(buff,"addi %s, $zero, %s",buffer2,(yyvsp[(3) - (3)].sval));
+			datafile = fopen("mips.txt", "a+");
+			fprintf(datafile, "\t%s\n",buff);
+			fclose(datafile);
+		}
+		else
+			sprintf(buffer2, "%s", (yyvsp[(3) - (3)].sval));
+
+		char num[5];
+		itoa(GetFreeRegister('t'), num,5);
+		strcat(buffer3, num);
+
+		char buff[20];
+		sprintf(buff,"and %s,%s,%s",buffer3,buffer1,buffer2);
+		if (new_buffer1)
+		freereg(buffer1);
+		if (new_buffer2)
+		freereg(buffer2);
+		datafile = fopen("mips.txt", "a+");
+
+
+
+		fprintf(datafile, "\t%s\n",buff);
+		fclose(datafile);
+
+		sprintf((yyval.sval),"%s",buffer3);
+	}
+	else{
+	char num[5];
+	itoa(GetFreeRegister('t'), num,5);
+	char buffer[10] = {'$','t'};
+	strcat(buffer, num);
+
+	char buff[20];
+	sprintf(buff,"and %s,%s,%s",buffer,(yyvsp[(1) - (3)].sval),(yyvsp[(3) - (3)].sval));
+
+	datafile = fopen("mips.txt", "a+");
+	fprintf(datafile, "\t%s\n",buff);
+	fclose(datafile);
+
+
+	sprintf((yyval.sval),"%s",buffer);
+
+	}
+
+;}
     break;
 
   case 85:
 
 /* Line 1455 of yacc.c  */
-#line 1561 "code.y"
+#line 2292 "code.y"
+    {
+	printf("logical and\n");
+	if (isnumber((yyvsp[(1) - (3)].sval)) || isalpha((yyvsp[(1) - (3)].sval)[0]) || isnumber((yyvsp[(3) - (3)].sval)) || isalpha((yyvsp[(3) - (3)].sval)[0]))
+	{
+		char buffer1[10] = {'$','t'};
+		char buffer2[10] = {'$','t'};
+		char buffer3[10] = {'$', 't'};
+		int new_buffer1 = 0;
+		int new_buffer2 = 0;
+		if (isnumber((yyvsp[(1) - (3)].sval)) || isalpha((yyvsp[(1) - (3)].sval)[0]))
+		{
+			new_buffer1 = 1;
+		char num[5];
+		itoa(GetFreeRegister('t'), num,5);
+
+		strcat(buffer1, num);
+		char buff[50];
+		if (isalpha((yyvsp[(1) - (3)].sval)[0]))
+			sprintf(buff,"addi %s, $zero, %d",buffer1,(yyvsp[(1) - (3)].sval)[0]);
+		else
+			sprintf(buff,"addi %s, $zero, %s",buffer1,(yyvsp[(1) - (3)].sval));
+		datafile = fopen("mips.txt", "a+");
+		fprintf(datafile, "\t%s\n",buff);
+		fclose(datafile);
+		}
+		else
+			sprintf(buffer1, "%s", (yyvsp[(1) - (3)].sval));
+
+		if (isnumber((yyvsp[(3) - (3)].sval)) || isalpha((yyvsp[(3) - (3)].sval)[0]))
+		{
+			new_buffer2 = 1;
+			char num[5];
+			itoa(GetFreeRegister('t'), num,5);
+			strcat(buffer2, num);
+			char buff[50];
+			if (isalpha((yyvsp[(3) - (3)].sval)[0]))
+				sprintf(buff,"addi %s, $zero, %d",buffer2,(yyvsp[(3) - (3)].sval)[0]);
+			else
+				sprintf(buff,"addi %s, $zero, %s",buffer2,(yyvsp[(3) - (3)].sval));
+			datafile = fopen("mips.txt", "a+");
+			fprintf(datafile, "\t%s\n",buff);
+			fclose(datafile);
+		}
+		else
+			sprintf(buffer2, "%s", (yyvsp[(3) - (3)].sval));
+
+		char num[5];
+		itoa(GetFreeRegister('t'), num,5);
+		strcat(buffer3, num);
+
+		char buff[20];
+		sprintf(buff,"and %s,%s,%s",buffer3,buffer1,buffer2);
+		if (new_buffer1)
+		freereg(buffer1);
+		if (new_buffer2)
+		freereg(buffer2);
+		datafile = fopen("mips.txt", "a+");
+
+
+
+		fprintf(datafile, "\t%s\n",buff);
+		fclose(datafile);
+
+		sprintf((yyval.sval),"%s",buffer3);
+	}
+	else{
+	char num[5];
+	itoa(GetFreeRegister('t'), num,5);
+	char buffer[10] = {'$','t'};
+	strcat(buffer, num);
+
+	char buff[20];
+	sprintf(buff,"and %s,%s,%s",buffer,(yyvsp[(1) - (3)].sval),(yyvsp[(3) - (3)].sval));
+
+	datafile = fopen("mips.txt", "a+");
+	fprintf(datafile, "\t%s\n",buff);
+	fclose(datafile);
+
+
+	sprintf((yyval.sval),"%s",buffer);
+
+	}
+
+;}
+    break;
+
+  case 86:
+
+/* Line 1455 of yacc.c  */
+#line 2376 "code.y"
+    {
+	printf("logical xor\n");
+	if (isnumber((yyvsp[(1) - (3)].sval)) || isalpha((yyvsp[(1) - (3)].sval)[0]) || isnumber((yyvsp[(3) - (3)].sval)) || isalpha((yyvsp[(3) - (3)].sval)[0]))
+	{
+		char buffer1[10] = {'$','t'};
+		char buffer2[10] = {'$','t'};
+		char buffer3[10] = {'$', 't'};
+		int new_buffer1 = 0;
+		int new_buffer2 = 0;
+		if (isnumber((yyvsp[(1) - (3)].sval)) || isalpha((yyvsp[(1) - (3)].sval)[0]))
+		{
+			new_buffer1 = 1;
+		char num[5];
+		itoa(GetFreeRegister('t'), num,5);
+
+		strcat(buffer1, num);
+		char buff[50];
+		if (isalpha((yyvsp[(1) - (3)].sval)[0]))
+			sprintf(buff,"addi %s, $zero, %d",buffer1,(yyvsp[(1) - (3)].sval)[0]);
+		else
+			sprintf(buff,"addi %s, $zero, %s",buffer1,(yyvsp[(1) - (3)].sval));
+		datafile = fopen("mips.txt", "a+");
+		fprintf(datafile, "\t%s\n",buff);
+		fclose(datafile);
+		}
+		else
+			sprintf(buffer1, "%s", (yyvsp[(1) - (3)].sval));
+
+		if (isnumber((yyvsp[(3) - (3)].sval)) || isalpha((yyvsp[(3) - (3)].sval)[0]))
+		{
+			new_buffer2 = 1;
+			char num[5];
+			itoa(GetFreeRegister('t'), num,5);
+			strcat(buffer2, num);
+			char buff[50];
+			if (isalpha((yyvsp[(3) - (3)].sval)[0]))
+				sprintf(buff,"addi %s, $zero, %d",buffer2,(yyvsp[(3) - (3)].sval)[0]);
+			else
+				sprintf(buff,"addi %s, $zero, %s",buffer2,(yyvsp[(3) - (3)].sval));
+			datafile = fopen("mips.txt", "a+");
+			fprintf(datafile, "\t%s\n",buff);
+			fclose(datafile);
+		}
+		else
+			sprintf(buffer2, "%s", (yyvsp[(3) - (3)].sval));
+
+		char num[5];
+		itoa(GetFreeRegister('t'), num,5);
+		strcat(buffer3, num);
+
+		char buff[20];
+		sprintf(buff,"xor %s,%s,%s",buffer3,buffer1,buffer2);
+		if (new_buffer1)
+		freereg(buffer1);
+		if (new_buffer2)
+		freereg(buffer2);
+		datafile = fopen("mips.txt", "a+");
+
+
+
+		fprintf(datafile, "\t%s\n",buff);
+		fclose(datafile);
+
+		sprintf((yyval.sval),"%s",buffer3);
+	}
+	else{
+	char num[5];
+	itoa(GetFreeRegister('t'), num,5);
+	char buffer[10] = {'$','t'};
+	strcat(buffer, num);
+
+	char buff[20];
+	sprintf(buff,"xor %s,%s,%s",buffer,(yyvsp[(1) - (3)].sval),(yyvsp[(3) - (3)].sval));
+
+	datafile = fopen("mips.txt", "a+");
+	fprintf(datafile, "\t%s\n",buff);
+	fclose(datafile);
+
+
+	sprintf((yyval.sval),"%s",buffer);
+
+	}
+
+;}
+    break;
+
+  case 87:
+
+/* Line 1455 of yacc.c  */
+#line 2460 "code.y"
+    {printf("logical not\n"); sprintf((yyval.sval),"%d", !(yyvsp[(2) - (2)].sval));;}
+    break;
+
+  case 88:
+
+/* Line 1455 of yacc.c  */
+#line 2461 "code.y"
+    {printf("parantheses\n");  sprintf((yyval.sval),"%s",(yyvsp[(2) - (3)].sval));;}
+    break;
+
+  case 89:
+
+/* Line 1455 of yacc.c  */
+#line 2462 "code.y"
     {
 	printf("character literal\n");
 	char buff[2];
@@ -3392,10 +4335,10 @@ else
 	;}
     break;
 
-  case 86:
+  case 90:
 
 /* Line 1455 of yacc.c  */
-#line 1568 "code.y"
+#line 2469 "code.y"
     {
 	printf("id literal\n");
 	if(first != NULL){
@@ -3425,10 +4368,10 @@ char error[30] = "no such variable exists ...";
 ;}
     break;
 
-  case 87:
+  case 91:
 
 /* Line 1455 of yacc.c  */
-#line 1595 "code.y"
+#line 2496 "code.y"
     {
 	printf("negative num\n");
 	datafile = fopen("mips.txt", "a+");
@@ -3466,7 +4409,7 @@ char error[30] = "no such variable exists ...";
 
 
 /* Line 1455 of yacc.c  */
-#line 3470 "code.tab.c"
+#line 4413 "code.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -3678,7 +4621,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 1629 "code.y"
+#line 2530 "code.y"
 
 
 
