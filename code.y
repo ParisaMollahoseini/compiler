@@ -1386,7 +1386,7 @@ EXP '+' EXP {
 
 		char buff2[10];
 		sprintf(buff2,"%d",atoi($1) + atoi($3));
-		strcpy($$,buff2);
+		strcpy($$,buffer);
 
 	} |
 INTVAL {
@@ -1401,7 +1401,7 @@ EXP LOG_OR EXP {printf("logical or\n"); sprintf($$,"%d",atoi($1) | atoi($3));} |
 EXP LOG_AND EXP {printf("logical and\n"); sprintf($$,"%d",atoi($1) & atoi($3));} |
 EXP LOG_XOR EXP {printf("logical xor\n"); sprintf($$,"%d",atoi($1) ^ atoi($3));} |
 NOT EXP {printf("logical not\n"); sprintf($$,"%d", !$2);} |
-'(' EXP ')' {printf("parantheses\n");  sprintf($$,"%d",$2);} |
+'(' EXP ')' {printf("parantheses\n");  sprintf($$,"%s",$2);} |
 char_val {
 	printf("character literal\n");
 	char buff[2];

@@ -18,7 +18,7 @@ func1:
 	beq 1,$zero,afterwhile1
 	while2:
 	beq 2,$zero,afterwhile2
-	addi $t3,$t1,1
+	sub $t3,$t1,1
 	add $t1, $zero , $t3 
 	j while2
 	afterwhile2:

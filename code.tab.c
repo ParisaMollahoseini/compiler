@@ -3133,7 +3133,7 @@ else
 
 		char buff2[10];
 		sprintf(buff2,"%d",atoi((yyvsp[(1) - (3)].sval)) + atoi((yyvsp[(3) - (3)].sval)));
-		strcpy((yyval.sval),buff2);
+		strcpy((yyval.sval),buffer);
 
 	;}
     break;
@@ -3196,7 +3196,7 @@ else
 
 /* Line 1455 of yacc.c  */
 #line 1404 "code.y"
-    {printf("parantheses\n");  sprintf((yyval.sval),"%d",(yyvsp[(2) - (3)].sval));;}
+    {printf("parantheses\n");  sprintf((yyval.sval),"%s",(yyvsp[(2) - (3)].sval));;}
     break;
 
   case 83:
