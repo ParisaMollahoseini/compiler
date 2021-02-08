@@ -33,6 +33,7 @@ char* popStack()
 struct function_names
 {
 	char name[10];
+	char type[10];//void or int
 	int num ;//arg nums
 };
 struct function_names fun_names[100];
@@ -53,11 +54,6 @@ struct var
 	struct var* next;
 };
 
-struct func
-{
-	char name[30];
-	char type[10];//void or int
-};
 
 
 struct var variables[100];
@@ -69,8 +65,8 @@ int founded_func_num = 0;
 char currtype[4] ;
 int count_label = 0 ;
 
-struct func function_types[10000];
-int functions_count = 0;
+//struct func function_types[10000];
+//int functions_count = 0;
 
 int yyparse();
 void yyerror(const char *s);
@@ -148,8 +144,7 @@ _Bool a_state[4] = {0,0,0,0};
 PROGRAM: FTYPE ID {
 	strcpy(current_func,$2);
 	pushStack($2);
-	strcpy(function_types[functions_count].name, $2);
-	strcpy(function_types[functions_count++].type, $1);
+
  }
  '('  PARAMS {
 	 printf("see function : %s\n",current_func);
@@ -167,7 +162,8 @@ PROGRAM: FTYPE ID {
 	 printf("Param value : %d\n",$5);
 
 	 fun_names[func_count].num = $5;
-	 strcpy(fun_names[func_count++].name,current_func);
+	 strcpy(fun_names[func_count].name,current_func);
+	 strcpy(fun_names[functions_count++].type, $1);
 		}
 		')'  '{'  STMTS  '}' {
 
@@ -713,7 +709,7 @@ fclose(datafile);
 }}IDS;
 
 ASSIGN_STMT: ID EQ EXP '$' {
-		
+
 		if(first != NULL)
 		{
 			char this_scope[10];
@@ -839,18 +835,20 @@ FUNC_CALL: ID {
 		strcpy(current_func,popStack());
 		pushStack(current_func);
 
-	} STMTS {
+	}
+	STMTS {
 		int i = 0;
 		for (; i < functions_count; i++)
 		{
-			if (strcmp(function_types[i].name, $1) == 0)
+			if (strcmp(fun_names[i].name, $1) == 0)
 				break;
 		}
-		
-		if (strcmp(function_types[i].type, "void") == 0)
+
+		if (strcmp(fun_names[i].type, "void") == 0)
 			strcpy($$, "void");
 		else
-			strcpy($$, "int");};
+			strcpy($$, "int");
+		};
 
 ARGS_IN: {
 	if(founded_func_num != 0 )
@@ -1028,11 +1026,6 @@ EXP  {
 };
 
 RETURN_STMT: RETURN EXP '$' {
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 7c9ca849e75c0ca4687cca2e4170f73c8fbc949a
 	printf("return\n");
 	if (isnumber($2) || isalpha($2[0]))
 	{
@@ -1054,20 +1047,15 @@ RETURN_STMT: RETURN EXP '$' {
 		datafile = fopen("mips.txt", "a+");
 		fprintf(datafile, "\t%s\n",buff);
 		fclose(datafile);
-<<<<<<< HEAD
-		
-		sprintf(return_result,"%s", $2);
-	
-=======
 
->>>>>>> 7c9ca849e75c0ca4687cca2e4170f73c8fbc949a
+		sprintf(return_result,"%s", $2);
+
+
 	}
 	else{
-
-
 	char buff[20];
 	sprintf(buff,"move $v0, %s",$2);
-	
+
 	datafile = fopen("mips.txt", "a+");
 	fprintf(datafile, "\t%s\n",buff);
 	sprintf(return_result,"%s", $2);
@@ -1243,9 +1231,9 @@ char error[30] = "no such variable exists ...";
 			YYERROR;
 }
 }
-| '-' EXP {printf("negative num\n"); sprintf($$,"%d", -atoi($2));} 
+| '-' EXP {printf("negative num\n"); sprintf($$,"%d", -atoi($2));}
 | FUNC_CALL  {
-	
+
 	if (strcmp($1, "void") == 0)
 	{
 		char error[40] = "void function has no return value ...";

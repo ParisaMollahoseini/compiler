@@ -121,24 +121,6 @@ Grammar
    58        | EXP ',' EXP
    59        | EXP
 
-<<<<<<< HEAD
-   60 EXP: EXP ISEQ EXP
-   61    | EXP ISNOTEQ EXP
-   62    | EXP '+' EXP
-   63    | EXP '-' EXP
-   64    | INTVAL
-   65    | EXP COND_AND EXP
-   66    | EXP COND_OR EXP
-   67    | EXP LOG_OR EXP
-   68    | EXP LOG_AND EXP
-   69    | EXP LOG_XOR EXP
-   70    | NOT EXP
-   71    | '(' EXP ')'
-   72    | char_val
-   73    | ID
-   74    | '-' EXP
-   75    | FUNC_CALL
-=======
    60 $@21: /* empty */
 
    61 RETURN_STMT: RETURN EXP '$' $@21 STMTS
@@ -158,7 +140,7 @@ Grammar
    74    | char_val
    75    | ID
    76    | '-' EXP
->>>>>>> 7c9ca849e75c0ca4687cca2e4170f73c8fbc949a
+   77    | FUNC_CALL
 
 
 Terminals, with rules where they appear
@@ -216,33 +198,20 @@ Nonterminals, with rules where they appear
 $accept (47)
     on left: 0
 EXP (48)
-<<<<<<< HEAD
-    on left: 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75, on right:
-    27 31 36 39 42 45 54 55 56 57 59 60 61 62 63 65 66 67 68 69 70
-    71 74
+    on left: 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77, on right:
+    27 31 36 39 44 47 56 57 58 59 61 62 63 64 65 67 68 69 70 71 72
+    73 76
 FTYPE (49)
     on left: 6 7, on right: 4
 VTYPE (50)
-=======
-    on left: 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76, on right:
-    27 31 36 39 44 47 56 57 58 59 61 62 63 64 65 67 68 69 70 71 72
-    73 76
-VTYPE (49)
->>>>>>> 7c9ca849e75c0ca4687cca2e4170f73c8fbc949a
     on left: 13 14, on right: 9 10 11 12 15 16
 PARAMS (51)
     on left: 8 9 10 11 12, on right: 4
-<<<<<<< HEAD
 FUNC_CALL (52)
-    on left: 52, on right: 21 75
+    on left: 54, on right: 21 77
 ARGS_IN (53)
-    on left: 53 54 55 56 57, on right: 52
-PROGRAM (54)
-=======
-ARGS_IN (51)
     on left: 55 56 57 58 59, on right: 54
-PROGRAM (52)
->>>>>>> 7c9ca849e75c0ca4687cca2e4170f73c8fbc949a
+PROGRAM (54)
     on left: 4 5, on right: 0 4
 $@1 (55)
     on left: 1, on right: 4
@@ -254,17 +223,10 @@ THREE_ID (58)
     on left: 15, on right: 10 11 12
 THREE_ID_COMMA (59)
     on left: 16, on right: 11 12
-<<<<<<< HEAD
 STMTS (60)
-    on left: 17 18 19 20 21 22 23, on right: 4 25 27 29 31 36 39 42
-    45 48 52 59
-DECLARE_STMT (61)
-=======
-STMTS (59)
     on left: 17 18 19 20 21 22 23, on right: 4 25 27 29 31 36 39 44
     47 50 54 61
-DECLARE_STMT (60)
->>>>>>> 7c9ca849e75c0ca4687cca2e4170f73c8fbc949a
+DECLARE_STMT (61)
     on left: 25 27 29 31, on right: 17
 $@4 (62)
     on left: 24, on right: 25
@@ -288,54 +250,26 @@ $@10 (71)
     on left: 37, on right: 39
 $@11 (72)
     on left: 38, on right: 39
-<<<<<<< HEAD
 IF_STMT (73)
-    on left: 42, on right: 20
-$@12 (74)
-    on left: 40, on right: 42
-$@13 (75)
-    on left: 41, on right: 42
-ELSEIF_STMT (76)
-    on left: 45 46, on right: 42
-$@14 (77)
-    on left: 43, on right: 45
-$@15 (78)
-    on left: 44, on right: 45
-ELSE_STMT (79)
-    on left: 48 49, on right: 42
-$@16 (80)
-    on left: 47, on right: 48
-$@17 (81)
-    on left: 50, on right: 52
-$@18 (82)
-    on left: 51, on right: 52
-RETURN_STMT (83)
-    on left: 59, on right: 22
-$@19 (84)
-    on left: 58, on right: 59
-=======
-IF_STMT (72)
     on left: 44, on right: 20
-$@12 (73)
+$@12 (74)
     on left: 40, on right: 44
-$@13 (74)
+$@13 (75)
     on left: 41, on right: 44
-$@14 (75)
+$@14 (76)
     on left: 42, on right: 44
-$@15 (76)
+$@15 (77)
     on left: 43, on right: 44
-ELSEIF_STMT (77)
+ELSEIF_STMT (78)
     on left: 47 48, on right: 44
-$@16 (78)
+$@16 (79)
     on left: 45, on right: 47
-$@17 (79)
+$@17 (80)
     on left: 46, on right: 47
-ELSE_STMT (80)
+ELSE_STMT (81)
     on left: 50 51, on right: 44
-$@18 (81)
+$@18 (82)
     on left: 49, on right: 50
-FUNC_CALL (82)
-    on left: 54, on right: 21
 $@19 (83)
     on left: 52, on right: 54
 $@20 (84)
@@ -344,7 +278,6 @@ RETURN_STMT (85)
     on left: 61, on right: 22
 $@21 (86)
     on left: 60, on right: 61
->>>>>>> 7c9ca849e75c0ca4687cca2e4170f73c8fbc949a
 
 
 state 0
@@ -644,11 +577,7 @@ state 31
 
     $default  reduce using rule 52 ($@19)
 
-<<<<<<< HEAD
-    $@17  go to state 54
-=======
-    $@19  go to state 53
->>>>>>> 7c9ca849e75c0ca4687cca2e4170f73c8fbc949a
+    $@19  go to state 54
 
 
 state 32
@@ -801,19 +730,13 @@ state 47
 
 state 48
 
-<<<<<<< HEAD
-   52 FUNC_CALL: ID . $@17 '(' ARGS_IN ')' '$' $@18 STMTS
-   73 EXP: ID .
-
-    '('       reduce using rule 50 ($@17)
-    $default  reduce using rule 73 (EXP)
-=======
+   54 FUNC_CALL: ID . $@19 '(' ARGS_IN ')' '$' $@20 STMTS
    75 EXP: ID .
 
+    '('       reduce using rule 52 ($@19)
     $default  reduce using rule 75 (EXP)
->>>>>>> 7c9ca849e75c0ca4687cca2e4170f73c8fbc949a
 
-    $@17  go to state 54
+    $@19  go to state 54
 
 
 state 49
@@ -843,25 +766,21 @@ state 49
 
 state 50
 
-   75 EXP: FUNC_CALL .
+   77 EXP: FUNC_CALL .
 
-    $default  reduce using rule 75 (EXP)
+    $default  reduce using rule 77 (EXP)
 
 
 state 51
 
-<<<<<<< HEAD
    39 WHILE_STMT: WHILE $@10 . '(' EXP ')' '{' STMTS '}' $@11 STMTS
-=======
-   44 IF_STMT: IF $@12 . '(' EXP ')' $@13 '{' STMTS '}' $@14 ELSEIF_STMT ELSE_STMT $@15 STMTS
->>>>>>> 7c9ca849e75c0ca4687cca2e4170f73c8fbc949a
 
     '('  shift, and go to state 74
 
 
 state 52
 
-   42 IF_STMT: IF $@12 . '(' EXP ')' '{' STMTS '}' ELSEIF_STMT ELSE_STMT $@13 STMTS
+   44 IF_STMT: IF $@12 . '(' EXP ')' $@13 '{' STMTS '}' $@14 ELSEIF_STMT ELSE_STMT $@15 STMTS
 
     '('  shift, and go to state 75
 
@@ -1154,11 +1073,7 @@ state 73
 
     $default  reduce using rule 60 ($@21)
 
-<<<<<<< HEAD
-    $@19  go to state 94
-=======
-    $@21  go to state 93
->>>>>>> 7c9ca849e75c0ca4687cca2e4170f73c8fbc949a
+    $@21  go to state 94
 
 
 state 74
@@ -1726,13 +1641,9 @@ state 108
 
    44 IF_STMT: IF $@12 '(' EXP ')' . $@13 '{' STMTS '}' $@14 ELSEIF_STMT ELSE_STMT $@15 STMTS
 
-<<<<<<< HEAD
-    '{'  shift, and go to state 118
-=======
     $default  reduce using rule 41 ($@13)
 
-    $@13  go to state 117
->>>>>>> 7c9ca849e75c0ca4687cca2e4170f73c8fbc949a
+    $@13  go to state 118
 
 
 state 109
@@ -1876,26 +1787,7 @@ state 118
 
    44 IF_STMT: IF $@12 '(' EXP ')' $@13 . '{' STMTS '}' $@14 ELSEIF_STMT ELSE_STMT $@15 STMTS
 
-<<<<<<< HEAD
-    CHAR    shift, and go to state 26
-    INT     shift, and go to state 27
-    RETURN  shift, and go to state 28
-    WHILE   shift, and go to state 29
-    IF      shift, and go to state 30
-    ID      shift, and go to state 31
-
-    $default  reduce using rule 23 (STMTS)
-
-    FUNC_CALL     go to state 32
-    STMTS         go to state 126
-    DECLARE_STMT  go to state 34
-    ASSIGN_STMT   go to state 35
-    WHILE_STMT    go to state 36
-    IF_STMT       go to state 37
-    RETURN_STMT   go to state 38
-=======
-    '{'  shift, and go to state 125
->>>>>>> 7c9ca849e75c0ca4687cca2e4170f73c8fbc949a
+    '{'  shift, and go to state 126
 
 
 state 119
@@ -1940,11 +1832,7 @@ state 121
 
     $default  reduce using rule 53 ($@20)
 
-<<<<<<< HEAD
-    $@18  go to state 128
-=======
-    $@20  go to state 127
->>>>>>> 7c9ca849e75c0ca4687cca2e4170f73c8fbc949a
+    $@20  go to state 128
 
 
 state 122
@@ -1988,17 +1876,13 @@ state 126
 
     $default  reduce using rule 23 (STMTS)
 
-<<<<<<< HEAD
-    '}'  shift, and go to state 130
-=======
-    STMTS         go to state 129
-    DECLARE_STMT  go to state 33
-    ASSIGN_STMT   go to state 34
-    WHILE_STMT    go to state 35
-    IF_STMT       go to state 36
-    FUNC_CALL     go to state 37
+    FUNC_CALL     go to state 32
+    STMTS         go to state 130
+    DECLARE_STMT  go to state 34
+    ASSIGN_STMT   go to state 35
+    WHILE_STMT    go to state 36
+    IF_STMT       go to state 37
     RETURN_STMT   go to state 38
->>>>>>> 7c9ca849e75c0ca4687cca2e4170f73c8fbc949a
 
 
 state 127
@@ -2050,47 +1934,13 @@ state 129
 
 state 130
 
-<<<<<<< HEAD
-   42 IF_STMT: IF $@12 '(' EXP ')' '{' STMTS '}' . ELSEIF_STMT ELSE_STMT $@13 STMTS
-
-    ELSEIF  shift, and go to state 134
-
-    $default  reduce using rule 46 (ELSEIF_STMT)
-
-    ELSEIF_STMT  go to state 135
-=======
    44 IF_STMT: IF $@12 '(' EXP ')' $@13 '{' STMTS . '}' $@14 ELSEIF_STMT ELSE_STMT $@15 STMTS
 
-    '}'  shift, and go to state 133
->>>>>>> 7c9ca849e75c0ca4687cca2e4170f73c8fbc949a
+    '}'  shift, and go to state 134
 
 
 state 131
 
-<<<<<<< HEAD
-   54 ARGS_IN: EXP ',' EXP ',' EXP . ',' EXP
-   55        | EXP ',' EXP ',' EXP .
-   60 EXP: EXP . ISEQ EXP
-   61    | EXP . ISNOTEQ EXP
-   62    | EXP . '+' EXP
-   63    | EXP . '-' EXP
-   65    | EXP . COND_AND EXP
-   66    | EXP . COND_OR EXP
-   67    | EXP . LOG_OR EXP
-   68    | EXP . LOG_AND EXP
-   69    | EXP . LOG_XOR EXP
-
-    ','       shift, and go to state 136
-    COND_OR   shift, and go to state 64
-    COND_AND  shift, and go to state 65
-    LOG_OR    shift, and go to state 66
-    LOG_XOR   shift, and go to state 67
-    LOG_AND   shift, and go to state 68
-    ISNOTEQ   shift, and go to state 69
-    ISEQ      shift, and go to state 70
-    '+'       shift, and go to state 71
-    '-'       shift, and go to state 72
-=======
    56 ARGS_IN: EXP ',' EXP ',' EXP . ',' EXP
    57        | EXP ',' EXP ',' EXP .
    62 EXP: EXP . ISEQ EXP
@@ -2103,17 +1953,16 @@ state 131
    70    | EXP . LOG_AND EXP
    71    | EXP . LOG_XOR EXP
 
-    ','       shift, and go to state 134
-    COND_OR   shift, and go to state 63
-    COND_AND  shift, and go to state 64
-    LOG_OR    shift, and go to state 65
-    LOG_XOR   shift, and go to state 66
-    LOG_AND   shift, and go to state 67
-    ISNOTEQ   shift, and go to state 68
-    ISEQ      shift, and go to state 69
-    '+'       shift, and go to state 70
-    '-'       shift, and go to state 71
->>>>>>> 7c9ca849e75c0ca4687cca2e4170f73c8fbc949a
+    ','       shift, and go to state 135
+    COND_OR   shift, and go to state 64
+    COND_AND  shift, and go to state 65
+    LOG_OR    shift, and go to state 66
+    LOG_XOR   shift, and go to state 67
+    LOG_AND   shift, and go to state 68
+    ISNOTEQ   shift, and go to state 69
+    ISEQ      shift, and go to state 70
+    '+'       shift, and go to state 71
+    '-'       shift, and go to state 72
 
     $default  reduce using rule 57 (ARGS_IN)
 
@@ -2138,21 +1987,12 @@ state 133
 
     $default  reduce using rule 23 (STMTS)
 
-<<<<<<< HEAD
     FUNC_CALL     go to state 32
-    STMTS         go to state 137
+    STMTS         go to state 136
     DECLARE_STMT  go to state 34
     ASSIGN_STMT   go to state 35
     WHILE_STMT    go to state 36
     IF_STMT       go to state 37
-=======
-    STMTS         go to state 135
-    DECLARE_STMT  go to state 33
-    ASSIGN_STMT   go to state 34
-    WHILE_STMT    go to state 35
-    IF_STMT       go to state 36
-    FUNC_CALL     go to state 37
->>>>>>> 7c9ca849e75c0ca4687cca2e4170f73c8fbc949a
     RETURN_STMT   go to state 38
 
 
@@ -2162,31 +2002,12 @@ state 134
 
     $default  reduce using rule 42 ($@14)
 
-<<<<<<< HEAD
-    $@14  go to state 138
-=======
-    $@14  go to state 136
->>>>>>> 7c9ca849e75c0ca4687cca2e4170f73c8fbc949a
+    $@14  go to state 137
 
 
 state 135
 
-<<<<<<< HEAD
-   42 IF_STMT: IF $@12 '(' EXP ')' '{' STMTS '}' ELSEIF_STMT . ELSE_STMT $@13 STMTS
-
-    ELSE  shift, and go to state 139
-
-    $default  reduce using rule 49 (ELSE_STMT)
-
-    ELSE_STMT  go to state 140
-
-
-state 136
-
-   54 ARGS_IN: EXP ',' EXP ',' EXP ',' . EXP
-=======
    56 ARGS_IN: EXP ',' EXP ',' EXP ',' . EXP
->>>>>>> 7c9ca849e75c0ca4687cca2e4170f73c8fbc949a
 
     INTVAL    shift, and go to state 43
     char_val  shift, and go to state 44
@@ -2195,40 +2016,29 @@ state 136
     '('       shift, and go to state 47
     ID        shift, and go to state 48
 
-<<<<<<< HEAD
-    EXP        go to state 141
+    EXP        go to state 138
     FUNC_CALL  go to state 50
 
 
-state 137
-=======
-    EXP  go to state 137
-
-
-state 135
->>>>>>> 7c9ca849e75c0ca4687cca2e4170f73c8fbc949a
+state 136
 
    39 WHILE_STMT: WHILE $@10 '(' EXP ')' '{' STMTS '}' $@11 STMTS .
 
     $default  reduce using rule 39 (WHILE_STMT)
 
 
-<<<<<<< HEAD
-state 138
-=======
-state 136
+state 137
 
    44 IF_STMT: IF $@12 '(' EXP ')' $@13 '{' STMTS '}' $@14 . ELSEIF_STMT ELSE_STMT $@15 STMTS
 
-    ELSEIF  shift, and go to state 138
+    ELSEIF  shift, and go to state 139
 
     $default  reduce using rule 48 (ELSEIF_STMT)
 
-    ELSEIF_STMT  go to state 139
+    ELSEIF_STMT  go to state 140
 
 
-state 137
->>>>>>> 7c9ca849e75c0ca4687cca2e4170f73c8fbc949a
+state 138
 
    56 ARGS_IN: EXP ',' EXP ',' EXP ',' EXP .
    62 EXP: EXP . ISEQ EXP
@@ -2241,58 +2051,6 @@ state 137
    70    | EXP . LOG_AND EXP
    71    | EXP . LOG_XOR EXP
 
-<<<<<<< HEAD
-    '('  shift, and go to state 142
-=======
-    COND_OR   shift, and go to state 63
-    COND_AND  shift, and go to state 64
-    LOG_OR    shift, and go to state 65
-    LOG_XOR   shift, and go to state 66
-    LOG_AND   shift, and go to state 67
-    ISNOTEQ   shift, and go to state 68
-    ISEQ      shift, and go to state 69
-    '+'       shift, and go to state 70
-    '-'       shift, and go to state 71
-
-    $default  reduce using rule 56 (ARGS_IN)
->>>>>>> 7c9ca849e75c0ca4687cca2e4170f73c8fbc949a
-
-
-state 139
-
-   47 ELSEIF_STMT: ELSEIF . $@16 '(' EXP ')' '{' STMTS '}' $@17 ELSEIF
-
-    $default  reduce using rule 45 ($@16)
-
-<<<<<<< HEAD
-    $@16  go to state 143
-=======
-    $@16  go to state 140
->>>>>>> 7c9ca849e75c0ca4687cca2e4170f73c8fbc949a
-
-
-state 140
-
-   44 IF_STMT: IF $@12 '(' EXP ')' $@13 '{' STMTS '}' $@14 ELSEIF_STMT . ELSE_STMT $@15 STMTS
-
-    ELSE  shift, and go to state 141
-
-<<<<<<< HEAD
-    $@13  go to state 144
-=======
-    $default  reduce using rule 51 (ELSE_STMT)
->>>>>>> 7c9ca849e75c0ca4687cca2e4170f73c8fbc949a
-
-    ELSE_STMT  go to state 142
-
-<<<<<<< HEAD
-state 141
-=======
->>>>>>> 7c9ca849e75c0ca4687cca2e4170f73c8fbc949a
-
-state 140
-
-<<<<<<< HEAD
     COND_OR   shift, and go to state 64
     COND_AND  shift, and go to state 65
     LOG_OR    shift, and go to state 66
@@ -2302,11 +2060,35 @@ state 140
     ISEQ      shift, and go to state 70
     '+'       shift, and go to state 71
     '-'       shift, and go to state 72
-=======
-   47 ELSEIF_STMT: ELSEIF $@16 . '(' EXP ')' '{' STMTS '}' $@17 ELSEIF
->>>>>>> 7c9ca849e75c0ca4687cca2e4170f73c8fbc949a
 
-    '('  shift, and go to state 143
+    $default  reduce using rule 56 (ARGS_IN)
+
+
+state 139
+
+   47 ELSEIF_STMT: ELSEIF . $@16 '(' EXP ')' '{' STMTS '}' $@17 ELSEIF
+
+    $default  reduce using rule 45 ($@16)
+
+    $@16  go to state 141
+
+
+state 140
+
+   44 IF_STMT: IF $@12 '(' EXP ')' $@13 '{' STMTS '}' $@14 ELSEIF_STMT . ELSE_STMT $@15 STMTS
+
+    ELSE  shift, and go to state 142
+
+    $default  reduce using rule 51 (ELSE_STMT)
+
+    ELSE_STMT  go to state 143
+
+
+state 141
+
+   47 ELSEIF_STMT: ELSEIF $@16 . '(' EXP ')' '{' STMTS '}' $@17 ELSEIF
+
+    '('  shift, and go to state 144
 
 
 state 142
@@ -2315,19 +2097,19 @@ state 142
 
     $default  reduce using rule 49 ($@18)
 
-    $@18  go to state 144
+    $@18  go to state 145
 
 
-state 142
+state 143
 
    44 IF_STMT: IF $@12 '(' EXP ')' $@13 '{' STMTS '}' $@14 ELSEIF_STMT ELSE_STMT . $@15 STMTS
 
     $default  reduce using rule 43 ($@15)
 
-    $@15  go to state 145
+    $@15  go to state 146
 
 
-state 143
+state 144
 
    47 ELSEIF_STMT: ELSEIF $@16 '(' . EXP ')' '{' STMTS '}' $@17 ELSEIF
 
@@ -2338,32 +2120,18 @@ state 143
     '('       shift, and go to state 47
     ID        shift, and go to state 48
 
-<<<<<<< HEAD
-    EXP        go to state 145
+    EXP        go to state 147
     FUNC_CALL  go to state 50
 
 
-state 143
-=======
-    EXP  go to state 146
-
-
-state 144
->>>>>>> 7c9ca849e75c0ca4687cca2e4170f73c8fbc949a
+state 145
 
    50 ELSE_STMT: ELSE $@18 . '{' STMTS '}'
 
-<<<<<<< HEAD
-    '{'  shift, and go to state 146
+    '{'  shift, and go to state 148
 
 
-state 144
-=======
-    '{'  shift, and go to state 147
-
-
-state 145
->>>>>>> 7c9ca849e75c0ca4687cca2e4170f73c8fbc949a
+state 146
 
    44 IF_STMT: IF $@12 '(' EXP ')' $@13 '{' STMTS '}' $@14 ELSEIF_STMT ELSE_STMT $@15 . STMTS
 
@@ -2376,9 +2144,8 @@ state 145
 
     $default  reduce using rule 23 (STMTS)
 
-<<<<<<< HEAD
     FUNC_CALL     go to state 32
-    STMTS         go to state 147
+    STMTS         go to state 149
     DECLARE_STMT  go to state 34
     ASSIGN_STMT   go to state 35
     WHILE_STMT    go to state 36
@@ -2386,19 +2153,7 @@ state 145
     RETURN_STMT   go to state 38
 
 
-state 145
-=======
-    STMTS         go to state 148
-    DECLARE_STMT  go to state 33
-    ASSIGN_STMT   go to state 34
-    WHILE_STMT    go to state 35
-    IF_STMT       go to state 36
-    FUNC_CALL     go to state 37
-    RETURN_STMT   go to state 38
-
-
-state 146
->>>>>>> 7c9ca849e75c0ca4687cca2e4170f73c8fbc949a
+state 147
 
    47 ELSEIF_STMT: ELSEIF $@16 '(' EXP . ')' '{' STMTS '}' $@17 ELSEIF
    62 EXP: EXP . ISEQ EXP
@@ -2411,7 +2166,6 @@ state 146
    70    | EXP . LOG_AND EXP
    71    | EXP . LOG_XOR EXP
 
-<<<<<<< HEAD
     COND_OR   shift, and go to state 64
     COND_AND  shift, and go to state 65
     LOG_OR    shift, and go to state 66
@@ -2421,25 +2175,10 @@ state 146
     ISEQ      shift, and go to state 70
     '+'       shift, and go to state 71
     '-'       shift, and go to state 72
-    ')'       shift, and go to state 148
+    ')'       shift, and go to state 150
 
 
-state 146
-=======
-    COND_OR   shift, and go to state 63
-    COND_AND  shift, and go to state 64
-    LOG_OR    shift, and go to state 65
-    LOG_XOR   shift, and go to state 66
-    LOG_AND   shift, and go to state 67
-    ISNOTEQ   shift, and go to state 68
-    ISEQ      shift, and go to state 69
-    '+'       shift, and go to state 70
-    '-'       shift, and go to state 71
-    ')'       shift, and go to state 149
-
-
-state 147
->>>>>>> 7c9ca849e75c0ca4687cca2e4170f73c8fbc949a
+state 148
 
    50 ELSE_STMT: ELSE $@18 '{' . STMTS '}'
 
@@ -2452,9 +2191,8 @@ state 147
 
     $default  reduce using rule 23 (STMTS)
 
-<<<<<<< HEAD
     FUNC_CALL     go to state 32
-    STMTS         go to state 149
+    STMTS         go to state 151
     DECLARE_STMT  go to state 34
     ASSIGN_STMT   go to state 35
     WHILE_STMT    go to state 36
@@ -2462,58 +2200,28 @@ state 147
     RETURN_STMT   go to state 38
 
 
-state 147
-=======
-    STMTS         go to state 150
-    DECLARE_STMT  go to state 33
-    ASSIGN_STMT   go to state 34
-    WHILE_STMT    go to state 35
-    IF_STMT       go to state 36
-    FUNC_CALL     go to state 37
-    RETURN_STMT   go to state 38
-
-
-state 148
->>>>>>> 7c9ca849e75c0ca4687cca2e4170f73c8fbc949a
+state 149
 
    44 IF_STMT: IF $@12 '(' EXP ')' $@13 '{' STMTS '}' $@14 ELSEIF_STMT ELSE_STMT $@15 STMTS .
 
     $default  reduce using rule 44 (IF_STMT)
 
 
-<<<<<<< HEAD
-state 148
-=======
-state 149
->>>>>>> 7c9ca849e75c0ca4687cca2e4170f73c8fbc949a
+state 150
 
    47 ELSEIF_STMT: ELSEIF $@16 '(' EXP ')' . '{' STMTS '}' $@17 ELSEIF
 
-<<<<<<< HEAD
-    '{'  shift, and go to state 150
-
-
-state 149
-=======
-    '{'  shift, and go to state 151
-
-
-state 150
->>>>>>> 7c9ca849e75c0ca4687cca2e4170f73c8fbc949a
-
-   50 ELSE_STMT: ELSE $@18 '{' STMTS . '}'
-
-<<<<<<< HEAD
-    '}'  shift, and go to state 151
-
-
-state 150
-=======
-    '}'  shift, and go to state 152
+    '{'  shift, and go to state 152
 
 
 state 151
->>>>>>> 7c9ca849e75c0ca4687cca2e4170f73c8fbc949a
+
+   50 ELSE_STMT: ELSE $@18 '{' STMTS . '}'
+
+    '}'  shift, and go to state 153
+
+
+state 152
 
    47 ELSEIF_STMT: ELSEIF $@16 '(' EXP ')' '{' . STMTS '}' $@17 ELSEIF
 
@@ -2526,9 +2234,8 @@ state 151
 
     $default  reduce using rule 23 (STMTS)
 
-<<<<<<< HEAD
     FUNC_CALL     go to state 32
-    STMTS         go to state 152
+    STMTS         go to state 154
     DECLARE_STMT  go to state 34
     ASSIGN_STMT   go to state 35
     WHILE_STMT    go to state 36
@@ -2536,74 +2243,37 @@ state 151
     RETURN_STMT   go to state 38
 
 
-state 151
-=======
-    STMTS         go to state 153
-    DECLARE_STMT  go to state 33
-    ASSIGN_STMT   go to state 34
-    WHILE_STMT    go to state 35
-    IF_STMT       go to state 36
-    FUNC_CALL     go to state 37
-    RETURN_STMT   go to state 38
-
-
-state 152
->>>>>>> 7c9ca849e75c0ca4687cca2e4170f73c8fbc949a
+state 153
 
    50 ELSE_STMT: ELSE $@18 '{' STMTS '}' .
 
     $default  reduce using rule 50 (ELSE_STMT)
 
 
-<<<<<<< HEAD
-state 152
-=======
-state 153
->>>>>>> 7c9ca849e75c0ca4687cca2e4170f73c8fbc949a
+state 154
 
    47 ELSEIF_STMT: ELSEIF $@16 '(' EXP ')' '{' STMTS . '}' $@17 ELSEIF
 
-<<<<<<< HEAD
-    '}'  shift, and go to state 153
+    '}'  shift, and go to state 155
 
 
-state 153
-=======
-    '}'  shift, and go to state 154
-
-
-state 154
->>>>>>> 7c9ca849e75c0ca4687cca2e4170f73c8fbc949a
+state 155
 
    47 ELSEIF_STMT: ELSEIF $@16 '(' EXP ')' '{' STMTS '}' . $@17 ELSEIF
 
     $default  reduce using rule 46 ($@17)
 
-<<<<<<< HEAD
-    $@15  go to state 154
-
-
-state 154
-=======
-    $@17  go to state 155
-
-
-state 155
->>>>>>> 7c9ca849e75c0ca4687cca2e4170f73c8fbc949a
-
-   47 ELSEIF_STMT: ELSEIF $@16 '(' EXP ')' '{' STMTS '}' $@17 . ELSEIF
-
-<<<<<<< HEAD
-    ELSEIF  shift, and go to state 155
-
-
-state 155
-=======
-    ELSEIF  shift, and go to state 156
+    $@17  go to state 156
 
 
 state 156
->>>>>>> 7c9ca849e75c0ca4687cca2e4170f73c8fbc949a
+
+   47 ELSEIF_STMT: ELSEIF $@16 '(' EXP ')' '{' STMTS '}' $@17 . ELSEIF
+
+    ELSEIF  shift, and go to state 157
+
+
+state 157
 
    47 ELSEIF_STMT: ELSEIF $@16 '(' EXP ')' '{' STMTS '}' $@17 ELSEIF .
 

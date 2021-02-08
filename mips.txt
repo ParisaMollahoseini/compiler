@@ -8,13 +8,8 @@ func1:
 	sw $t5, 20($sp)
 	sw $t6, 24($sp)
 	sw $t7, 28($sp)
-	addi $t0, $zero , 2 
-	addi $t1, $zero , 3 
-	addi $t2, $zero, 98
-	sub $t3,$t2,$t0
-<<<<<<< HEAD
-	addi $t2, $zero, 1
-	move $v0, $t2
+	addi $t0, $zero, 1
+	move $v0, $t0
 	lw $t0, 0($sp)
 	lw $t1, 4($sp)
 	lw $t2, 8($sp)
@@ -35,11 +30,7 @@ me:
 	sw $t5, 20($sp)
 	sw $t6, 24($sp)
 	sw $t7, 28($sp)
-	addi $t2, $zero , 2 
+	addi $t0, $zero , 2 
 	addi $a0,$zero,12
 	jal func1
-	addi $t2, $zero , 6 
 	addi $s0,$zero,1
-=======
-	beq $t3,$zero,else0
->>>>>>> 7c9ca849e75c0ca4687cca2e4170f73c8fbc949a
