@@ -18,7 +18,7 @@ int func1(int a)
 
 }
 
-void me()
+void main()
 {
 int a $
 func1(3)$

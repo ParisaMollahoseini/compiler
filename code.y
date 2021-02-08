@@ -153,7 +153,7 @@ PROGRAM {
 		if(seen_main_flag == 0)
 		{
 			char error[30] = "PROGRAM has no main .... ";
-						
+
 						yyerror(error);
 						YYERROR;
 		}
@@ -1043,7 +1043,7 @@ FUNC_CALL: ID {
 			strcpy($$, "int");
 
 } | INT ID EQ ID {
-	
+
 	if(first != NULL){
 		char this_scope[10];
 		strcpy(this_scope,popStack());
@@ -1785,6 +1785,14 @@ EXP '+' EXP {
 					char num2[5];
 					itoa(GetFreeRegister('t'), num2,5);
 					strcat(buff2, num2);
+
+					if($3[0]==0 || atoi($3)==0)
+					{
+						char error[30] = "division by zero ...";
+									strcat(error);
+									yyerror(error);
+									YYERROR;
+					}
 					if(isalpha($3[0]))
 						fprintf(datafile,"\taddi %s,$zero,%d\n",buff2,$3[0]);
 						else
