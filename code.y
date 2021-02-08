@@ -782,7 +782,9 @@ else
 WHILE_STMT: WHILE {printf("while begin\n");} '(' EXP  ')' '{' STMTS '}' {printf("while end\n");} STMTS;
 
 IF_STMT: IF {
-	pushStack(strcat("if",atoi(count_label)));
+	char buff[10];
+	sprintf(buff,"%d",count_label);
+	pushStack(strcat("if",buff));
 	printf("if %d begin\n",count_label);
 	}
 	'(' EXP ')' {
@@ -805,7 +807,9 @@ IF_STMT: IF {
 		} STMTS;
 
 ELSEIF_STMT: ELSEIF {
-	pushStack(strcat("elseif",atoi(count_label)));
+	char buff[10];
+	sprintf(buff,"%d",count_label);
+	pushStack(strcat("elseif",buff));
 	printf("else if %d begin\n",count_label);
 	}
  '(' EXP ')' {
@@ -822,7 +826,9 @@ ELSEIF_STMT: ELSEIF {
 	 } ELSEIF_STMT | ;
 
 ELSE_STMT: ELSE {
-	pushStack(strcat("else",atoi(count_label)));
+	char buff[10];
+	sprintf(buff,"%d",count_label);
+	pushStack(strcat("else",buff));
 	printf("else begin\n");
 	}
 	'{' STMTS  '}' {
