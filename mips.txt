@@ -18,26 +18,27 @@ func1:
 	sgt $t1,$t3,$zero
 	sgt $t2,$t0,$zero
 	or $t2, $t2, $t1
-	add $t0, $zero , $t2 
-	addi $t1, $zero , 3 
+	add $t0, $zero , $t2
+	addi $t1, $zero , 3
+	addi $t4, $zero , 0
 	while0:
 	beq 2,$zero,afterwhile0
 	beq 2,$zero,else1
-	addi $t4, $zero , 0 
-	addi $t11,$zero,9
-	div $t10,$t1,$t11
-	sub $t12,$zero,$t10
-	add $t1, $zero , $t12 
+	addi $t10, $zero , 0
+	addi $t12,$zero,9
+	div $t11,$t1,$t12
+	sub $t13,$zero,$t11
+	add $t1, $zero , $t13
 	j afterif1:
 	else1:
 	afterif1:
 	j while0
 	afterwhile0:
-	sub $t4,$zero,$a0
-	subi $t13,$t4,1
-	add $a0, $zero , $t13 
-	addi $t14, $zero, 0
-	move $v0, $t14
+	sub $t1,$zero,$a0
+	subi $t14,$t1,1
+	add $a0, $zero , $t14
+	addi $t0, $zero, 0
+	move $v0, $t0
 	lw $t0, 0($sp)
 	lw $t1, 4($sp)
 	lw $t2, 8($sp)
@@ -58,7 +59,7 @@ main:
 	sw $t5, 20($sp)
 	sw $t6, 24($sp)
 	sw $t7, 28($sp)
-	addi $t0, $zero , 0 
+	addi $t0, $zero , 0
 	addi $a0,$zero,3
 	jal func1
 	move $t0, $v0
