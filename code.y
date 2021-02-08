@@ -814,8 +814,10 @@ IF_STMT: IF {
 
 ELSEIF_STMT: ELSEIF {
 	datafile = fopen("mips.txt", "a+");
+
 	fprintf(datafile, "\telse%d:\n",label_stack[label_stack_size-1]);
 	label_stack_size--;
+	fclose(datafile);
 
 	char buff[10];
 	sprintf(buff,"else%d",count_label);
@@ -853,6 +855,7 @@ ELSE_STMT: ELSE {
 		}
 		| {
 			datafile = fopen("mips.txt", "a+");
+			printf("--------------------\n");
 			fprintf(datafile, "\telse%d:\n",label_stack[label_stack_size-1]);
 			label_stack_size--;
 			fclose(datafile);

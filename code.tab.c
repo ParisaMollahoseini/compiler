@@ -575,10 +575,10 @@ static const yytype_uint16 yyrline[] =
      191,   216,   241,   266,   292,   292,   296,   320,   343,   344,
      345,   346,   347,   348,   348,   351,   351,   412,   412,   503,
      503,   560,   560,   657,   657,   657,   712,   712,   783,   783,
-     783,   785,   792,   799,   807,   785,   815,   825,   831,   815,
-     837,   839,   839,   854,   861,   884,   861,   910,   921,   974,
-    1019,  1057,  1085,  1085,  1123,  1207,  1208,  1225,  1244,  1250,
-    1251,  1252,  1253,  1254,  1255,  1256,  1257,  1264,  1291,  1292
+     783,   785,   792,   799,   807,   785,   815,   827,   833,   815,
+     839,   841,   841,   856,   864,   887,   864,   913,   924,   977,
+    1022,  1060,  1088,  1088,  1126,  1210,  1211,  1228,  1247,  1253,
+    1254,  1255,  1256,  1257,  1258,  1259,  1260,  1267,  1294,  1295
 };
 #endif
 
@@ -2404,8 +2404,10 @@ else
 #line 815 "code.y"
     {
 	datafile = fopen("mips.txt", "a+");
+
 	fprintf(datafile, "\telse%d:\n",label_stack[label_stack_size-1]);
 	label_stack_size--;
+	fclose(datafile);
 
 	char buff[10];
 	sprintf(buff,"else%d",count_label);
@@ -2417,7 +2419,7 @@ else
   case 47:
 
 /* Line 1455 of yacc.c  */
-#line 825 "code.y"
+#line 827 "code.y"
     {
 	 datafile = fopen("mips.txt", "a+");
 	 label_stack[label_stack_size++]=count_label;
@@ -2429,7 +2431,7 @@ else
   case 48:
 
 /* Line 1455 of yacc.c  */
-#line 831 "code.y"
+#line 833 "code.y"
     {
 		 popStack();
 	 	datafile = fopen("mips.txt", "a+");
@@ -2442,7 +2444,7 @@ else
   case 51:
 
 /* Line 1455 of yacc.c  */
-#line 839 "code.y"
+#line 841 "code.y"
     {
 	datafile = fopen("mips.txt", "a+");
 	fprintf(datafile, "\telse%d:\n",label_stack[label_stack_size-1]);
@@ -2459,7 +2461,7 @@ else
   case 52:
 
 /* Line 1455 of yacc.c  */
-#line 850 "code.y"
+#line 852 "code.y"
     {
 		popStack();
 		printf("else end\n");
@@ -2469,9 +2471,10 @@ else
   case 53:
 
 /* Line 1455 of yacc.c  */
-#line 854 "code.y"
+#line 856 "code.y"
     {
 			datafile = fopen("mips.txt", "a+");
+			printf("--------------------\n");
 			fprintf(datafile, "\telse%d:\n",label_stack[label_stack_size-1]);
 			label_stack_size--;
 			fclose(datafile);
@@ -2481,7 +2484,7 @@ else
   case 54:
 
 /* Line 1455 of yacc.c  */
-#line 861 "code.y"
+#line 864 "code.y"
     {
 	int flag = -1 ;
 	for(int i=0;i<func_count;i++)
@@ -2510,7 +2513,7 @@ else
   case 55:
 
 /* Line 1455 of yacc.c  */
-#line 884 "code.y"
+#line 887 "code.y"
     {
 		char buff[20];
 	  datafile = fopen("mips.txt", "a+");
@@ -2528,7 +2531,7 @@ else
   case 56:
 
 /* Line 1455 of yacc.c  */
-#line 896 "code.y"
+#line 899 "code.y"
     {
 		int i = 0;
 		for (; i < func_count; i++)
@@ -2547,7 +2550,7 @@ else
   case 57:
 
 /* Line 1455 of yacc.c  */
-#line 910 "code.y"
+#line 913 "code.y"
     {
 	if(founded_func_num != 0 )
 	{
@@ -2564,7 +2567,7 @@ else
   case 58:
 
 /* Line 1455 of yacc.c  */
-#line 921 "code.y"
+#line 924 "code.y"
     {
 	if(founded_func_num != 4 )
 	{
@@ -2623,7 +2626,7 @@ else
   case 59:
 
 /* Line 1455 of yacc.c  */
-#line 974 "code.y"
+#line 977 "code.y"
     {
 	if(founded_func_num != 3 )
 	{
@@ -2674,7 +2677,7 @@ else
   case 60:
 
 /* Line 1455 of yacc.c  */
-#line 1019 "code.y"
+#line 1022 "code.y"
     {
 	if(founded_func_num != 2 )
 	{
@@ -2718,7 +2721,7 @@ else
   case 61:
 
 /* Line 1455 of yacc.c  */
-#line 1057 "code.y"
+#line 1060 "code.y"
     {
 	if(founded_func_num != 1 )
 	{
@@ -2751,7 +2754,7 @@ else
   case 62:
 
 /* Line 1455 of yacc.c  */
-#line 1085 "code.y"
+#line 1088 "code.y"
     {
 	printf("return\n");
 	if (isnumber((yyvsp[(2) - (3)].sval)) || isalpha((yyvsp[(2) - (3)].sval)[0]))
@@ -2794,7 +2797,7 @@ else
   case 64:
 
 /* Line 1455 of yacc.c  */
-#line 1123 "code.y"
+#line 1126 "code.y"
     {
 	printf("equality condition\n");
 	if (isnumber((yyvsp[(1) - (3)].sval)) || isalpha((yyvsp[(1) - (3)].sval)[0]) || isnumber((yyvsp[(3) - (3)].sval)) || isalpha((yyvsp[(3) - (3)].sval)[0]))
@@ -2884,14 +2887,14 @@ else
   case 65:
 
 /* Line 1455 of yacc.c  */
-#line 1207 "code.y"
+#line 1210 "code.y"
     {printf("notequality\n"); sprintf((yyval.sval),"%d",(yyvsp[(1) - (3)].sval) != (yyvsp[(3) - (3)].sval));;}
     break;
 
   case 66:
 
 /* Line 1455 of yacc.c  */
-#line 1208 "code.y"
+#line 1211 "code.y"
     {
 	char num[5];
 	itoa(GetFreeRegister('t'), num,5);
@@ -2914,7 +2917,7 @@ else
   case 67:
 
 /* Line 1455 of yacc.c  */
-#line 1225 "code.y"
+#line 1228 "code.y"
     {
 		char num[5];
 		itoa(GetFreeRegister('t'), num,5);
@@ -2939,7 +2942,7 @@ else
   case 68:
 
 /* Line 1455 of yacc.c  */
-#line 1244 "code.y"
+#line 1247 "code.y"
     {
 	printf("int literal\n");
 	char buff[10];
@@ -2951,56 +2954,56 @@ else
   case 69:
 
 /* Line 1455 of yacc.c  */
-#line 1250 "code.y"
+#line 1253 "code.y"
     {printf("conditional and\n");  sprintf((yyval.sval),"%d",(yyvsp[(1) - (3)].sval) && (yyvsp[(3) - (3)].sval));;}
     break;
 
   case 70:
 
 /* Line 1455 of yacc.c  */
-#line 1251 "code.y"
+#line 1254 "code.y"
     {printf("nonditional or\n"); sprintf((yyval.sval),"%d",(yyvsp[(1) - (3)].sval) || (yyvsp[(3) - (3)].sval));;}
     break;
 
   case 71:
 
 /* Line 1455 of yacc.c  */
-#line 1252 "code.y"
+#line 1255 "code.y"
     {printf("logical or\n"); sprintf((yyval.sval),"%d",atoi((yyvsp[(1) - (3)].sval)) | atoi((yyvsp[(3) - (3)].sval)));;}
     break;
 
   case 72:
 
 /* Line 1455 of yacc.c  */
-#line 1253 "code.y"
+#line 1256 "code.y"
     {printf("logical and\n"); sprintf((yyval.sval),"%d",atoi((yyvsp[(1) - (3)].sval)) & atoi((yyvsp[(3) - (3)].sval)));;}
     break;
 
   case 73:
 
 /* Line 1455 of yacc.c  */
-#line 1254 "code.y"
+#line 1257 "code.y"
     {printf("logical xor\n"); sprintf((yyval.sval),"%d",atoi((yyvsp[(1) - (3)].sval)) ^ atoi((yyvsp[(3) - (3)].sval)));;}
     break;
 
   case 74:
 
 /* Line 1455 of yacc.c  */
-#line 1255 "code.y"
+#line 1258 "code.y"
     {printf("logical not\n"); sprintf((yyval.sval),"%d", !(yyvsp[(2) - (2)].sval));;}
     break;
 
   case 75:
 
 /* Line 1455 of yacc.c  */
-#line 1256 "code.y"
+#line 1259 "code.y"
     {printf("parantheses\n");  sprintf((yyval.sval),"%d",(yyvsp[(2) - (3)].sval));;}
     break;
 
   case 76:
 
 /* Line 1455 of yacc.c  */
-#line 1257 "code.y"
+#line 1260 "code.y"
     {
 	printf("character literal\n");
 	char buff[2];
@@ -3013,7 +3016,7 @@ else
   case 77:
 
 /* Line 1455 of yacc.c  */
-#line 1264 "code.y"
+#line 1267 "code.y"
     {
 	printf("id literal\n");
 	if(first != NULL){
@@ -3046,14 +3049,14 @@ char error[30] = "no such variable exists ...";
   case 78:
 
 /* Line 1455 of yacc.c  */
-#line 1291 "code.y"
+#line 1294 "code.y"
     {printf("negative num\n"); sprintf((yyval.sval),"%d", -atoi((yyvsp[(2) - (2)].sval)));;}
     break;
 
   case 79:
 
 /* Line 1455 of yacc.c  */
-#line 1292 "code.y"
+#line 1295 "code.y"
     {
 
 	if (strcmp((yyvsp[(1) - (1)].sval), "void") == 0)
@@ -3079,7 +3082,7 @@ char error[30] = "no such variable exists ...";
 
 
 /* Line 1455 of yacc.c  */
-#line 3083 "code.tab.c"
+#line 3086 "code.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -3291,7 +3294,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 1314 "code.y"
+#line 1317 "code.y"
 
 
 

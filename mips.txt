@@ -10,22 +10,21 @@ func1:
 	sw $t7, 28($sp)
 	addi $t0, $zero , 2 
 	addi $t1, $zero , 3 
-	addi $t2, $zero, 98
-	sub $t3,$t2,$t0
-	beq $t3,$zero,else0
 	addi $t2, $zero, 3
-	addi $t4, $zero, 2
-	sub $t10,$t2,$t4
-	beq $t10,$zero,else1
+	addi $t3, $zero, 2
+	sub $t4,$t2,$t3
+	beq $t4,$zero,else0
 	addi $t1, $zero , 9 
-	j afterif1:
-	else1:
-	afterif1:
-	addi $t1, $zero , 20 
 	j afterif0:
 	else0:
-	addi $t2,$t1,2
-	add $t0, $zero , $t2 
+	addi $t2, $zero, 1
+	addi $t3, $zero, 3
+	sub $t10,$t2,$t3
+	beq $t10,$zero,else1
+	add $t0, $zero , $a0 
+	j afterif0:
+	else1:
+	add $t0, $zero , $t1 
 	afterif0:
 	lw $t0, 0($sp)
 	lw $t1, 4($sp)
@@ -47,10 +46,6 @@ me:
 	sw $t5, 20($sp)
 	sw $t6, 24($sp)
 	sw $t7, 28($sp)
-	addi $t0, $zero , 2 
-	addi $a0,$zero,12
-	jal func1
-	addi $t0, $zero , 6 
 	lw $t0, 0($sp)
 	lw $t1, 4($sp)
 	lw $t2, 8($sp)
