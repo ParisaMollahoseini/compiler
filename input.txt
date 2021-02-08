@@ -26,3 +26,6 @@ int c $
 c = func1(3)$
 return 7$
 }
+int func2(int a)
+{
+}

@@ -159,6 +159,13 @@ PROGRAM {
 		}
 }
 PROGRAM: FTYPE FUNNAME {
+	if(seen_main_flag == 1 && strcmp($2,"main")!=0)
+	{
+		char error[100] = "No function definision is allowed after main  .... ";
+					yyerror(error);
+					YYERROR;
+	}
+
 	strcpy(current_func,$2);
 	pushStack($2);
 
