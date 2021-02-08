@@ -2624,7 +2624,7 @@ else
 		fclose(datafile);
 		
 		sprintf(buff,"move $v0, %s",buffer);
-
+		freereg(buffer);
 		datafile = fopen("mips.txt", "a+");
 		fprintf(datafile, "\t%s\n",buff);
 		fclose(datafile);
@@ -2727,7 +2727,7 @@ else
 
 	sprintf((yyval.sval),"%d",(yyvsp[(1) - (3)].sval) == (yyvsp[(3) - (3)].sval));
 	}
-	;}
+;}
     break;
 
   case 62:

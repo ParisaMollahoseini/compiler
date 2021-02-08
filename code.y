@@ -764,7 +764,14 @@ else
 
 WHILE_STMT: WHILE {printf("while begin\n");} '(' EXP  ')' '{' STMTS '}' {printf("while end\n");} STMTS;
 
-IF_STMT: IF {printf("if begin\n");} '(' EXP ')' '{' STMTS  '}' ELSEIF_STMT ELSE_STMT {printf("if end\n");} STMTS;
+IF_STMT: IF {
+	pushStack("if");
+	printf("if begin\n");
+	}
+	'(' EXP ')' {
+
+	}
+'{' STMTS  '}' ELSEIF_STMT ELSE_STMT {printf("if end\n");} STMTS;
 
 ELSEIF_STMT: ELSEIF {printf("elseif begin\n");} '(' EXP ')' '{' STMTS '}' {printf("elseif end\n");} ELSEIF | ;
 
@@ -983,10 +990,10 @@ EXP  {
 
 RETURN_STMT: RETURN EXP '$' {
 
-	
+
 	printf("return\n");
 	if (isnumber($2) || isalpha($2[0]))
-	{		
+	{
 		char num[5];
 		itoa(GetFreeRegister('t'), num,5);
 		char buffer[10] = {'$','t'};
@@ -999,17 +1006,17 @@ RETURN_STMT: RETURN EXP '$' {
 		datafile = fopen("mips.txt", "a+");
 		fprintf(datafile, "\t%s\n",buff);
 		fclose(datafile);
-		
+
 		sprintf(buff,"move $v0, %s",buffer);
 		freereg(buffer);
 		datafile = fopen("mips.txt", "a+");
 		fprintf(datafile, "\t%s\n",buff);
 		fclose(datafile);
-	
+
 	}
 	else{
 
-	
+
 	char buff[20];
 	sprintf(buff,"move $v0, %s",$2);
 
@@ -1020,9 +1027,9 @@ RETURN_STMT: RETURN EXP '$' {
 } STMTS;
 
 EXP: EXP ISEQ EXP {
-	printf("equality condition\n"); 
+	printf("equality condition\n");
 	if (isnumber($1) || isalpha($1[0]) || isnumber($3) || isalpha($3[0]))
-	{		
+	{
 		char buffer1[10] = {'$','t'};
 		char buffer2[10] = {'$','t'};
 		char buffer3[10] = {'$', 't'};
@@ -1033,7 +1040,7 @@ EXP: EXP ISEQ EXP {
 			new_buffer1 = 1;
 		char num[5];
 		itoa(GetFreeRegister('t'), num,5);
-		
+
 		strcat(buffer1, num);
 		char buff[50];
 		if (isalpha($1[0]))
@@ -1076,11 +1083,13 @@ EXP: EXP ISEQ EXP {
 		if (new_buffer2)
 		freereg(buffer2);
 		datafile = fopen("mips.txt", "a+");
+
+
+
 		fprintf(datafile, "\t%s\n",buff);
 		fclose(datafile);
 
-		pushStack(buffer3);
-	
+		sprintf($$,"%s",buffer3);
 	}
 	else{
 	char num[5];
@@ -1095,10 +1104,11 @@ EXP: EXP ISEQ EXP {
 	fprintf(datafile, "\t%s\n",buff);
 	fclose(datafile);
 
-	pushStack(buffer);
 
-	sprintf($$,"%d",$1 == $3);
+	sprintf($$,"%s",buffer);
+
 	}
+
 } |
 EXP ISNOTEQ EXP {printf("notequality\n"); sprintf($$,"%d",$1 != $3);} |
 EXP '+' EXP {
