@@ -5,7 +5,7 @@ int func1(int a)
     int c = 3$
     if ('b' == b)
     {
-
+      int c = 10$
     }
     return 1$
 

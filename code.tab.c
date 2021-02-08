@@ -3185,7 +3185,7 @@ struct var* findvar_inscope(char var_name[10],char this_scope[10])
 			//find func
 			for(int q=0 ; q<func_count; q++)
 			{
-				if(strcmp(fun_names[q].name,this_scope)==0)
+				if(strcmp(fun_names[q].name,scope[k])==0)
 				{
 					size = k+1 ;
 					break;
