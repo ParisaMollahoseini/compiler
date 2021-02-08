@@ -19,7 +19,7 @@ func1:
 	while2:
 	beq 2,$zero,afterwhile2
 	addi $t4,$zero,1
-	mul $t3,$t1,$t4
+	div $t3,$t1,$t4
 	add $t1, $zero , $t3 
 	j while2
 	afterwhile2:
