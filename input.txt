@@ -4,7 +4,7 @@ void func1()
 
 }
 
-int main()
+int me()
 {
 int a1 = 2$
 }

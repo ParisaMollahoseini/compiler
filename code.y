@@ -10,8 +10,8 @@ FILE* datafile;
 
 // Stack used to save the name of the register
 // that th variable is stored in
-char stack[30][8];
-int stackSize;
+char stack[30][10];
+int stackSize=0;
 
 // pushStack saves the register's name
 void pushStack(char* reg)
@@ -22,7 +22,7 @@ void pushStack(char* reg)
 // popStack returns the register's name
 char* popStack()
 {
-	char* a = (char*)malloc(sizeof(char)*8);
+	char* a = (char*)malloc(sizeof(char)*10);
 	strcpy(a , stack[stackSize-1]);
 	stackSize--;
 	return a;
@@ -53,7 +53,7 @@ struct var
 
 struct var variables[100];
 int count = 0 ,func_count = 0;
-int a_num=0;
+
 
 char current_func[20],founded_func[20];
 int founded_func_num = 0;
@@ -62,6 +62,7 @@ char currtype[4] ;
 int yyparse();
 void yyerror(const char *s);
 
+struct var* findvar_inscope(char var_name[10]);
 struct var* findvar_WithFunc(struct var* first, char* funcName);
 struct var* addvar(struct var** first, struct var** last, char* name, char *type);
 void vardelete(struct var** first, struct var** last, char* func_name);
@@ -129,7 +130,7 @@ _Bool a_state[4] = {0,0,0,0};
 %%
 PROGRAM: FTYPE ID {
 	strcpy(current_func,$2);
-	a_num = 0;
+	pushStack($2);
  }
  '('  PARAMS {
 	 printf("see function : %s\n",current_func);
@@ -145,7 +146,7 @@ PROGRAM: FTYPE ID {
 		}
 		')'  '{'  STMTS  '}' {
 
-		vardelete(&first,&last,current_func);
+		vardelete(&first,&last,popStack());
 
 
 		datafile = fopen("mips.txt", "a+");
@@ -321,7 +322,7 @@ RETURN_STMT |
 
 DECLARE_STMT: INT ID {
 	if(first != NULL){
-	if(!findvar(first,$2,current_func)){
+	if(!findvar_inscope($2)){
 		printf("declare %s %s\n",$1,$2);
 
 
@@ -379,7 +380,8 @@ IDS '$' STMTS |
 INT ID EQ EXP {
 	if(first != NULL){
 
-	if(!findvar(first,$2,current_func)){
+
+		if(!findvar_inscope($2)){
 
 		printf("declare and assign int %s = %d\n",$2,atoi($4));
 	struct var *newvar = addvar(&first, &last,$2, $1);
@@ -466,7 +468,9 @@ else
 }'$' STMTS |
 CHAR ID {
 	if(first != NULL){
-	if(!findvar(first,$2,current_func)){
+
+
+	if(!findvar_inscope($2)){
 		printf("declare %s %s\n","char",$2);
 
 		strcpy(currtype,$1);
@@ -519,7 +523,8 @@ fclose(datafile);
 IDS '$' STMTS |
 CHAR ID EQ EXP {
 	if(first != NULL){
-		if(!findvar(first,$2,current_func)){
+
+	if(!findvar_inscope($2)){
 			printf("declare and assign char %s = %s\n",$2,$4);
 
 		struct var *newvar = addvar(&first, &last,$2, $1);
@@ -612,7 +617,9 @@ CHAR ID EQ EXP {
 
 IDS: | ',' ID {
 		if(first != NULL){
-	if(!findvar(first,$2,current_func)){
+
+
+		if(!findvar_inscope($2)){
 		printf("declare more id %s %s\n",currtype,$2);
 	struct var *newvar = addvar(&first, &last,$2, currtype);
 	strcpy(newvar -> current_func ,current_func);
@@ -662,9 +669,10 @@ fclose(datafile);
 
 ASSIGN_STMT: ID EQ EXP '$' {
 		if(first != NULL){
-	if(findvar(first,$1,current_func)){
 
-	struct var *newvar = findvar(first,$1,current_func);
+		if(findvar_inscope($1)){
+
+	struct var *newvar = findvar_inscope($1));
 		datafile = fopen("mips.txt", "a+");
 		printf("type is %s...\n",newvar->type);
 		if(isnumber($3))
@@ -750,6 +758,7 @@ FUNC_CALL: ID {
 	}
 	else
 	{
+		pushStack($1);
 		strcpy(founded_func,$1);
 		founded_func_num = fun_names[flag].num;
 	}
@@ -760,6 +769,10 @@ FUNC_CALL: ID {
 		sprintf(buff,"jal %s",founded_func);
 		fprintf(datafile, "\t%s\n",buff);
 		fclose(datafile);
+
+		popStack();
+		strcpy(current_func,popStack);
+		pushStack(current_func);
 
 	} STMTS;
 
@@ -1046,7 +1059,33 @@ void yyerror(const char *s)
 	printf("-Error- %s",s);
 
 }
-
+struct var* findvar_inscope(char var_name[10])
+{
+	///
+	int size = stackSize;
+	char scope[size][10];
+	for(int k=0;k<size;k++)
+	{
+		strcpy(scope[k],popStack());
+	}
+	for(int k=0;k<size;k++)
+	{
+		if(findvar(first,var_name,scope[k]))
+			{
+				for(int k1=size-1;k1>=0;k1--)
+				{
+					pushStack(scope[k1]);
+				}
+				return findvar(first,var_name,scope[k]);
+			}
+	}
+	for(int k=size-1;k>=0;k--)
+	{
+		pushStack(scope[k]);
+	}
+	return NULL;
+	///
+}
 void vardelete(struct var** first, struct var** last, char* func_name){
 	struct var* prev;
 

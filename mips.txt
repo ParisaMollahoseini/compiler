@@ -1,2 +1,5 @@
 func1:
 	jr $ra
+me:
+	addi $t0, $zero , 2 
+	jr $ra
