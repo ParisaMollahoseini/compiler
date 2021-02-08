@@ -4,6 +4,8 @@ Terminals unused in grammar
    ISHIGHER
    ISLOWERANDEQ
    ISLOWER
+   '*'
+   '/'
    '['
    ']'
    VALUE_ID
@@ -116,51 +118,49 @@ Grammar
    56    | EXP ISNOTEQ EXP
    57    | EXP '+' EXP
    58    | EXP '-' EXP
-   59    | EXP '*' EXP
-   60    | EXP '/' EXP
-   61    | INTVAL
-   62    | EXP COND_AND EXP
-   63    | EXP COND_OR EXP
-   64    | EXP LOG_OR EXP
-   65    | EXP LOG_AND EXP
-   66    | EXP LOG_XOR EXP
-   67    | NOT EXP
-   68    | '(' EXP ')'
-   69    | char_val
-   70    | ID
-   71    | '-' EXP
+   59    | INTVAL
+   60    | EXP COND_AND EXP
+   61    | EXP COND_OR EXP
+   62    | EXP LOG_OR EXP
+   63    | EXP LOG_AND EXP
+   64    | EXP LOG_XOR EXP
+   65    | NOT EXP
+   66    | '(' EXP ')'
+   67    | char_val
+   68    | ID
+   69    | '-' EXP
 
 
 Terminals, with rules where they appear
 
 $end (0) 0
 '$' (36) 25 27 29 31 36 51 54
-'(' (40) 4 39 42 45 51 68
-')' (41) 4 39 42 45 51 68
-'*' (42) 59
+'(' (40) 4 39 42 45 51 66
+')' (41) 4 39 42 45 51 66
+'*' (42)
 '+' (43) 57
 ',' (44) 10 11 12 16 34 53
-'-' (45) 58 71
-'/' (47) 60
+'-' (45) 58 69
+'/' (47)
 '[' (91)
 ']' (93)
 '{' (123) 4 39 42 45 48
 '}' (125) 4 39 42 45 48
 error (256)
-INTVAL (258) 61
-char_val (259) 69
-COND_OR (260) 63
-COND_AND (261) 62
-LOG_OR (262) 64
-LOG_XOR (263) 66
-LOG_AND (264) 65
+INTVAL (258) 59
+char_val (259) 67
+COND_OR (260) 61
+COND_AND (261) 60
+LOG_OR (262) 62
+LOG_XOR (263) 64
+LOG_AND (264) 63
 ISNOTEQ (265) 56
 ISEQ (266) 55
 ISHIGHERANDEQ (267)
 ISHIGHER (268)
 ISLOWERANDEQ (269)
 ISLOWER (270)
-NOT (271) 67
+NOT (271) 65
 VALUE_ID (272)
 EQ (273) 27 31 36
 MULTI_COMMENT (274)
@@ -178,7 +178,7 @@ ELSEIF (285) 45
 WHILE (286) 39
 IF (287) 42
 NUM (288)
-ID (289) 4 9 10 11 12 15 16 25 27 29 31 34 36 51 70
+ID (289) 4 9 10 11 12 15 16 25 27 29 31 34 36 51 68
 
 
 Nonterminals, with rules where they appear
@@ -186,9 +186,8 @@ Nonterminals, with rules where they appear
 $accept (47)
     on left: 0
 EXP (48)
-    on left: 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71, on right:
-    27 31 36 39 42 45 53 54 55 56 57 58 59 60 62 63 64 65 66 67 68
-    71
+    on left: 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69, on right:
+    27 31 36 39 42 45 53 54 55 56 57 58 60 61 62 63 64 65 66 69
 VTYPE (49)
     on left: 13 14, on right: 9 10 11 12 15 16
 PARAMS (50)
@@ -650,21 +649,21 @@ state 42
 
 state 43
 
-   61 EXP: INTVAL .
+   59 EXP: INTVAL .
 
-    $default  reduce using rule 61 (EXP)
+    $default  reduce using rule 59 (EXP)
 
 
 state 44
 
-   69 EXP: char_val .
+   67 EXP: char_val .
 
-    $default  reduce using rule 69 (EXP)
+    $default  reduce using rule 67 (EXP)
 
 
 state 45
 
-   71 EXP: '-' . EXP
+   69 EXP: '-' . EXP
 
     INTVAL    shift, and go to state 43
     char_val  shift, and go to state 44
@@ -678,7 +677,7 @@ state 45
 
 state 46
 
-   67 EXP: NOT . EXP
+   65 EXP: NOT . EXP
 
     INTVAL    shift, and go to state 43
     char_val  shift, and go to state 44
@@ -692,7 +691,7 @@ state 46
 
 state 47
 
-   68 EXP: '(' . EXP ')'
+   66 EXP: '(' . EXP ')'
 
     INTVAL    shift, and go to state 43
     char_val  shift, and go to state 44
@@ -706,9 +705,9 @@ state 47
 
 state 48
 
-   70 EXP: ID .
+   68 EXP: ID .
 
-    $default  reduce using rule 70 (EXP)
+    $default  reduce using rule 68 (EXP)
 
 
 state 49
@@ -718,13 +717,11 @@ state 49
    56    | EXP . ISNOTEQ EXP
    57    | EXP . '+' EXP
    58    | EXP . '-' EXP
-   59    | EXP . '*' EXP
-   60    | EXP . '/' EXP
-   62    | EXP . COND_AND EXP
-   63    | EXP . COND_OR EXP
-   64    | EXP . LOG_OR EXP
-   65    | EXP . LOG_AND EXP
-   66    | EXP . LOG_XOR EXP
+   60    | EXP . COND_AND EXP
+   61    | EXP . COND_OR EXP
+   62    | EXP . LOG_OR EXP
+   63    | EXP . LOG_AND EXP
+   64    | EXP . LOG_XOR EXP
 
     COND_OR   shift, and go to state 63
     COND_AND  shift, and go to state 64
@@ -735,23 +732,21 @@ state 49
     ISEQ      shift, and go to state 69
     '+'       shift, and go to state 70
     '-'       shift, and go to state 71
-    '*'       shift, and go to state 72
-    '/'       shift, and go to state 73
-    '$'       shift, and go to state 74
+    '$'       shift, and go to state 72
 
 
 state 50
 
    39 WHILE_STMT: WHILE $@10 . '(' EXP ')' '{' STMTS '}' $@11 STMTS
 
-    '('  shift, and go to state 75
+    '('  shift, and go to state 73
 
 
 state 51
 
    42 IF_STMT: IF $@12 . '(' EXP ')' '{' STMTS '}' ELSEIF_STMT ELSE_STMT $@13 STMTS
 
-    '('  shift, and go to state 76
+    '('  shift, and go to state 74
 
 
 state 52
@@ -765,14 +760,14 @@ state 52
     '('       shift, and go to state 47
     ID        shift, and go to state 48
 
-    EXP  go to state 77
+    EXP  go to state 75
 
 
 state 53
 
    51 FUNC_CALL: ID $@17 . '(' ARGS_IN ')' '$' STMTS
 
-    '('  shift, and go to state 78
+    '('  shift, and go to state 76
 
 
 state 54
@@ -781,7 +776,7 @@ state 54
 
     $default  reduce using rule 3 ($@3)
 
-    $@3  go to state 79
+    $@3  go to state 77
 
 
 state 55
@@ -802,18 +797,18 @@ state 56
     '('       shift, and go to state 47
     ID        shift, and go to state 48
 
-    EXP  go to state 80
+    EXP  go to state 78
 
 
 state 57
 
    29 DECLARE_STMT: CHAR ID $@6 . IDS '$' STMTS
 
-    ','  shift, and go to state 81
+    ','  shift, and go to state 79
 
     $default  reduce using rule 32 (IDS)
 
-    IDS  go to state 82
+    IDS  go to state 80
 
 
 state 58
@@ -827,18 +822,18 @@ state 58
     '('       shift, and go to state 47
     ID        shift, and go to state 48
 
-    EXP  go to state 83
+    EXP  go to state 81
 
 
 state 59
 
    25 DECLARE_STMT: INT ID $@4 . IDS '$' STMTS
 
-    ','  shift, and go to state 81
+    ','  shift, and go to state 79
 
     $default  reduce using rule 32 (IDS)
 
-    IDS  go to state 84
+    IDS  go to state 82
 
 
 state 60
@@ -847,19 +842,14 @@ state 60
    56    | EXP . ISNOTEQ EXP
    57    | EXP . '+' EXP
    58    | EXP . '-' EXP
-   59    | EXP . '*' EXP
-   60    | EXP . '/' EXP
-   62    | EXP . COND_AND EXP
-   63    | EXP . COND_OR EXP
-   64    | EXP . LOG_OR EXP
-   65    | EXP . LOG_AND EXP
-   66    | EXP . LOG_XOR EXP
-   71    | '-' EXP .
+   60    | EXP . COND_AND EXP
+   61    | EXP . COND_OR EXP
+   62    | EXP . LOG_OR EXP
+   63    | EXP . LOG_AND EXP
+   64    | EXP . LOG_XOR EXP
+   69    | '-' EXP .
 
-    '*'  shift, and go to state 72
-    '/'  shift, and go to state 73
-
-    $default  reduce using rule 71 (EXP)
+    $default  reduce using rule 69 (EXP)
 
 
 state 61
@@ -868,16 +858,14 @@ state 61
    56    | EXP . ISNOTEQ EXP
    57    | EXP . '+' EXP
    58    | EXP . '-' EXP
-   59    | EXP . '*' EXP
-   60    | EXP . '/' EXP
-   62    | EXP . COND_AND EXP
-   63    | EXP . COND_OR EXP
-   64    | EXP . LOG_OR EXP
-   65    | EXP . LOG_AND EXP
-   66    | EXP . LOG_XOR EXP
-   67    | NOT EXP .
+   60    | EXP . COND_AND EXP
+   61    | EXP . COND_OR EXP
+   62    | EXP . LOG_OR EXP
+   63    | EXP . LOG_AND EXP
+   64    | EXP . LOG_XOR EXP
+   65    | NOT EXP .
 
-    $default  reduce using rule 67 (EXP)
+    $default  reduce using rule 65 (EXP)
 
 
 state 62
@@ -886,14 +874,12 @@ state 62
    56    | EXP . ISNOTEQ EXP
    57    | EXP . '+' EXP
    58    | EXP . '-' EXP
-   59    | EXP . '*' EXP
-   60    | EXP . '/' EXP
-   62    | EXP . COND_AND EXP
-   63    | EXP . COND_OR EXP
-   64    | EXP . LOG_OR EXP
-   65    | EXP . LOG_AND EXP
-   66    | EXP . LOG_XOR EXP
-   68    | '(' EXP . ')'
+   60    | EXP . COND_AND EXP
+   61    | EXP . COND_OR EXP
+   62    | EXP . LOG_OR EXP
+   63    | EXP . LOG_AND EXP
+   64    | EXP . LOG_XOR EXP
+   66    | '(' EXP . ')'
 
     COND_OR   shift, and go to state 63
     COND_AND  shift, and go to state 64
@@ -904,14 +890,40 @@ state 62
     ISEQ      shift, and go to state 69
     '+'       shift, and go to state 70
     '-'       shift, and go to state 71
-    '*'       shift, and go to state 72
-    '/'       shift, and go to state 73
-    ')'       shift, and go to state 85
+    ')'       shift, and go to state 83
 
 
 state 63
 
-   63 EXP: EXP COND_OR . EXP
+   61 EXP: EXP COND_OR . EXP
+
+    INTVAL    shift, and go to state 43
+    char_val  shift, and go to state 44
+    '-'       shift, and go to state 45
+    NOT       shift, and go to state 46
+    '('       shift, and go to state 47
+    ID        shift, and go to state 48
+
+    EXP  go to state 84
+
+
+state 64
+
+   60 EXP: EXP COND_AND . EXP
+
+    INTVAL    shift, and go to state 43
+    char_val  shift, and go to state 44
+    '-'       shift, and go to state 45
+    NOT       shift, and go to state 46
+    '('       shift, and go to state 47
+    ID        shift, and go to state 48
+
+    EXP  go to state 85
+
+
+state 65
+
+   62 EXP: EXP LOG_OR . EXP
 
     INTVAL    shift, and go to state 43
     char_val  shift, and go to state 44
@@ -923,9 +935,9 @@ state 63
     EXP  go to state 86
 
 
-state 64
+state 66
 
-   62 EXP: EXP COND_AND . EXP
+   64 EXP: EXP LOG_XOR . EXP
 
     INTVAL    shift, and go to state 43
     char_val  shift, and go to state 44
@@ -937,9 +949,9 @@ state 64
     EXP  go to state 87
 
 
-state 65
+state 67
 
-   64 EXP: EXP LOG_OR . EXP
+   63 EXP: EXP LOG_AND . EXP
 
     INTVAL    shift, and go to state 43
     char_val  shift, and go to state 44
@@ -949,34 +961,6 @@ state 65
     ID        shift, and go to state 48
 
     EXP  go to state 88
-
-
-state 66
-
-   66 EXP: EXP LOG_XOR . EXP
-
-    INTVAL    shift, and go to state 43
-    char_val  shift, and go to state 44
-    '-'       shift, and go to state 45
-    NOT       shift, and go to state 46
-    '('       shift, and go to state 47
-    ID        shift, and go to state 48
-
-    EXP  go to state 89
-
-
-state 67
-
-   65 EXP: EXP LOG_AND . EXP
-
-    INTVAL    shift, and go to state 43
-    char_val  shift, and go to state 44
-    '-'       shift, and go to state 45
-    NOT       shift, and go to state 46
-    '('       shift, and go to state 47
-    ID        shift, and go to state 48
-
-    EXP  go to state 90
 
 
 state 68
@@ -990,7 +974,7 @@ state 68
     '('       shift, and go to state 47
     ID        shift, and go to state 48
 
-    EXP  go to state 91
+    EXP  go to state 89
 
 
 state 69
@@ -1004,7 +988,7 @@ state 69
     '('       shift, and go to state 47
     ID        shift, and go to state 48
 
-    EXP  go to state 92
+    EXP  go to state 90
 
 
 state 70
@@ -1018,7 +1002,7 @@ state 70
     '('       shift, and go to state 47
     ID        shift, and go to state 48
 
-    EXP  go to state 93
+    EXP  go to state 91
 
 
 state 71
@@ -1032,38 +1016,10 @@ state 71
     '('       shift, and go to state 47
     ID        shift, and go to state 48
 
-    EXP  go to state 94
+    EXP  go to state 92
 
 
 state 72
-
-   59 EXP: EXP '*' . EXP
-
-    INTVAL    shift, and go to state 43
-    char_val  shift, and go to state 44
-    '-'       shift, and go to state 45
-    NOT       shift, and go to state 46
-    '('       shift, and go to state 47
-    ID        shift, and go to state 48
-
-    EXP  go to state 95
-
-
-state 73
-
-   60 EXP: EXP '/' . EXP
-
-    INTVAL    shift, and go to state 43
-    char_val  shift, and go to state 44
-    '-'       shift, and go to state 45
-    NOT       shift, and go to state 46
-    '('       shift, and go to state 47
-    ID        shift, and go to state 48
-
-    EXP  go to state 96
-
-
-state 74
 
    54 RETURN_STMT: RETURN EXP '$' . STMTS
 
@@ -1076,7 +1032,7 @@ state 74
 
     $default  reduce using rule 23 (STMTS)
 
-    STMTS         go to state 97
+    STMTS         go to state 93
     DECLARE_STMT  go to state 33
     ASSIGN_STMT   go to state 34
     WHILE_STMT    go to state 35
@@ -1085,7 +1041,7 @@ state 74
     RETURN_STMT   go to state 38
 
 
-state 75
+state 73
 
    39 WHILE_STMT: WHILE $@10 '(' . EXP ')' '{' STMTS '}' $@11 STMTS
 
@@ -1096,10 +1052,10 @@ state 75
     '('       shift, and go to state 47
     ID        shift, and go to state 48
 
-    EXP  go to state 98
+    EXP  go to state 94
 
 
-state 76
+state 74
 
    42 IF_STMT: IF $@12 '(' . EXP ')' '{' STMTS '}' ELSEIF_STMT ELSE_STMT $@13 STMTS
 
@@ -1110,23 +1066,21 @@ state 76
     '('       shift, and go to state 47
     ID        shift, and go to state 48
 
-    EXP  go to state 99
+    EXP  go to state 95
 
 
-state 77
+state 75
 
    36 ASSIGN_STMT: ID EQ EXP . '$' $@9 STMTS
    55 EXP: EXP . ISEQ EXP
    56    | EXP . ISNOTEQ EXP
    57    | EXP . '+' EXP
    58    | EXP . '-' EXP
-   59    | EXP . '*' EXP
-   60    | EXP . '/' EXP
-   62    | EXP . COND_AND EXP
-   63    | EXP . COND_OR EXP
-   64    | EXP . LOG_OR EXP
-   65    | EXP . LOG_AND EXP
-   66    | EXP . LOG_XOR EXP
+   60    | EXP . COND_AND EXP
+   61    | EXP . COND_OR EXP
+   62    | EXP . LOG_OR EXP
+   63    | EXP . LOG_AND EXP
+   64    | EXP . LOG_XOR EXP
 
     COND_OR   shift, and go to state 63
     COND_AND  shift, and go to state 64
@@ -1137,12 +1091,10 @@ state 77
     ISEQ      shift, and go to state 69
     '+'       shift, and go to state 70
     '-'       shift, and go to state 71
-    '*'       shift, and go to state 72
-    '/'       shift, and go to state 73
-    '$'       shift, and go to state 100
+    '$'       shift, and go to state 96
 
 
-state 78
+state 76
 
    51 FUNC_CALL: ID $@17 '(' . ARGS_IN ')' '$' STMTS
 
@@ -1155,11 +1107,11 @@ state 78
 
     $default  reduce using rule 52 (ARGS_IN)
 
-    EXP      go to state 101
-    ARGS_IN  go to state 102
+    EXP      go to state 97
+    ARGS_IN  go to state 98
 
 
-state 79
+state 77
 
     4 PROGRAM: FTYPE ID $@1 '(' PARAMS $@2 ')' '{' STMTS '}' $@3 . PROGRAM
 
@@ -1168,24 +1120,22 @@ state 79
 
     $default  reduce using rule 5 (PROGRAM)
 
-    PROGRAM  go to state 103
+    PROGRAM  go to state 99
     FTYPE    go to state 4
 
 
-state 80
+state 78
 
    31 DECLARE_STMT: CHAR ID EQ EXP . $@7 '$' STMTS
    55 EXP: EXP . ISEQ EXP
    56    | EXP . ISNOTEQ EXP
    57    | EXP . '+' EXP
    58    | EXP . '-' EXP
-   59    | EXP . '*' EXP
-   60    | EXP . '/' EXP
-   62    | EXP . COND_AND EXP
-   63    | EXP . COND_OR EXP
-   64    | EXP . LOG_OR EXP
-   65    | EXP . LOG_AND EXP
-   66    | EXP . LOG_XOR EXP
+   60    | EXP . COND_AND EXP
+   61    | EXP . COND_OR EXP
+   62    | EXP . LOG_OR EXP
+   63    | EXP . LOG_AND EXP
+   64    | EXP . LOG_XOR EXP
 
     COND_OR   shift, and go to state 63
     COND_AND  shift, and go to state 64
@@ -1196,42 +1146,38 @@ state 80
     ISEQ      shift, and go to state 69
     '+'       shift, and go to state 70
     '-'       shift, and go to state 71
-    '*'       shift, and go to state 72
-    '/'       shift, and go to state 73
 
     $default  reduce using rule 30 ($@7)
 
-    $@7  go to state 104
+    $@7  go to state 100
 
 
-state 81
+state 79
 
    34 IDS: ',' . ID $@8 IDS
 
-    ID  shift, and go to state 105
+    ID  shift, and go to state 101
 
 
-state 82
+state 80
 
    29 DECLARE_STMT: CHAR ID $@6 IDS . '$' STMTS
 
-    '$'  shift, and go to state 106
+    '$'  shift, and go to state 102
 
 
-state 83
+state 81
 
    27 DECLARE_STMT: INT ID EQ EXP . $@5 '$' STMTS
    55 EXP: EXP . ISEQ EXP
    56    | EXP . ISNOTEQ EXP
    57    | EXP . '+' EXP
    58    | EXP . '-' EXP
-   59    | EXP . '*' EXP
-   60    | EXP . '/' EXP
-   62    | EXP . COND_AND EXP
-   63    | EXP . COND_OR EXP
-   64    | EXP . LOG_OR EXP
-   65    | EXP . LOG_AND EXP
-   66    | EXP . LOG_XOR EXP
+   60    | EXP . COND_AND EXP
+   61    | EXP . COND_OR EXP
+   62    | EXP . LOG_OR EXP
+   63    | EXP . LOG_AND EXP
+   64    | EXP . LOG_XOR EXP
 
     COND_OR   shift, and go to state 63
     COND_AND  shift, and go to state 64
@@ -1242,42 +1188,38 @@ state 83
     ISEQ      shift, and go to state 69
     '+'       shift, and go to state 70
     '-'       shift, and go to state 71
-    '*'       shift, and go to state 72
-    '/'       shift, and go to state 73
 
     $default  reduce using rule 26 ($@5)
 
-    $@5  go to state 107
+    $@5  go to state 103
 
 
-state 84
+state 82
 
    25 DECLARE_STMT: INT ID $@4 IDS . '$' STMTS
 
-    '$'  shift, and go to state 108
+    '$'  shift, and go to state 104
 
 
-state 85
+state 83
 
-   68 EXP: '(' EXP ')' .
+   66 EXP: '(' EXP ')' .
 
-    $default  reduce using rule 68 (EXP)
+    $default  reduce using rule 66 (EXP)
 
 
-state 86
+state 84
 
    55 EXP: EXP . ISEQ EXP
    56    | EXP . ISNOTEQ EXP
    57    | EXP . '+' EXP
    58    | EXP . '-' EXP
-   59    | EXP . '*' EXP
-   60    | EXP . '/' EXP
-   62    | EXP . COND_AND EXP
-   63    | EXP . COND_OR EXP
-   63    | EXP COND_OR EXP .
-   64    | EXP . LOG_OR EXP
-   65    | EXP . LOG_AND EXP
-   66    | EXP . LOG_XOR EXP
+   60    | EXP . COND_AND EXP
+   61    | EXP . COND_OR EXP
+   61    | EXP COND_OR EXP .
+   62    | EXP . LOG_OR EXP
+   63    | EXP . LOG_AND EXP
+   64    | EXP . LOG_XOR EXP
 
     COND_AND  shift, and go to state 64
     LOG_OR    shift, and go to state 65
@@ -1287,26 +1229,22 @@ state 86
     ISEQ      shift, and go to state 69
     '+'       shift, and go to state 70
     '-'       shift, and go to state 71
-    '*'       shift, and go to state 72
-    '/'       shift, and go to state 73
 
-    $default  reduce using rule 63 (EXP)
+    $default  reduce using rule 61 (EXP)
 
 
-state 87
+state 85
 
    55 EXP: EXP . ISEQ EXP
    56    | EXP . ISNOTEQ EXP
    57    | EXP . '+' EXP
    58    | EXP . '-' EXP
-   59    | EXP . '*' EXP
-   60    | EXP . '/' EXP
-   62    | EXP . COND_AND EXP
-   62    | EXP COND_AND EXP .
-   63    | EXP . COND_OR EXP
-   64    | EXP . LOG_OR EXP
-   65    | EXP . LOG_AND EXP
-   66    | EXP . LOG_XOR EXP
+   60    | EXP . COND_AND EXP
+   60    | EXP COND_AND EXP .
+   61    | EXP . COND_OR EXP
+   62    | EXP . LOG_OR EXP
+   63    | EXP . LOG_AND EXP
+   64    | EXP . LOG_XOR EXP
 
     LOG_OR   shift, and go to state 65
     LOG_XOR  shift, and go to state 66
@@ -1315,10 +1253,53 @@ state 87
     ISEQ     shift, and go to state 69
     '+'      shift, and go to state 70
     '-'      shift, and go to state 71
-    '*'      shift, and go to state 72
-    '/'      shift, and go to state 73
+
+    $default  reduce using rule 60 (EXP)
+
+
+state 86
+
+   55 EXP: EXP . ISEQ EXP
+   56    | EXP . ISNOTEQ EXP
+   57    | EXP . '+' EXP
+   58    | EXP . '-' EXP
+   60    | EXP . COND_AND EXP
+   61    | EXP . COND_OR EXP
+   62    | EXP . LOG_OR EXP
+   62    | EXP LOG_OR EXP .
+   63    | EXP . LOG_AND EXP
+   64    | EXP . LOG_XOR EXP
+
+    LOG_XOR  shift, and go to state 66
+    LOG_AND  shift, and go to state 67
+    ISNOTEQ  shift, and go to state 68
+    ISEQ     shift, and go to state 69
+    '+'      shift, and go to state 70
+    '-'      shift, and go to state 71
 
     $default  reduce using rule 62 (EXP)
+
+
+state 87
+
+   55 EXP: EXP . ISEQ EXP
+   56    | EXP . ISNOTEQ EXP
+   57    | EXP . '+' EXP
+   58    | EXP . '-' EXP
+   60    | EXP . COND_AND EXP
+   61    | EXP . COND_OR EXP
+   62    | EXP . LOG_OR EXP
+   63    | EXP . LOG_AND EXP
+   64    | EXP . LOG_XOR EXP
+   64    | EXP LOG_XOR EXP .
+
+    LOG_AND  shift, and go to state 67
+    ISNOTEQ  shift, and go to state 68
+    ISEQ     shift, and go to state 69
+    '+'      shift, and go to state 70
+    '-'      shift, and go to state 71
+
+    $default  reduce using rule 64 (EXP)
 
 
 state 88
@@ -1327,223 +1308,110 @@ state 88
    56    | EXP . ISNOTEQ EXP
    57    | EXP . '+' EXP
    58    | EXP . '-' EXP
-   59    | EXP . '*' EXP
-   60    | EXP . '/' EXP
-   62    | EXP . COND_AND EXP
-   63    | EXP . COND_OR EXP
-   64    | EXP . LOG_OR EXP
-   64    | EXP LOG_OR EXP .
-   65    | EXP . LOG_AND EXP
-   66    | EXP . LOG_XOR EXP
+   60    | EXP . COND_AND EXP
+   61    | EXP . COND_OR EXP
+   62    | EXP . LOG_OR EXP
+   63    | EXP . LOG_AND EXP
+   63    | EXP LOG_AND EXP .
+   64    | EXP . LOG_XOR EXP
 
-    LOG_XOR  shift, and go to state 66
-    LOG_AND  shift, and go to state 67
     ISNOTEQ  shift, and go to state 68
     ISEQ     shift, and go to state 69
     '+'      shift, and go to state 70
     '-'      shift, and go to state 71
-    '*'      shift, and go to state 72
-    '/'      shift, and go to state 73
 
-    $default  reduce using rule 64 (EXP)
+    $default  reduce using rule 63 (EXP)
 
 
 state 89
 
    55 EXP: EXP . ISEQ EXP
    56    | EXP . ISNOTEQ EXP
-   57    | EXP . '+' EXP
-   58    | EXP . '-' EXP
-   59    | EXP . '*' EXP
-   60    | EXP . '/' EXP
-   62    | EXP . COND_AND EXP
-   63    | EXP . COND_OR EXP
-   64    | EXP . LOG_OR EXP
-   65    | EXP . LOG_AND EXP
-   66    | EXP . LOG_XOR EXP
-   66    | EXP LOG_XOR EXP .
-
-    LOG_AND  shift, and go to state 67
-    ISNOTEQ  shift, and go to state 68
-    ISEQ     shift, and go to state 69
-    '+'      shift, and go to state 70
-    '-'      shift, and go to state 71
-    '*'      shift, and go to state 72
-    '/'      shift, and go to state 73
-
-    $default  reduce using rule 66 (EXP)
-
-
-state 90
-
-   55 EXP: EXP . ISEQ EXP
-   56    | EXP . ISNOTEQ EXP
-   57    | EXP . '+' EXP
-   58    | EXP . '-' EXP
-   59    | EXP . '*' EXP
-   60    | EXP . '/' EXP
-   62    | EXP . COND_AND EXP
-   63    | EXP . COND_OR EXP
-   64    | EXP . LOG_OR EXP
-   65    | EXP . LOG_AND EXP
-   65    | EXP LOG_AND EXP .
-   66    | EXP . LOG_XOR EXP
-
-    ISNOTEQ  shift, and go to state 68
-    ISEQ     shift, and go to state 69
-    '+'      shift, and go to state 70
-    '-'      shift, and go to state 71
-    '*'      shift, and go to state 72
-    '/'      shift, and go to state 73
-
-    $default  reduce using rule 65 (EXP)
-
-
-state 91
-
-   55 EXP: EXP . ISEQ EXP
-   56    | EXP . ISNOTEQ EXP
    56    | EXP ISNOTEQ EXP .
    57    | EXP . '+' EXP
    58    | EXP . '-' EXP
-   59    | EXP . '*' EXP
-   60    | EXP . '/' EXP
-   62    | EXP . COND_AND EXP
-   63    | EXP . COND_OR EXP
-   64    | EXP . LOG_OR EXP
-   65    | EXP . LOG_AND EXP
-   66    | EXP . LOG_XOR EXP
+   60    | EXP . COND_AND EXP
+   61    | EXP . COND_OR EXP
+   62    | EXP . LOG_OR EXP
+   63    | EXP . LOG_AND EXP
+   64    | EXP . LOG_XOR EXP
 
     '+'  shift, and go to state 70
     '-'  shift, and go to state 71
-    '*'  shift, and go to state 72
-    '/'  shift, and go to state 73
 
     $default  reduce using rule 56 (EXP)
 
 
-state 92
+state 90
 
    55 EXP: EXP . ISEQ EXP
    55    | EXP ISEQ EXP .
    56    | EXP . ISNOTEQ EXP
    57    | EXP . '+' EXP
    58    | EXP . '-' EXP
-   59    | EXP . '*' EXP
-   60    | EXP . '/' EXP
-   62    | EXP . COND_AND EXP
-   63    | EXP . COND_OR EXP
-   64    | EXP . LOG_OR EXP
-   65    | EXP . LOG_AND EXP
-   66    | EXP . LOG_XOR EXP
+   60    | EXP . COND_AND EXP
+   61    | EXP . COND_OR EXP
+   62    | EXP . LOG_OR EXP
+   63    | EXP . LOG_AND EXP
+   64    | EXP . LOG_XOR EXP
 
     '+'  shift, and go to state 70
     '-'  shift, and go to state 71
-    '*'  shift, and go to state 72
-    '/'  shift, and go to state 73
 
     $default  reduce using rule 55 (EXP)
 
 
-state 93
+state 91
 
    55 EXP: EXP . ISEQ EXP
    56    | EXP . ISNOTEQ EXP
    57    | EXP . '+' EXP
    57    | EXP '+' EXP .
    58    | EXP . '-' EXP
-   59    | EXP . '*' EXP
-   60    | EXP . '/' EXP
-   62    | EXP . COND_AND EXP
-   63    | EXP . COND_OR EXP
-   64    | EXP . LOG_OR EXP
-   65    | EXP . LOG_AND EXP
-   66    | EXP . LOG_XOR EXP
-
-    '*'  shift, and go to state 72
-    '/'  shift, and go to state 73
+   60    | EXP . COND_AND EXP
+   61    | EXP . COND_OR EXP
+   62    | EXP . LOG_OR EXP
+   63    | EXP . LOG_AND EXP
+   64    | EXP . LOG_XOR EXP
 
     $default  reduce using rule 57 (EXP)
 
 
-state 94
+state 92
 
    55 EXP: EXP . ISEQ EXP
    56    | EXP . ISNOTEQ EXP
    57    | EXP . '+' EXP
    58    | EXP . '-' EXP
    58    | EXP '-' EXP .
-   59    | EXP . '*' EXP
-   60    | EXP . '/' EXP
-   62    | EXP . COND_AND EXP
-   63    | EXP . COND_OR EXP
-   64    | EXP . LOG_OR EXP
-   65    | EXP . LOG_AND EXP
-   66    | EXP . LOG_XOR EXP
-
-    '*'  shift, and go to state 72
-    '/'  shift, and go to state 73
+   60    | EXP . COND_AND EXP
+   61    | EXP . COND_OR EXP
+   62    | EXP . LOG_OR EXP
+   63    | EXP . LOG_AND EXP
+   64    | EXP . LOG_XOR EXP
 
     $default  reduce using rule 58 (EXP)
 
 
-state 95
-
-   55 EXP: EXP . ISEQ EXP
-   56    | EXP . ISNOTEQ EXP
-   57    | EXP . '+' EXP
-   58    | EXP . '-' EXP
-   59    | EXP . '*' EXP
-   59    | EXP '*' EXP .
-   60    | EXP . '/' EXP
-   62    | EXP . COND_AND EXP
-   63    | EXP . COND_OR EXP
-   64    | EXP . LOG_OR EXP
-   65    | EXP . LOG_AND EXP
-   66    | EXP . LOG_XOR EXP
-
-    $default  reduce using rule 59 (EXP)
-
-
-state 96
-
-   55 EXP: EXP . ISEQ EXP
-   56    | EXP . ISNOTEQ EXP
-   57    | EXP . '+' EXP
-   58    | EXP . '-' EXP
-   59    | EXP . '*' EXP
-   60    | EXP . '/' EXP
-   60    | EXP '/' EXP .
-   62    | EXP . COND_AND EXP
-   63    | EXP . COND_OR EXP
-   64    | EXP . LOG_OR EXP
-   65    | EXP . LOG_AND EXP
-   66    | EXP . LOG_XOR EXP
-
-    $default  reduce using rule 60 (EXP)
-
-
-state 97
+state 93
 
    54 RETURN_STMT: RETURN EXP '$' STMTS .
 
     $default  reduce using rule 54 (RETURN_STMT)
 
 
-state 98
+state 94
 
    39 WHILE_STMT: WHILE $@10 '(' EXP . ')' '{' STMTS '}' $@11 STMTS
    55 EXP: EXP . ISEQ EXP
    56    | EXP . ISNOTEQ EXP
    57    | EXP . '+' EXP
    58    | EXP . '-' EXP
-   59    | EXP . '*' EXP
-   60    | EXP . '/' EXP
-   62    | EXP . COND_AND EXP
-   63    | EXP . COND_OR EXP
-   64    | EXP . LOG_OR EXP
-   65    | EXP . LOG_AND EXP
-   66    | EXP . LOG_XOR EXP
+   60    | EXP . COND_AND EXP
+   61    | EXP . COND_OR EXP
+   62    | EXP . LOG_OR EXP
+   63    | EXP . LOG_AND EXP
+   64    | EXP . LOG_XOR EXP
 
     COND_OR   shift, and go to state 63
     COND_AND  shift, and go to state 64
@@ -1554,25 +1422,21 @@ state 98
     ISEQ      shift, and go to state 69
     '+'       shift, and go to state 70
     '-'       shift, and go to state 71
-    '*'       shift, and go to state 72
-    '/'       shift, and go to state 73
-    ')'       shift, and go to state 109
+    ')'       shift, and go to state 105
 
 
-state 99
+state 95
 
    42 IF_STMT: IF $@12 '(' EXP . ')' '{' STMTS '}' ELSEIF_STMT ELSE_STMT $@13 STMTS
    55 EXP: EXP . ISEQ EXP
    56    | EXP . ISNOTEQ EXP
    57    | EXP . '+' EXP
    58    | EXP . '-' EXP
-   59    | EXP . '*' EXP
-   60    | EXP . '/' EXP
-   62    | EXP . COND_AND EXP
-   63    | EXP . COND_OR EXP
-   64    | EXP . LOG_OR EXP
-   65    | EXP . LOG_AND EXP
-   66    | EXP . LOG_XOR EXP
+   60    | EXP . COND_AND EXP
+   61    | EXP . COND_OR EXP
+   62    | EXP . LOG_OR EXP
+   63    | EXP . LOG_AND EXP
+   64    | EXP . LOG_XOR EXP
 
     COND_OR   shift, and go to state 63
     COND_AND  shift, and go to state 64
@@ -1583,36 +1447,32 @@ state 99
     ISEQ      shift, and go to state 69
     '+'       shift, and go to state 70
     '-'       shift, and go to state 71
-    '*'       shift, and go to state 72
-    '/'       shift, and go to state 73
-    ')'       shift, and go to state 110
+    ')'       shift, and go to state 106
 
 
-state 100
+state 96
 
    36 ASSIGN_STMT: ID EQ EXP '$' . $@9 STMTS
 
     $default  reduce using rule 35 ($@9)
 
-    $@9  go to state 111
+    $@9  go to state 107
 
 
-state 101
+state 97
 
    53 ARGS_IN: EXP . ',' EXP ',' EXP ',' EXP
    55 EXP: EXP . ISEQ EXP
    56    | EXP . ISNOTEQ EXP
    57    | EXP . '+' EXP
    58    | EXP . '-' EXP
-   59    | EXP . '*' EXP
-   60    | EXP . '/' EXP
-   62    | EXP . COND_AND EXP
-   63    | EXP . COND_OR EXP
-   64    | EXP . LOG_OR EXP
-   65    | EXP . LOG_AND EXP
-   66    | EXP . LOG_XOR EXP
+   60    | EXP . COND_AND EXP
+   61    | EXP . COND_OR EXP
+   62    | EXP . LOG_OR EXP
+   63    | EXP . LOG_AND EXP
+   64    | EXP . LOG_XOR EXP
 
-    ','       shift, and go to state 112
+    ','       shift, and go to state 108
     COND_OR   shift, and go to state 63
     COND_AND  shift, and go to state 64
     LOG_OR    shift, and go to state 65
@@ -1622,41 +1482,39 @@ state 101
     ISEQ      shift, and go to state 69
     '+'       shift, and go to state 70
     '-'       shift, and go to state 71
-    '*'       shift, and go to state 72
-    '/'       shift, and go to state 73
 
 
-state 102
+state 98
 
    51 FUNC_CALL: ID $@17 '(' ARGS_IN . ')' '$' STMTS
 
-    ')'  shift, and go to state 113
+    ')'  shift, and go to state 109
 
 
-state 103
+state 99
 
     4 PROGRAM: FTYPE ID $@1 '(' PARAMS $@2 ')' '{' STMTS '}' $@3 PROGRAM .
 
     $default  reduce using rule 4 (PROGRAM)
 
 
-state 104
+state 100
 
    31 DECLARE_STMT: CHAR ID EQ EXP $@7 . '$' STMTS
 
-    '$'  shift, and go to state 114
+    '$'  shift, and go to state 110
 
 
-state 105
+state 101
 
    34 IDS: ',' ID . $@8 IDS
 
     $default  reduce using rule 33 ($@8)
 
-    $@8  go to state 115
+    $@8  go to state 111
 
 
-state 106
+state 102
 
    29 DECLARE_STMT: CHAR ID $@6 IDS '$' . STMTS
 
@@ -1669,7 +1527,7 @@ state 106
 
     $default  reduce using rule 23 (STMTS)
 
-    STMTS         go to state 116
+    STMTS         go to state 112
     DECLARE_STMT  go to state 33
     ASSIGN_STMT   go to state 34
     WHILE_STMT    go to state 35
@@ -1678,14 +1536,14 @@ state 106
     RETURN_STMT   go to state 38
 
 
-state 107
+state 103
 
    27 DECLARE_STMT: INT ID EQ EXP $@5 . '$' STMTS
 
-    '$'  shift, and go to state 117
+    '$'  shift, and go to state 113
 
 
-state 108
+state 104
 
    25 DECLARE_STMT: INT ID $@4 IDS '$' . STMTS
 
@@ -1698,7 +1556,7 @@ state 108
 
     $default  reduce using rule 23 (STMTS)
 
-    STMTS         go to state 118
+    STMTS         go to state 114
     DECLARE_STMT  go to state 33
     ASSIGN_STMT   go to state 34
     WHILE_STMT    go to state 35
@@ -1707,21 +1565,21 @@ state 108
     RETURN_STMT   go to state 38
 
 
-state 109
+state 105
 
    39 WHILE_STMT: WHILE $@10 '(' EXP ')' . '{' STMTS '}' $@11 STMTS
 
-    '{'  shift, and go to state 119
+    '{'  shift, and go to state 115
 
 
-state 110
+state 106
 
    42 IF_STMT: IF $@12 '(' EXP ')' . '{' STMTS '}' ELSEIF_STMT ELSE_STMT $@13 STMTS
 
-    '{'  shift, and go to state 120
+    '{'  shift, and go to state 116
 
 
-state 111
+state 107
 
    36 ASSIGN_STMT: ID EQ EXP '$' $@9 . STMTS
 
@@ -1734,7 +1592,7 @@ state 111
 
     $default  reduce using rule 23 (STMTS)
 
-    STMTS         go to state 121
+    STMTS         go to state 117
     DECLARE_STMT  go to state 33
     ASSIGN_STMT   go to state 34
     WHILE_STMT    go to state 35
@@ -1743,7 +1601,7 @@ state 111
     RETURN_STMT   go to state 38
 
 
-state 112
+state 108
 
    53 ARGS_IN: EXP ',' . EXP ',' EXP ',' EXP
 
@@ -1754,19 +1612,110 @@ state 112
     '('       shift, and go to state 47
     ID        shift, and go to state 48
 
-    EXP  go to state 122
+    EXP  go to state 118
+
+
+state 109
+
+   51 FUNC_CALL: ID $@17 '(' ARGS_IN ')' . '$' STMTS
+
+    '$'  shift, and go to state 119
+
+
+state 110
+
+   31 DECLARE_STMT: CHAR ID EQ EXP $@7 '$' . STMTS
+
+    CHAR    shift, and go to state 26
+    INT     shift, and go to state 27
+    RETURN  shift, and go to state 28
+    WHILE   shift, and go to state 29
+    IF      shift, and go to state 30
+    ID      shift, and go to state 31
+
+    $default  reduce using rule 23 (STMTS)
+
+    STMTS         go to state 120
+    DECLARE_STMT  go to state 33
+    ASSIGN_STMT   go to state 34
+    WHILE_STMT    go to state 35
+    IF_STMT       go to state 36
+    FUNC_CALL     go to state 37
+    RETURN_STMT   go to state 38
+
+
+state 111
+
+   34 IDS: ',' ID $@8 . IDS
+
+    ','  shift, and go to state 79
+
+    $default  reduce using rule 32 (IDS)
+
+    IDS  go to state 121
+
+
+state 112
+
+   29 DECLARE_STMT: CHAR ID $@6 IDS '$' STMTS .
+
+    $default  reduce using rule 29 (DECLARE_STMT)
 
 
 state 113
 
-   51 FUNC_CALL: ID $@17 '(' ARGS_IN ')' . '$' STMTS
+   27 DECLARE_STMT: INT ID EQ EXP $@5 '$' . STMTS
 
-    '$'  shift, and go to state 123
+    CHAR    shift, and go to state 26
+    INT     shift, and go to state 27
+    RETURN  shift, and go to state 28
+    WHILE   shift, and go to state 29
+    IF      shift, and go to state 30
+    ID      shift, and go to state 31
+
+    $default  reduce using rule 23 (STMTS)
+
+    STMTS         go to state 122
+    DECLARE_STMT  go to state 33
+    ASSIGN_STMT   go to state 34
+    WHILE_STMT    go to state 35
+    IF_STMT       go to state 36
+    FUNC_CALL     go to state 37
+    RETURN_STMT   go to state 38
 
 
 state 114
 
-   31 DECLARE_STMT: CHAR ID EQ EXP $@7 '$' . STMTS
+   25 DECLARE_STMT: INT ID $@4 IDS '$' STMTS .
+
+    $default  reduce using rule 25 (DECLARE_STMT)
+
+
+state 115
+
+   39 WHILE_STMT: WHILE $@10 '(' EXP ')' '{' . STMTS '}' $@11 STMTS
+
+    CHAR    shift, and go to state 26
+    INT     shift, and go to state 27
+    RETURN  shift, and go to state 28
+    WHILE   shift, and go to state 29
+    IF      shift, and go to state 30
+    ID      shift, and go to state 31
+
+    $default  reduce using rule 23 (STMTS)
+
+    STMTS         go to state 123
+    DECLARE_STMT  go to state 33
+    ASSIGN_STMT   go to state 34
+    WHILE_STMT    go to state 35
+    IF_STMT       go to state 36
+    FUNC_CALL     go to state 37
+    RETURN_STMT   go to state 38
+
+
+state 116
+
+   42 IF_STMT: IF $@12 '(' EXP ')' '{' . STMTS '}' ELSEIF_STMT ELSE_STMT $@13 STMTS
 
     CHAR    shift, and go to state 26
     INT     shift, and go to state 27
@@ -1786,27 +1735,41 @@ state 114
     RETURN_STMT   go to state 38
 
 
-state 115
-
-   34 IDS: ',' ID $@8 . IDS
-
-    ','  shift, and go to state 81
-
-    $default  reduce using rule 32 (IDS)
-
-    IDS  go to state 125
-
-
-state 116
-
-   29 DECLARE_STMT: CHAR ID $@6 IDS '$' STMTS .
-
-    $default  reduce using rule 29 (DECLARE_STMT)
-
-
 state 117
 
-   27 DECLARE_STMT: INT ID EQ EXP $@5 '$' . STMTS
+   36 ASSIGN_STMT: ID EQ EXP '$' $@9 STMTS .
+
+    $default  reduce using rule 36 (ASSIGN_STMT)
+
+
+state 118
+
+   53 ARGS_IN: EXP ',' EXP . ',' EXP ',' EXP
+   55 EXP: EXP . ISEQ EXP
+   56    | EXP . ISNOTEQ EXP
+   57    | EXP . '+' EXP
+   58    | EXP . '-' EXP
+   60    | EXP . COND_AND EXP
+   61    | EXP . COND_OR EXP
+   62    | EXP . LOG_OR EXP
+   63    | EXP . LOG_AND EXP
+   64    | EXP . LOG_XOR EXP
+
+    ','       shift, and go to state 125
+    COND_OR   shift, and go to state 63
+    COND_AND  shift, and go to state 64
+    LOG_OR    shift, and go to state 65
+    LOG_XOR   shift, and go to state 66
+    LOG_AND   shift, and go to state 67
+    ISNOTEQ   shift, and go to state 68
+    ISEQ      shift, and go to state 69
+    '+'       shift, and go to state 70
+    '-'       shift, and go to state 71
+
+
+state 119
+
+   51 FUNC_CALL: ID $@17 '(' ARGS_IN ')' '$' . STMTS
 
     CHAR    shift, and go to state 26
     INT     shift, and go to state 27
@@ -1826,151 +1789,42 @@ state 117
     RETURN_STMT   go to state 38
 
 
-state 118
-
-   25 DECLARE_STMT: INT ID $@4 IDS '$' STMTS .
-
-    $default  reduce using rule 25 (DECLARE_STMT)
-
-
-state 119
-
-   39 WHILE_STMT: WHILE $@10 '(' EXP ')' '{' . STMTS '}' $@11 STMTS
-
-    CHAR    shift, and go to state 26
-    INT     shift, and go to state 27
-    RETURN  shift, and go to state 28
-    WHILE   shift, and go to state 29
-    IF      shift, and go to state 30
-    ID      shift, and go to state 31
-
-    $default  reduce using rule 23 (STMTS)
-
-    STMTS         go to state 127
-    DECLARE_STMT  go to state 33
-    ASSIGN_STMT   go to state 34
-    WHILE_STMT    go to state 35
-    IF_STMT       go to state 36
-    FUNC_CALL     go to state 37
-    RETURN_STMT   go to state 38
-
-
 state 120
-
-   42 IF_STMT: IF $@12 '(' EXP ')' '{' . STMTS '}' ELSEIF_STMT ELSE_STMT $@13 STMTS
-
-    CHAR    shift, and go to state 26
-    INT     shift, and go to state 27
-    RETURN  shift, and go to state 28
-    WHILE   shift, and go to state 29
-    IF      shift, and go to state 30
-    ID      shift, and go to state 31
-
-    $default  reduce using rule 23 (STMTS)
-
-    STMTS         go to state 128
-    DECLARE_STMT  go to state 33
-    ASSIGN_STMT   go to state 34
-    WHILE_STMT    go to state 35
-    IF_STMT       go to state 36
-    FUNC_CALL     go to state 37
-    RETURN_STMT   go to state 38
-
-
-state 121
-
-   36 ASSIGN_STMT: ID EQ EXP '$' $@9 STMTS .
-
-    $default  reduce using rule 36 (ASSIGN_STMT)
-
-
-state 122
-
-   53 ARGS_IN: EXP ',' EXP . ',' EXP ',' EXP
-   55 EXP: EXP . ISEQ EXP
-   56    | EXP . ISNOTEQ EXP
-   57    | EXP . '+' EXP
-   58    | EXP . '-' EXP
-   59    | EXP . '*' EXP
-   60    | EXP . '/' EXP
-   62    | EXP . COND_AND EXP
-   63    | EXP . COND_OR EXP
-   64    | EXP . LOG_OR EXP
-   65    | EXP . LOG_AND EXP
-   66    | EXP . LOG_XOR EXP
-
-    ','       shift, and go to state 129
-    COND_OR   shift, and go to state 63
-    COND_AND  shift, and go to state 64
-    LOG_OR    shift, and go to state 65
-    LOG_XOR   shift, and go to state 66
-    LOG_AND   shift, and go to state 67
-    ISNOTEQ   shift, and go to state 68
-    ISEQ      shift, and go to state 69
-    '+'       shift, and go to state 70
-    '-'       shift, and go to state 71
-    '*'       shift, and go to state 72
-    '/'       shift, and go to state 73
-
-
-state 123
-
-   51 FUNC_CALL: ID $@17 '(' ARGS_IN ')' '$' . STMTS
-
-    CHAR    shift, and go to state 26
-    INT     shift, and go to state 27
-    RETURN  shift, and go to state 28
-    WHILE   shift, and go to state 29
-    IF      shift, and go to state 30
-    ID      shift, and go to state 31
-
-    $default  reduce using rule 23 (STMTS)
-
-    STMTS         go to state 130
-    DECLARE_STMT  go to state 33
-    ASSIGN_STMT   go to state 34
-    WHILE_STMT    go to state 35
-    IF_STMT       go to state 36
-    FUNC_CALL     go to state 37
-    RETURN_STMT   go to state 38
-
-
-state 124
 
    31 DECLARE_STMT: CHAR ID EQ EXP $@7 '$' STMTS .
 
     $default  reduce using rule 31 (DECLARE_STMT)
 
 
-state 125
+state 121
 
    34 IDS: ',' ID $@8 IDS .
 
     $default  reduce using rule 34 (IDS)
 
 
-state 126
+state 122
 
    27 DECLARE_STMT: INT ID EQ EXP $@5 '$' STMTS .
 
     $default  reduce using rule 27 (DECLARE_STMT)
 
 
-state 127
+state 123
 
    39 WHILE_STMT: WHILE $@10 '(' EXP ')' '{' STMTS . '}' $@11 STMTS
 
-    '}'  shift, and go to state 131
+    '}'  shift, and go to state 127
 
 
-state 128
+state 124
 
    42 IF_STMT: IF $@12 '(' EXP ')' '{' STMTS . '}' ELSEIF_STMT ELSE_STMT $@13 STMTS
 
-    '}'  shift, and go to state 132
+    '}'  shift, and go to state 128
 
 
-state 129
+state 125
 
    53 ARGS_IN: EXP ',' EXP ',' . EXP ',' EXP
 
@@ -1981,52 +1835,50 @@ state 129
     '('       shift, and go to state 47
     ID        shift, and go to state 48
 
-    EXP  go to state 133
+    EXP  go to state 129
 
 
-state 130
+state 126
 
    51 FUNC_CALL: ID $@17 '(' ARGS_IN ')' '$' STMTS .
 
     $default  reduce using rule 51 (FUNC_CALL)
 
 
-state 131
+state 127
 
    39 WHILE_STMT: WHILE $@10 '(' EXP ')' '{' STMTS '}' . $@11 STMTS
 
     $default  reduce using rule 38 ($@11)
 
-    $@11  go to state 134
+    $@11  go to state 130
 
 
-state 132
+state 128
 
    42 IF_STMT: IF $@12 '(' EXP ')' '{' STMTS '}' . ELSEIF_STMT ELSE_STMT $@13 STMTS
 
-    ELSEIF  shift, and go to state 135
+    ELSEIF  shift, and go to state 131
 
     $default  reduce using rule 46 (ELSEIF_STMT)
 
-    ELSEIF_STMT  go to state 136
+    ELSEIF_STMT  go to state 132
 
 
-state 133
+state 129
 
    53 ARGS_IN: EXP ',' EXP ',' EXP . ',' EXP
    55 EXP: EXP . ISEQ EXP
    56    | EXP . ISNOTEQ EXP
    57    | EXP . '+' EXP
    58    | EXP . '-' EXP
-   59    | EXP . '*' EXP
-   60    | EXP . '/' EXP
-   62    | EXP . COND_AND EXP
-   63    | EXP . COND_OR EXP
-   64    | EXP . LOG_OR EXP
-   65    | EXP . LOG_AND EXP
-   66    | EXP . LOG_XOR EXP
+   60    | EXP . COND_AND EXP
+   61    | EXP . COND_OR EXP
+   62    | EXP . LOG_OR EXP
+   63    | EXP . LOG_AND EXP
+   64    | EXP . LOG_XOR EXP
 
-    ','       shift, and go to state 137
+    ','       shift, and go to state 133
     COND_OR   shift, and go to state 63
     COND_AND  shift, and go to state 64
     LOG_OR    shift, and go to state 65
@@ -2036,11 +1888,9 @@ state 133
     ISEQ      shift, and go to state 69
     '+'       shift, and go to state 70
     '-'       shift, and go to state 71
-    '*'       shift, and go to state 72
-    '/'       shift, and go to state 73
 
 
-state 134
+state 130
 
    39 WHILE_STMT: WHILE $@10 '(' EXP ')' '{' STMTS '}' $@11 . STMTS
 
@@ -2053,7 +1903,7 @@ state 134
 
     $default  reduce using rule 23 (STMTS)
 
-    STMTS         go to state 138
+    STMTS         go to state 134
     DECLARE_STMT  go to state 33
     ASSIGN_STMT   go to state 34
     WHILE_STMT    go to state 35
@@ -2062,29 +1912,101 @@ state 134
     RETURN_STMT   go to state 38
 
 
-state 135
+state 131
 
    45 ELSEIF_STMT: ELSEIF . $@14 '(' EXP ')' '{' STMTS '}' $@15 ELSEIF
 
     $default  reduce using rule 43 ($@14)
 
-    $@14  go to state 139
+    $@14  go to state 135
+
+
+state 132
+
+   42 IF_STMT: IF $@12 '(' EXP ')' '{' STMTS '}' ELSEIF_STMT . ELSE_STMT $@13 STMTS
+
+    ELSE  shift, and go to state 136
+
+    $default  reduce using rule 49 (ELSE_STMT)
+
+    ELSE_STMT  go to state 137
+
+
+state 133
+
+   53 ARGS_IN: EXP ',' EXP ',' EXP ',' . EXP
+
+    INTVAL    shift, and go to state 43
+    char_val  shift, and go to state 44
+    '-'       shift, and go to state 45
+    NOT       shift, and go to state 46
+    '('       shift, and go to state 47
+    ID        shift, and go to state 48
+
+    EXP  go to state 138
+
+
+state 134
+
+   39 WHILE_STMT: WHILE $@10 '(' EXP ')' '{' STMTS '}' $@11 STMTS .
+
+    $default  reduce using rule 39 (WHILE_STMT)
+
+
+state 135
+
+   45 ELSEIF_STMT: ELSEIF $@14 . '(' EXP ')' '{' STMTS '}' $@15 ELSEIF
+
+    '('  shift, and go to state 139
 
 
 state 136
 
-   42 IF_STMT: IF $@12 '(' EXP ')' '{' STMTS '}' ELSEIF_STMT . ELSE_STMT $@13 STMTS
+   48 ELSE_STMT: ELSE . $@16 '{' STMTS '}'
 
-    ELSE  shift, and go to state 140
+    $default  reduce using rule 47 ($@16)
 
-    $default  reduce using rule 49 (ELSE_STMT)
-
-    ELSE_STMT  go to state 141
+    $@16  go to state 140
 
 
 state 137
 
-   53 ARGS_IN: EXP ',' EXP ',' EXP ',' . EXP
+   42 IF_STMT: IF $@12 '(' EXP ')' '{' STMTS '}' ELSEIF_STMT ELSE_STMT . $@13 STMTS
+
+    $default  reduce using rule 41 ($@13)
+
+    $@13  go to state 141
+
+
+state 138
+
+   53 ARGS_IN: EXP ',' EXP ',' EXP ',' EXP .
+   55 EXP: EXP . ISEQ EXP
+   56    | EXP . ISNOTEQ EXP
+   57    | EXP . '+' EXP
+   58    | EXP . '-' EXP
+   60    | EXP . COND_AND EXP
+   61    | EXP . COND_OR EXP
+   62    | EXP . LOG_OR EXP
+   63    | EXP . LOG_AND EXP
+   64    | EXP . LOG_XOR EXP
+
+    COND_OR   shift, and go to state 63
+    COND_AND  shift, and go to state 64
+    LOG_OR    shift, and go to state 65
+    LOG_XOR   shift, and go to state 66
+    LOG_AND   shift, and go to state 67
+    ISNOTEQ   shift, and go to state 68
+    ISEQ      shift, and go to state 69
+    '+'       shift, and go to state 70
+    '-'       shift, and go to state 71
+
+    $default  reduce using rule 53 (ARGS_IN)
+
+
+state 139
+
+   45 ELSEIF_STMT: ELSEIF $@14 '(' . EXP ')' '{' STMTS '}' $@15 ELSEIF
 
     INTVAL    shift, and go to state 43
     char_val  shift, and go to state 44
@@ -2096,90 +2018,14 @@ state 137
     EXP  go to state 142
 
 
-state 138
-
-   39 WHILE_STMT: WHILE $@10 '(' EXP ')' '{' STMTS '}' $@11 STMTS .
-
-    $default  reduce using rule 39 (WHILE_STMT)
-
-
-state 139
-
-   45 ELSEIF_STMT: ELSEIF $@14 . '(' EXP ')' '{' STMTS '}' $@15 ELSEIF
-
-    '('  shift, and go to state 143
-
-
 state 140
-
-   48 ELSE_STMT: ELSE . $@16 '{' STMTS '}'
-
-    $default  reduce using rule 47 ($@16)
-
-    $@16  go to state 144
-
-
-state 141
-
-   42 IF_STMT: IF $@12 '(' EXP ')' '{' STMTS '}' ELSEIF_STMT ELSE_STMT . $@13 STMTS
-
-    $default  reduce using rule 41 ($@13)
-
-    $@13  go to state 145
-
-
-state 142
-
-   53 ARGS_IN: EXP ',' EXP ',' EXP ',' EXP .
-   55 EXP: EXP . ISEQ EXP
-   56    | EXP . ISNOTEQ EXP
-   57    | EXP . '+' EXP
-   58    | EXP . '-' EXP
-   59    | EXP . '*' EXP
-   60    | EXP . '/' EXP
-   62    | EXP . COND_AND EXP
-   63    | EXP . COND_OR EXP
-   64    | EXP . LOG_OR EXP
-   65    | EXP . LOG_AND EXP
-   66    | EXP . LOG_XOR EXP
-
-    COND_OR   shift, and go to state 63
-    COND_AND  shift, and go to state 64
-    LOG_OR    shift, and go to state 65
-    LOG_XOR   shift, and go to state 66
-    LOG_AND   shift, and go to state 67
-    ISNOTEQ   shift, and go to state 68
-    ISEQ      shift, and go to state 69
-    '+'       shift, and go to state 70
-    '-'       shift, and go to state 71
-    '*'       shift, and go to state 72
-    '/'       shift, and go to state 73
-
-    $default  reduce using rule 53 (ARGS_IN)
-
-
-state 143
-
-   45 ELSEIF_STMT: ELSEIF $@14 '(' . EXP ')' '{' STMTS '}' $@15 ELSEIF
-
-    INTVAL    shift, and go to state 43
-    char_val  shift, and go to state 44
-    '-'       shift, and go to state 45
-    NOT       shift, and go to state 46
-    '('       shift, and go to state 47
-    ID        shift, and go to state 48
-
-    EXP  go to state 146
-
-
-state 144
 
    48 ELSE_STMT: ELSE $@16 . '{' STMTS '}'
 
-    '{'  shift, and go to state 147
+    '{'  shift, and go to state 143
 
 
-state 145
+state 141
 
    42 IF_STMT: IF $@12 '(' EXP ')' '{' STMTS '}' ELSEIF_STMT ELSE_STMT $@13 . STMTS
 
@@ -2192,7 +2038,7 @@ state 145
 
     $default  reduce using rule 23 (STMTS)
 
-    STMTS         go to state 148
+    STMTS         go to state 144
     DECLARE_STMT  go to state 33
     ASSIGN_STMT   go to state 34
     WHILE_STMT    go to state 35
@@ -2201,20 +2047,18 @@ state 145
     RETURN_STMT   go to state 38
 
 
-state 146
+state 142
 
    45 ELSEIF_STMT: ELSEIF $@14 '(' EXP . ')' '{' STMTS '}' $@15 ELSEIF
    55 EXP: EXP . ISEQ EXP
    56    | EXP . ISNOTEQ EXP
    57    | EXP . '+' EXP
    58    | EXP . '-' EXP
-   59    | EXP . '*' EXP
-   60    | EXP . '/' EXP
-   62    | EXP . COND_AND EXP
-   63    | EXP . COND_OR EXP
-   64    | EXP . LOG_OR EXP
-   65    | EXP . LOG_AND EXP
-   66    | EXP . LOG_XOR EXP
+   60    | EXP . COND_AND EXP
+   61    | EXP . COND_OR EXP
+   62    | EXP . LOG_OR EXP
+   63    | EXP . LOG_AND EXP
+   64    | EXP . LOG_XOR EXP
 
     COND_OR   shift, and go to state 63
     COND_AND  shift, and go to state 64
@@ -2225,12 +2069,10 @@ state 146
     ISEQ      shift, and go to state 69
     '+'       shift, and go to state 70
     '-'       shift, and go to state 71
-    '*'       shift, and go to state 72
-    '/'       shift, and go to state 73
-    ')'       shift, and go to state 149
+    ')'       shift, and go to state 145
 
 
-state 147
+state 143
 
    48 ELSE_STMT: ELSE $@16 '{' . STMTS '}'
 
@@ -2243,7 +2085,7 @@ state 147
 
     $default  reduce using rule 23 (STMTS)
 
-    STMTS         go to state 150
+    STMTS         go to state 146
     DECLARE_STMT  go to state 33
     ASSIGN_STMT   go to state 34
     WHILE_STMT    go to state 35
@@ -2252,28 +2094,28 @@ state 147
     RETURN_STMT   go to state 38
 
 
-state 148
+state 144
 
    42 IF_STMT: IF $@12 '(' EXP ')' '{' STMTS '}' ELSEIF_STMT ELSE_STMT $@13 STMTS .
 
     $default  reduce using rule 42 (IF_STMT)
 
 
-state 149
+state 145
 
    45 ELSEIF_STMT: ELSEIF $@14 '(' EXP ')' . '{' STMTS '}' $@15 ELSEIF
 
-    '{'  shift, and go to state 151
+    '{'  shift, and go to state 147
 
 
-state 150
+state 146
 
    48 ELSE_STMT: ELSE $@16 '{' STMTS . '}'
 
-    '}'  shift, and go to state 152
+    '}'  shift, and go to state 148
 
 
-state 151
+state 147
 
    45 ELSEIF_STMT: ELSEIF $@14 '(' EXP ')' '{' . STMTS '}' $@15 ELSEIF
 
@@ -2286,7 +2128,7 @@ state 151
 
     $default  reduce using rule 23 (STMTS)
 
-    STMTS         go to state 153
+    STMTS         go to state 149
     DECLARE_STMT  go to state 33
     ASSIGN_STMT   go to state 34
     WHILE_STMT    go to state 35
@@ -2295,37 +2137,37 @@ state 151
     RETURN_STMT   go to state 38
 
 
-state 152
+state 148
 
    48 ELSE_STMT: ELSE $@16 '{' STMTS '}' .
 
     $default  reduce using rule 48 (ELSE_STMT)
 
 
-state 153
+state 149
 
    45 ELSEIF_STMT: ELSEIF $@14 '(' EXP ')' '{' STMTS . '}' $@15 ELSEIF
 
-    '}'  shift, and go to state 154
+    '}'  shift, and go to state 150
 
 
-state 154
+state 150
 
    45 ELSEIF_STMT: ELSEIF $@14 '(' EXP ')' '{' STMTS '}' . $@15 ELSEIF
 
     $default  reduce using rule 44 ($@15)
 
-    $@15  go to state 155
+    $@15  go to state 151
 
 
-state 155
+state 151
 
    45 ELSEIF_STMT: ELSEIF $@14 '(' EXP ')' '{' STMTS '}' $@15 . ELSEIF
 
-    ELSEIF  shift, and go to state 156
+    ELSEIF  shift, and go to state 152
 
 
-state 156
+state 152
 
    45 ELSEIF_STMT: ELSEIF $@14 '(' EXP ')' '{' STMTS '}' $@15 ELSEIF .
 

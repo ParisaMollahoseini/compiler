@@ -3,5 +3,9 @@
 	addi $a2, $zero , 0 
 func1:
 	addi $t0, $zero , 107 
-	addi $t0, $zero , 97 
+	addi $t0, $zero , 0 
 	addi $t1, $zero , 0 
+	addi $t2,$a0,5
+	addi $t1, $zero , 5 
+	addi $t3, $zero , 8 
+	addi $a0, $zero , 0 

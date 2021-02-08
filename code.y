@@ -46,7 +46,7 @@ struct var
 	char name[10];
 	char current_func[20] ;
 	char which_reg[3];
-	char type[5];//char or int
+	char type[10];//char or int
 	struct var* next;
 };
 
@@ -62,7 +62,7 @@ int yyparse();
 void yyerror(const char *s);
 
 struct var* findvar_WithFunc(struct var* first, char* funcName);
-struct var* addvar(struct var** first, struct var** last, char* name, char type[5]);
+struct var* addvar(struct var** first, struct var** last, char* name, char *type);
 void vardelete(struct var** first, struct var** last, char* func_name);
 void freereg(char* reg_name);
 int GetFreeRegister(char register);
@@ -116,7 +116,7 @@ _Bool a_state[4] = {0,0,0,0};
 %left BREAK CONTINUE
 %left IF WHILE ELSEIF ELSE VOID FOR MAIN RETURN
 
-%nterm <ival> EXP
+%nterm <sval> EXP
 %token <ival> NUM
 %token <sval> ID
 %nterm <sval> VTYPE
@@ -372,7 +372,7 @@ INT ID EQ EXP {
 
 	if(!findvar(first,$2,current_func)){
 
-		printf("declare and assign int %s = %d\n",$2,$4);
+		printf("declare and assign int %s = %d\n",$2,atoi($4));
 	struct var *newvar = addvar(&first, &last,$2, $1);
 
 	strcpy(newvar -> current_func ,current_func);
@@ -382,9 +382,9 @@ INT ID EQ EXP {
 	char buffer[10] = {'$', 't'};
 	strcpy(newvar -> which_reg , strcat(buffer,num));
 
-	newvar -> intchar_union.value_int = $4;
+	newvar -> intchar_union.value_int = atoi($4);
 	datafile = fopen("mips.txt", "a+");
-	fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,$4);
+	fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,atoi($4));
 	fclose(datafile);
 }
 else
@@ -396,7 +396,7 @@ else
 }
 }
 else{
-	printf("declare and assign int %s = %d\n",$2,$4);
+	printf("declare and assign int %s = %d\n",$2,atoi($4));
 
 
 	first = (struct var*)malloc(sizeof(struct var));
@@ -404,7 +404,7 @@ else{
 
 	strcpy(first->name ,$2);
 	strcpy(first->type,"int");
-	first->intchar_union.value_int = $4;
+	first->intchar_union.value_int = atoi($4);
 	strcpy(first -> current_func ,current_func);
 
 		first->next = NULL;
@@ -478,17 +478,21 @@ IDS '$' STMTS |
 CHAR ID EQ EXP {
 	if(first != NULL){
 		if(!findvar(first,$2,current_func)){
-			printf("declare and assign char %s = %c\n",$2,$4);
+			printf("declare and assign char %s = %s\n",$2,$4);
 
 		struct var *newvar = addvar(&first, &last,$2, $1);
 		strcpy(newvar -> current_func ,current_func);
+		strcpy(newvar -> type ,"char");///////////////////
 
 		char num[5];
 		itoa(GetFreeRegister('t'),num,5);
 		char buffer[10] = {'$', 't'};
 		strcpy(newvar -> which_reg , strcat(buffer,num));
 
-		newvar -> intchar_union.value_char = $4;
+		char buff3[2] ;
+		strcpy(buff3,$4);
+		newvar -> intchar_union.value_char = buff3[0];
+
 		datafile = fopen("mips.txt", "a+");
 		fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,newvar -> intchar_union.value_char);
 		fclose(datafile);
@@ -502,13 +506,15 @@ CHAR ID EQ EXP {
 	}
 	}
 	else{
-		printf("fisrt declare and assign char %s = %c\n",$2,$4);
+		printf("fisrt declare and assign char %s = %s\n",$2,$4);
 
 
 		first = (struct var*)malloc(sizeof(struct var));
 		last = (struct var*)malloc(sizeof(struct var));
 		strcpy(first->name ,$2);
-		first->intchar_union.value_char = $4;
+		char buff3[2] ;
+		strcpy(buff3,$4);
+		first->intchar_union.value_char = buff3[0];
 		strcpy(first->type,"char");
 		strcpy(first -> current_func ,current_func);
 
@@ -584,18 +590,20 @@ ASSIGN_STMT: ID EQ EXP '$' {
 
 	struct var *newvar = findvar(first,$1,current_func);
 		datafile = fopen("mips.txt", "a+");
-		printf("type is %s",newvar->type);
+		printf("type is %s...\n",newvar->type);
 	if(strcmp(newvar -> type ,"char")==0)
 	{
-		printf("assign  %s = %c\n",$1,$3);
-		newvar -> intchar_union.value_char = $3;
-		fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,newvar -> intchar_union.value_int);
+		printf("assign  %s = %s\n",$1,$3);
+		char buff3[2] ;
+		strcpy(buff3,$3);
+		newvar -> intchar_union.value_char = buff3[0];
+		fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,newvar -> intchar_union.value_char);
 
 	}
 	else
 	{
-		printf("assign  %s = %d\n",$1,$3);
-		newvar -> intchar_union.value_int = $3;
+		printf("assign  %s = %d\n",$1,atoi($3));
+		newvar -> intchar_union.value_int = atoi($3);
 		fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,newvar -> intchar_union.value_int);
 
 	}
@@ -653,40 +661,79 @@ FUNC_CALL: ID {
 }
 '(' ARGS_IN ')' '$' STMTS;
 
-ARGS_IN: {printf("no args passed\n");} |
-EXP ',' EXP ',' EXP ',' EXP ;
+ARGS_IN: {$$=0; printf("no args passed\n");} |
+EXP ',' EXP ',' EXP ',' EXP {$$=4; printf("4 args passed\n");};
 
 RETURN_STMT: RETURN EXP '$' STMTS;
 
-EXP: EXP ISEQ EXP {printf("equality\n");  $$= $1 == $3;} |
-EXP ISNOTEQ EXP {printf("notequality\n");  $$= $1 != $3;} |
-EXP '+' EXP {printf("addition\n");  $$= $1 + $3;} |
-EXP '-' EXP {printf("subtraction\n");  $$= $1 - $3;} |
-EXP '*' EXP {printf("multiply\n");  $$= $1 * $3;} |
-EXP '/' EXP {printf("division\n");  $$= $1 / $3;} |
-INTVAL {printf("int literal\n"); $$= $1;}  |
-EXP COND_AND EXP {printf("conditional and\n");  $$= $1 && $3;} |
-EXP COND_OR EXP {printf("nonditional or\n"); $$= $1 || $3;} |
-EXP LOG_OR EXP {printf("logical or\n"); $$= $1 | $3;} |
-EXP LOG_AND EXP {printf("logical and\n"); $$= $1 & $3;} |
-EXP LOG_XOR EXP {printf("logical xor\n"); $$= $1 ^ $3;} |
-NOT EXP {printf("logical not\n"); $$= !$2;} |
-'(' EXP ')' {printf("parantheses\n");  $$= $2;} |
-char_val {printf("character literal\n"); $$= $1;} |
+EXP: EXP ISEQ EXP {printf("equality\n"); sprintf($$,"%d",$1 == $3);} |
+EXP ISNOTEQ EXP {printf("notequality\n"); sprintf($$,"%d",$1 != $3);} |
+EXP '+' EXP {
+	char num[5];
+	itoa(GetFreeRegister('t'), num,5);
+	char buffer[10] = {'$','t'};
+	strcat(buffer, num);
+
+	printf("addition\n");
+	char buff[20];
+	sprintf(buff,"addi %s,%s,%s",buffer,$1,$3);
+
+	datafile = fopen("mips.txt", "a+");
+	fprintf(datafile, "\t%s\n",buff);
+	fclose(datafile);
+
+	char buff2[10];
+	sprintf(buff2,"%d",atoi($1) + atoi($3));
+	strcpy($$,buff2);
+}
+| EXP '-' EXP {
+		char num[5];
+		itoa(GetFreeRegister('t'), num,5);
+		char buffer[10] = {'$','t'};
+		strcat(buffer, num);
+
+		printf("subtraction\n");
+		char buff[20];
+		sprintf(buff,"sub %s,%s,%s",buffer,$1,$3);
+
+		datafile = fopen("mips.txt", "a+");
+		fprintf(datafile, "\t%s\n",buff);
+		fclose(datafile);
+
+		char buff2[10];
+		sprintf(buff2,"%d",atoi($1) + atoi($3));
+		strcpy($$,buff2);
+
+	} |
+INTVAL {
+	printf("int literal\n");
+	char buff[10];
+	sprintf(buff,"%d",$1);
+	 strcpy($$ , buff);
+	}  |
+EXP COND_AND EXP {printf("conditional and\n");  sprintf($$,"%d",$1 && $3);} |
+EXP COND_OR EXP {printf("nonditional or\n"); sprintf($$,"%d",$1 || $3);} |
+EXP LOG_OR EXP {printf("logical or\n"); sprintf($$,"%d",atoi($1) | atoi($3));} |
+EXP LOG_AND EXP {printf("logical and\n"); sprintf($$,"%d",atoi($1) & atoi($3));} |
+EXP LOG_XOR EXP {printf("logical xor\n"); sprintf($$,"%d",atoi($1) ^ atoi($3));} |
+NOT EXP {printf("logical not\n"); sprintf($$,"%d", !$2);} |
+'(' EXP ')' {printf("parantheses\n");  sprintf($$,"%d",$2);} |
+char_val {
+	printf("character literal\n");
+	char buff[2];
+	buff[0] = $1;
+	buff[1] = '\0';
+	strcpy($$,buff);
+	} |
 ID {
 	printf("id literal\n");
 	if(first != NULL){
 if(findvar(first,$1,current_func)){
 
 struct var *newvar = findvar(first,$1,current_func);
-if(strcmp(newvar->type,"int")==0)
-{
-	$$ = newvar -> intchar_union.value_int;
-}
-else
-{
-	$$ = newvar -> intchar_union.value_char;
-}
+
+	strcpy($$ , newvar ->which_reg);
+
 }
 else
 {
@@ -705,7 +752,7 @@ char error[30] = "no such variable exists ...";
 			YYERROR;
 }
 }
-| '-' EXP {printf("negative num\n"); $$= -$2;} ;
+| '-' EXP {printf("negative num\n"); sprintf($$,"%d", -atoi($2));} ;
 
 
 %%
@@ -786,7 +833,7 @@ int GetFreeRegister(char reg){
 				break;
 	}
 }
-struct var* addvar(struct var** first, struct var** last, char* name, char type[5]){
+struct var* addvar(struct var** first, struct var** last, char* name, char *type){
 
 	struct var* _new = (struct var*)malloc(sizeof(struct var));
 	strcpy(_new->name ,name);
