@@ -1,4 +1,4 @@
-void func1(int a)
+int func1(int a)
 
 {
     int b = 2$
@@ -17,12 +17,14 @@ void func1(int a)
     {
      b = c$
     }
-}
 
+}
+  return 1$
 
 }
 
 void me()
 {
-
+int a $
+a = func1(7)$
 }
