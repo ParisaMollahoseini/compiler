@@ -13,6 +13,8 @@ FILE* datafile;
 char stack[30][10];
 int stackSize=0;
 
+char return_result[20];
+
 // pushStack saves the register's name
 void pushStack(char* reg)
 {
@@ -51,6 +53,13 @@ struct var
 	struct var* next;
 };
 
+struct func
+{
+	char name[30];
+	char type[10];//void or int
+};
+
+
 struct var variables[100];
 int count = 0 ,func_count = 0;
 
@@ -58,6 +67,9 @@ int count = 0 ,func_count = 0;
 char current_func[20],founded_func[20];
 int founded_func_num = 0;
 char currtype[4] ;
+
+struct func function_types[10000];
+int functions_count = 0;
 
 int yyparse();
 void yyerror(const char *s);
@@ -123,8 +135,11 @@ _Bool a_state[4] = {0,0,0,0};
 %nterm <sval> EXP
 %token <ival> NUM
 %token <sval> ID
+%nterm <sval> FTYPE
 %nterm <sval> VTYPE
 %nterm <ival> PARAMS
+%nterm <sval> FUNC_CALL
+
 %nterm <ival> ARGS_IN
 %start PROGRAM
 
@@ -132,6 +147,8 @@ _Bool a_state[4] = {0,0,0,0};
 PROGRAM: FTYPE ID {
 	strcpy(current_func,$2);
 	pushStack($2);
+	strcpy(function_types[functions_count].name, $2);
+	strcpy(function_types[functions_count++].type, $1);
  }
  '('  PARAMS {
 	 printf("see function : %s\n",current_func);
@@ -170,7 +187,7 @@ PROGRAM: FTYPE ID {
 	}
 	PROGRAM |  ;
 
-FTYPE: VOID | INT;
+FTYPE: VOID {strcpy($$, "void");} | INT {strcpy($$,"int");};
 
 PARAMS: {$$ = 0; printf("no parameters\n");} |
 VTYPE   ID {
@@ -695,7 +712,9 @@ fclose(datafile);
 }}IDS;
 
 ASSIGN_STMT: ID EQ EXP '$' {
-		if(first != NULL){
+		
+		if(first != NULL)
+		{
 			char this_scope[10];
 			strcpy(this_scope,popStack());
 			pushStack(this_scope);
@@ -758,7 +777,8 @@ else
 				strcat(error, $1);
 				yyerror(error);
 				YYERROR;
-	}} STMTS;
+	}
+} STMTS;
 
 //VAR_VALUE: EXP | char_val;
 
@@ -804,7 +824,18 @@ FUNC_CALL: ID {
 		strcpy(current_func,popStack());
 		pushStack(current_func);
 
-	} STMTS;
+	} STMTS {
+		int i = 0;
+		for (; i < functions_count; i++)
+		{
+			if (strcmp(function_types[i].name, $1) == 0)
+				break;
+		}
+		
+		if (strcmp(function_types[i].type, "void") == 0)
+			strcpy($$, "void");
+		else
+			strcpy($$, "int");};
 
 ARGS_IN: {
 	if(founded_func_num != 0 )
@@ -982,8 +1013,6 @@ EXP  {
 };
 
 RETURN_STMT: RETURN EXP '$' {
-
-	
 	printf("return\n");
 	if (isnumber($2) || isalpha($2[0]))
 	{		
@@ -1005,6 +1034,8 @@ RETURN_STMT: RETURN EXP '$' {
 		datafile = fopen("mips.txt", "a+");
 		fprintf(datafile, "\t%s\n",buff);
 		fclose(datafile);
+		
+		sprintf(return_result,"%s", $2);
 	
 	}
 	else{
@@ -1012,12 +1043,13 @@ RETURN_STMT: RETURN EXP '$' {
 	
 	char buff[20];
 	sprintf(buff,"move $v0, %s",$2);
-
+	
 	datafile = fopen("mips.txt", "a+");
 	fprintf(datafile, "\t%s\n",buff);
+	sprintf(return_result,"%s", $2);
 	fclose(datafile);
 	}
-} STMTS;
+} STMTS ;
 
 EXP: EXP ISEQ EXP {
 	printf("equality condition\n"); 
@@ -1184,7 +1216,27 @@ char error[30] = "no such variable exists ...";
 			YYERROR;
 }
 }
-| '-' EXP {printf("negative num\n"); sprintf($$,"%d", -atoi($2));} ;
+| '-' EXP {printf("negative num\n"); sprintf($$,"%d", -atoi($2));} 
+| FUNC_CALL  {
+	
+	if (strcmp($1, "void") == 0)
+	{
+		char error[40] = "void function has no return value ...";
+		yyerror(error);
+		YYERROR;
+	}
+	else
+	{
+		printf("%s\n", return_result);
+		char buff[20];
+		sprintf(buff,"addi %s,%s,%s","$s0","$zero",return_result);
+
+		datafile = fopen("mips.txt", "a+");
+		fprintf(datafile, "\t%s\n",buff);
+		fclose(datafile);
+		sprintf($$, "%s" , return_result);
+	}
+} ;
 
 
 %%
