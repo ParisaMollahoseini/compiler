@@ -1989,7 +1989,7 @@ yyreduce:
 		strcpy(currtype,(yyvsp[(1) - (2)].sval));
 	struct var *newvar = addvar(&first, &last,(yyvsp[(2) - (2)].sval), (yyvsp[(1) - (2)].sval));
 
-  strcpy(newvar -> current_func , current_func);
+  strcpy(newvar -> current_func , this_scope);
 
 	char num[5];
 	itoa(GetFreeRegister('t'),num,5);
@@ -2150,7 +2150,7 @@ else
 
 		strcpy(currtype,(yyvsp[(1) - (2)].sval));
 	struct var *newvar = addvar(&first, &last,(yyvsp[(2) - (2)].sval), (yyvsp[(1) - (2)].sval));
-  strcpy(newvar -> current_func , current_func);
+  strcpy(newvar -> current_func , this_scope);
 
 	char num[5];
 	itoa(GetFreeRegister('t'),num,5);
@@ -2470,7 +2470,7 @@ else
 #line 827 "code.y"
     {
 
-				popStack();
+				vardelete(&first,&last,popStack());
 				datafile = fopen("mips.txt", "a+");
 	 		 fprintf(datafile, "\tj while%d\n",label_while_stack_end[label_while_stack_size_end-1]);
 			 fprintf(datafile, "\tafterwhile%d:\n",label_while_stack[label_while_stack_size-1]);
@@ -2512,7 +2512,7 @@ else
 #line 853 "code.y"
     {
 	datafile = fopen("mips.txt", "a+");
-	popStack();
+	vardelete(&first,&last,popStack());
 
 	fprintf(datafile, "\tj afterif%d:\n",label_stack_end[label_stack_size_end-1]);
 
@@ -2568,7 +2568,7 @@ else
 /* Line 1455 of yacc.c  */
 #line 887 "code.y"
     {
-		 popStack();
+		 vardelete(&first,&last,popStack());
 	 	datafile = fopen("mips.txt", "a+");
 		fprintf(datafile, "\tj afterif%d:\n",label_stack_end[label_stack_size_end-1]);
 
@@ -2598,7 +2598,7 @@ else
 /* Line 1455 of yacc.c  */
 #line 906 "code.y"
     {
-		popStack();
+		vardelete(&first,&last,popStack());
 		printf("else end\n");
 		;}
     break;
@@ -2817,7 +2817,7 @@ else
 		strcpy(currtype,(yyvsp[(1) - (4)].sval));
 	struct var *newvar = addvar(&first, &last,(yyvsp[(2) - (4)].sval), (yyvsp[(1) - (4)].sval));
 
-  strcpy(newvar -> current_func , current_func);
+  strcpy(newvar -> current_func , this_scope);
 
 	char num[5];
 	itoa(GetFreeRegister('t'),num,5);
@@ -4883,6 +4883,7 @@ int main()
 void yyerror(const char *s)
 {
 	printf("-Error- %s",s);
+	remove("mips.txt");
 
 }
 struct var* findvar_inscope(char var_name[10],char this_scope[10])
@@ -4961,6 +4962,7 @@ void vardelete(struct var** first, struct var** last, char* func_name){
 	for(struct var* t = *first; t; t = t->next){
 
 		if(strcmp(t->current_func, func_name) == 0){
+			printf("----------------------------%s-----------\n",func_name);
 			freereg(t->which_reg);
 			if(t == *first && t == *last){
 				*first = *last = NULL;

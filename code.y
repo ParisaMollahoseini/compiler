@@ -386,7 +386,7 @@ DECLARE_STMT: INT ID {
 		strcpy(currtype,$1);
 	struct var *newvar = addvar(&first, &last,$2, $1);
 
-  strcpy(newvar -> current_func , current_func);
+  strcpy(newvar -> current_func , this_scope);
 
 	char num[5];
 	itoa(GetFreeRegister('t'),num,5);
@@ -536,7 +536,7 @@ CHAR ID {
 
 		strcpy(currtype,$1);
 	struct var *newvar = addvar(&first, &last,$2, $1);
-  strcpy(newvar -> current_func , current_func);
+  strcpy(newvar -> current_func , this_scope);
 
 	char num[5];
 	itoa(GetFreeRegister('t'),num,5);
@@ -826,7 +826,7 @@ WHILE_STMT: WHILE {
 		 }
 		  '{' STMTS '}' {
 
-				popStack();
+				vardelete(&first,&last,popStack());
 				datafile = fopen("mips.txt", "a+");
 	 		 fprintf(datafile, "\tj while%d\n",label_while_stack_end[label_while_stack_size_end-1]);
 			 fprintf(datafile, "\tafterwhile%d:\n",label_while_stack[label_while_stack_size-1]);
@@ -852,7 +852,7 @@ IF_STMT: IF {
 		}
 '{' STMTS  '}' {
 	datafile = fopen("mips.txt", "a+");
-	popStack();
+	vardelete(&first,&last,popStack());
 
 	fprintf(datafile, "\tj afterif%d:\n",label_stack_end[label_stack_size_end-1]);
 
@@ -885,7 +885,7 @@ ELSEIF_STMT: ELSEIF {
 	 fclose(datafile);
 	 }
 	 '{' STMTS '}' {
-		 popStack();
+		 vardelete(&first,&last,popStack());
 	 	datafile = fopen("mips.txt", "a+");
 		fprintf(datafile, "\tj afterif%d:\n",label_stack_end[label_stack_size_end-1]);
 
@@ -904,7 +904,7 @@ ELSE_STMT: ELSE {
 	printf("else begin \n");
 	}
 	'{' STMTS  '}' {
-		popStack();
+		vardelete(&first,&last,popStack());
 		printf("else end\n");
 		}
 		| {
@@ -1068,7 +1068,7 @@ FUNC_CALL: ID {
 		strcpy(currtype,$1);
 	struct var *newvar = addvar(&first, &last,$2, $1);
 
-  strcpy(newvar -> current_func , current_func);
+  strcpy(newvar -> current_func , this_scope);
 
 	char num[5];
 	itoa(GetFreeRegister('t'),num,5);
@@ -2819,6 +2819,7 @@ void vardelete(struct var** first, struct var** last, char* func_name){
 	for(struct var* t = *first; t; t = t->next){
 
 		if(strcmp(t->current_func, func_name) == 0){
+			printf("----------------------------%s-----------\n",func_name);
 			freereg(t->which_reg);
 			if(t == *first && t == *last){
 				*first = *last = NULL;

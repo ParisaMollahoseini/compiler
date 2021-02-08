@@ -3,12 +3,16 @@ int func1(int a)
 {
     int w1 = 2 && 3 || 4$
     int c = 3$
-    while(2)
+    while (2)
+    {
+    if(2)
     {
     int o $
     c = -c / 9$
     }
-    o = c $
+    }
+
+    #o = c $
     a = -a - 1$
 
 
@@ -19,6 +23,6 @@ return 0$
 int main()
 {
 int c $
-func1(3)$
+c = func1(3)$
 return 7$
 }
