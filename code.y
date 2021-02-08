@@ -1042,6 +1042,157 @@ FUNC_CALL: ID {
 		else
 			strcpy($$, "int");
 
+} | INT ID EQ ID {
+	
+	if(first != NULL){
+		char this_scope[10];
+		strcpy(this_scope,popStack());
+		pushStack(this_scope);
+
+	if(!findvar_inscope($2,this_scope)){
+		printf("declare %s %s\n",$1,$2);
+
+
+		strcpy(currtype,$1);
+	struct var *newvar = addvar(&first, &last,$2, $1);
+
+  strcpy(newvar -> current_func , current_func);
+
+	char num[5];
+	itoa(GetFreeRegister('t'),num,5);
+	char buffer[10] = {'$', 't'};
+	strcpy(newvar -> which_reg , strcat(buffer,num));
+
+	datafile = fopen("mips.txt", "a+");
+	fprintf(datafile, "\taddi %s, $zero , %d \n", newvar->which_reg,0);
+	fclose(datafile);
+}
+else
+{
+
+	char error[30] = "replicate variable ";
+				strcat(error, $2);
+				yyerror(error);
+				YYERROR;
+}
+}
+else{
+	printf("declare %s %s\n",$1,$2);
+
+
+	first = (struct var*)malloc(sizeof(struct var));
+	last = (struct var*)malloc(sizeof(struct var));
+
+	strcpy(first->name ,$2);
+	strcpy(first->type,"int");
+
+	strcpy(first -> current_func ,current_func);
+
+		first->next = NULL;
+
+		char num[5];
+		itoa(GetFreeRegister('t'), num,10);
+		char buffer[10] = {'$','t'};
+		strcat(buffer, num);
+
+
+strcpy(first -> which_reg , buffer);
+last = first;
+datafile = fopen("mips.txt", "a+");
+fprintf(datafile, "\taddi %s, $zero , %d \n", first->which_reg,0);
+fclose(datafile);
+}
+
+	int flag = -1 ;
+	for(int i=0;i<func_count;i++)
+	{
+		if(strcmp($4,fun_names[i].name)==0)
+		{
+			flag = i;
+		}
+	}
+	if(flag == -1 )
+	{
+		char error[30] = "no such function exists ...";
+					strcat(error, $4);
+					yyerror(error);
+					YYERROR;
+	}
+	else
+	{
+		pushStack($4);
+		strcpy(founded_func,$4);
+		founded_func_num = fun_names[flag].num;
+	}
+}
+	 '(' ARGS_IN ')' '$' {
+		char buff[20];
+	  datafile = fopen("mips.txt", "a+");
+		sprintf(buff,"jal %s",founded_func);
+		fprintf(datafile, "\t%s\n",buff);
+		fclose(datafile);
+
+		popStack();
+		strcpy(current_func,popStack());
+		pushStack(current_func);
+
+	}
+	{
+
+	int i = 0;
+		for (; i < func_count; i++)
+		{
+			if (strcmp(fun_names[i].name, $4) == 0)
+				break;
+		}
+
+		if (strcmp(fun_names[i].type, "void") == 0)
+
+	{
+		char error[40] = "void function has no return value ...";
+		yyerror(error);
+		YYERROR;
+	}
+	else
+	{
+		if (findvar(first,$2, current_func))
+		{
+			struct var* this_var = findvar(first,$2, current_func);
+		//printf("%s\n", return_result);
+		char this_scope[10];
+		strcpy(this_scope,popStack());
+		pushStack(this_scope);
+
+
+		struct var *newvar = findvar_inscope($2,this_scope);
+		char buff[20];
+
+		sprintf(buff,"move %s, $v0", newvar->which_reg);
+
+		datafile = fopen("mips.txt", "a+");
+		fprintf(datafile, "\t%s\n",buff);
+		fclose(datafile);
+		}
+		else
+		{
+			char error[40] = "id not defined ...";
+			yyerror(error);
+			YYERROR;
+		}
+	}
+	}  STMTS{
+		int i = 0;
+		for (; i < func_count; i++)
+		{
+			if (strcmp(fun_names[i].name, $2) == 0)
+				break;
+		}
+
+		if (strcmp(fun_names[i].type, "void") == 0)
+			strcpy($$, "void");
+		else
+			strcpy($$, "int");
+
 };
 
 
