@@ -1929,7 +1929,7 @@ fclose(datafile);
 	else
 	{
 
-		fprintf(datafile, "\taddi %s, $zero , %s \n", newvar->which_reg,(yyvsp[(4) - (4)].sval));
+		fprintf(datafile, "\tadd %s, $zero , %s \n", newvar->which_reg,(yyvsp[(4) - (4)].sval));
 	}
 	fclose(datafile);
 }
@@ -1980,7 +1980,7 @@ else if(isalpha((yyvsp[(4) - (4)].sval)[0]))
 else
 {
 
-	fprintf(datafile, "\taddi %s, $zero , %s \n", first->which_reg,(yyvsp[(4) - (4)].sval));
+	fprintf(datafile, "\tadd %s, $zero , %s \n", first->which_reg,(yyvsp[(4) - (4)].sval));
 }fclose(datafile);
 }
 ;}
@@ -2088,7 +2088,7 @@ fclose(datafile);
 		else
 		{
 
-			fprintf(datafile, "\taddi %s, $zero , %s \n", newvar->which_reg,(yyvsp[(4) - (4)].sval));
+			fprintf(datafile, "\tadd %s, $zero , %s \n", newvar->which_reg,(yyvsp[(4) - (4)].sval));
 		}
 
 		fclose(datafile);
@@ -2142,7 +2142,7 @@ fclose(datafile);
 	else
 	{
 
-		fprintf(datafile, "\taddi %s, $zero , %s \n", first->which_reg,(yyvsp[(4) - (4)].sval));
+		fprintf(datafile, "\tadd %s, $zero , %s \n", first->which_reg,(yyvsp[(4) - (4)].sval));
 	}
 
 	fclose(datafile);
@@ -2241,7 +2241,7 @@ fclose(datafile);
 		}
 		else
 		{
-			fprintf(datafile, "\taddi %s, $zero , %s \n", newvar->which_reg,(yyvsp[(3) - (4)].sval));
+			fprintf(datafile, "\tadd %s, $zero , %s \n", newvar->which_reg,(yyvsp[(3) - (4)].sval));
 		}
 
 	/* if(strcmp(newvar -> type ,"char")==0)
@@ -2423,7 +2423,7 @@ else
 		else if(isalpha((yyvsp[(1) - (7)].sval)[0]))
 		sprintf(buff,"addi %s,%s,%d","$a0","$zero",(yyvsp[(1) - (7)].sval)[0]);
 		else
-		sprintf(buff,"addi %s,%s,%s","$a0","$zero",(yyvsp[(1) - (7)].sval));
+		sprintf(buff,"add %s,%s,%s","$a0","$zero",(yyvsp[(1) - (7)].sval));
 		fprintf(datafile, "\t%s\n",buff);
 
 		//a1
@@ -2432,7 +2432,7 @@ else
 			else if(isalpha((yyvsp[(3) - (7)].sval)[0]))
 			sprintf(buff,"addi %s,%s,%d","$a1","$zero",(yyvsp[(3) - (7)].sval)[0]);
 			else
-			sprintf(buff,"addi %s,%s,%s","$a1","$zero",(yyvsp[(3) - (7)].sval));
+			sprintf(buff,"add %s,%s,%s","$a1","$zero",(yyvsp[(3) - (7)].sval));
 			fprintf(datafile, "\t%s\n",buff);
 
 			//a2
@@ -2441,7 +2441,7 @@ else
 				else if(isalpha((yyvsp[(5) - (7)].sval)[0]))
 				sprintf(buff,"addi %s,%s,%d","$a2","$zero",(yyvsp[(5) - (7)].sval)[0]);
 				else
-				sprintf(buff,"addi %s,%s,%s","$a2","$zero",(yyvsp[(5) - (7)].sval));
+				sprintf(buff,"add %s,%s,%s","$a2","$zero",(yyvsp[(5) - (7)].sval));
 				fprintf(datafile, "\t%s\n",buff);
 
 				//a3
@@ -2450,7 +2450,7 @@ else
 					else if(isalpha((yyvsp[(7) - (7)].sval)[0]))
 					sprintf(buff,"addi %s,%s,%d","$a3","$zero",(yyvsp[(7) - (7)].sval)[0]);
 					else
-					sprintf(buff,"addi %s,%s,%s","$a3","$zero",(yyvsp[(7) - (7)].sval));
+					sprintf(buff,"add %s,%s,%s","$a3","$zero",(yyvsp[(7) - (7)].sval));
 					fprintf(datafile, "\t%s\n",buff);
 
 
@@ -2482,7 +2482,7 @@ else
 		else if(isalpha((yyvsp[(1) - (5)].sval)[0]))
 		sprintf(buff,"addi %s,%s,%d","$a0","$zero",(yyvsp[(1) - (5)].sval)[0]);
 		else
-		sprintf(buff,"addi %s,%s,%s","$a0","$zero",(yyvsp[(1) - (5)].sval));
+		sprintf(buff,"add %s,%s,%s","$a0","$zero",(yyvsp[(1) - (5)].sval));
 		fprintf(datafile, "\t%s\n",buff);
 
 		//a1
@@ -2491,7 +2491,7 @@ else
 			else if(isalpha((yyvsp[(3) - (5)].sval)[0]))
 			sprintf(buff,"addi %s,%s,%d","$a1","$zero",(yyvsp[(3) - (5)].sval)[0]);
 			else
-			sprintf(buff,"addi %s,%s,%s","$a1","$zero",(yyvsp[(3) - (5)].sval));
+			sprintf(buff,"add %s,%s,%s","$a1","$zero",(yyvsp[(3) - (5)].sval));
 			fprintf(datafile, "\t%s\n",buff);
 
 			//a2
@@ -2500,7 +2500,7 @@ else
 				else if(isalpha((yyvsp[(5) - (5)].sval)[0]))
 				sprintf(buff,"addi %s,%s,%d","$a2","$zero",(yyvsp[(5) - (5)].sval)[0]);
 				else
-				sprintf(buff,"addi %s,%s,%s","$a2","$zero",(yyvsp[(5) - (5)].sval));
+				sprintf(buff,"add %s,%s,%s","$a2","$zero",(yyvsp[(5) - (5)].sval));
 				fprintf(datafile, "\t%s\n",buff);
 
 
@@ -2533,7 +2533,7 @@ else
 		else if(isalpha((yyvsp[(1) - (3)].sval)[0]))
 		sprintf(buff,"addi %s,%s,%d","$a0","$zero",(yyvsp[(1) - (3)].sval)[0]);
 		else
-		sprintf(buff,"addi %s,%s,%s","$a0","$zero",(yyvsp[(1) - (3)].sval));
+		sprintf(buff,"add %s,%s,%s","$a0","$zero",(yyvsp[(1) - (3)].sval));
 		fprintf(datafile, "\t%s\n",buff);
 
 		//a1
@@ -2542,7 +2542,7 @@ else
 			else if(isalpha((yyvsp[(3) - (3)].sval)[0]))
 			sprintf(buff,"addi %s,%s,%d","$a1","$zero",(yyvsp[(3) - (3)].sval)[0]);
 			else
-			sprintf(buff,"addi %s,%s,%s","$a1","$zero",(yyvsp[(3) - (3)].sval));
+			sprintf(buff,"add %s,%s,%s","$a1","$zero",(yyvsp[(3) - (3)].sval));
 			fprintf(datafile, "\t%s\n",buff);
 
 
@@ -2577,7 +2577,7 @@ else
 		else if(isalpha((yyvsp[(1) - (1)].sval)[0]))
 		sprintf(buff,"addi %s,%s,%d","$a0","$zero",(yyvsp[(1) - (1)].sval)[0]);
 		else
-		sprintf(buff,"addi %s,%s,%s","$a0","$zero",(yyvsp[(1) - (1)].sval));
+		sprintf(buff,"add %s,%s,%s","$a0","$zero",(yyvsp[(1) - (1)].sval));
 		fprintf(datafile, "\t%s\n",buff);
 
 

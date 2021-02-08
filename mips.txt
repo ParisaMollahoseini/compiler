@@ -1,10 +1,10 @@
 func1:
 	addi $t0,$a0,2
-	addi $t1, $zero , $t0 
+	add $t1, $zero , $t0 
 	jr $ra
 me:
 	addi $t1, $zero , 2 
-	addi $a0,$zero,$t1
+	add $a0,$zero,$t1
 	jal func1
 	addi $t1, $zero , 6 
 	jr $ra

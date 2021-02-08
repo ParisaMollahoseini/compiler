@@ -418,7 +418,7 @@ INT ID EQ EXP {
 	else
 	{
 
-		fprintf(datafile, "\taddi %s, $zero , %s \n", newvar->which_reg,$4);
+		fprintf(datafile, "\tadd %s, $zero , %s \n", newvar->which_reg,$4);
 	}
 	fclose(datafile);
 }
@@ -469,7 +469,7 @@ else if(isalpha($4[0]))
 else
 {
 
-	fprintf(datafile, "\taddi %s, $zero , %s \n", first->which_reg,$4);
+	fprintf(datafile, "\tadd %s, $zero , %s \n", first->which_reg,$4);
 }fclose(datafile);
 }
 }'$' STMTS |
@@ -566,7 +566,7 @@ CHAR ID EQ EXP {
 		else
 		{
 
-			fprintf(datafile, "\taddi %s, $zero , %s \n", newvar->which_reg,$4);
+			fprintf(datafile, "\tadd %s, $zero , %s \n", newvar->which_reg,$4);
 		}
 
 		fclose(datafile);
@@ -620,7 +620,7 @@ CHAR ID EQ EXP {
 	else
 	{
 
-		fprintf(datafile, "\taddi %s, $zero , %s \n", first->which_reg,$4);
+		fprintf(datafile, "\tadd %s, $zero , %s \n", first->which_reg,$4);
 	}
 
 	fclose(datafile);
@@ -709,7 +709,7 @@ ASSIGN_STMT: ID EQ EXP '$' {
 		}
 		else
 		{
-			fprintf(datafile, "\taddi %s, $zero , %s \n", newvar->which_reg,$3);
+			fprintf(datafile, "\tadd %s, $zero , %s \n", newvar->which_reg,$3);
 		}
 
 	/* if(strcmp(newvar -> type ,"char")==0)
@@ -823,7 +823,7 @@ EXP ',' EXP ',' EXP ',' EXP {
 		else if(isalpha($1[0]))
 		sprintf(buff,"addi %s,%s,%d","$a0","$zero",$1[0]);
 		else
-		sprintf(buff,"addi %s,%s,%s","$a0","$zero",$1);
+		sprintf(buff,"add %s,%s,%s","$a0","$zero",$1);
 		fprintf(datafile, "\t%s\n",buff);
 
 		//a1
@@ -832,7 +832,7 @@ EXP ',' EXP ',' EXP ',' EXP {
 			else if(isalpha($3[0]))
 			sprintf(buff,"addi %s,%s,%d","$a1","$zero",$3[0]);
 			else
-			sprintf(buff,"addi %s,%s,%s","$a1","$zero",$3);
+			sprintf(buff,"add %s,%s,%s","$a1","$zero",$3);
 			fprintf(datafile, "\t%s\n",buff);
 
 			//a2
@@ -841,7 +841,7 @@ EXP ',' EXP ',' EXP ',' EXP {
 				else if(isalpha($5[0]))
 				sprintf(buff,"addi %s,%s,%d","$a2","$zero",$5[0]);
 				else
-				sprintf(buff,"addi %s,%s,%s","$a2","$zero",$5);
+				sprintf(buff,"add %s,%s,%s","$a2","$zero",$5);
 				fprintf(datafile, "\t%s\n",buff);
 
 				//a3
@@ -850,7 +850,7 @@ EXP ',' EXP ',' EXP ',' EXP {
 					else if(isalpha($7[0]))
 					sprintf(buff,"addi %s,%s,%d","$a3","$zero",$7[0]);
 					else
-					sprintf(buff,"addi %s,%s,%s","$a3","$zero",$7);
+					sprintf(buff,"add %s,%s,%s","$a3","$zero",$7);
 					fprintf(datafile, "\t%s\n",buff);
 
 
@@ -876,7 +876,7 @@ EXP ',' EXP ',' EXP  {
 		else if(isalpha($1[0]))
 		sprintf(buff,"addi %s,%s,%d","$a0","$zero",$1[0]);
 		else
-		sprintf(buff,"addi %s,%s,%s","$a0","$zero",$1);
+		sprintf(buff,"add %s,%s,%s","$a0","$zero",$1);
 		fprintf(datafile, "\t%s\n",buff);
 
 		//a1
@@ -885,7 +885,7 @@ EXP ',' EXP ',' EXP  {
 			else if(isalpha($3[0]))
 			sprintf(buff,"addi %s,%s,%d","$a1","$zero",$3[0]);
 			else
-			sprintf(buff,"addi %s,%s,%s","$a1","$zero",$3);
+			sprintf(buff,"add %s,%s,%s","$a1","$zero",$3);
 			fprintf(datafile, "\t%s\n",buff);
 
 			//a2
@@ -894,7 +894,7 @@ EXP ',' EXP ',' EXP  {
 				else if(isalpha($5[0]))
 				sprintf(buff,"addi %s,%s,%d","$a2","$zero",$5[0]);
 				else
-				sprintf(buff,"addi %s,%s,%s","$a2","$zero",$5);
+				sprintf(buff,"add %s,%s,%s","$a2","$zero",$5);
 				fprintf(datafile, "\t%s\n",buff);
 
 
@@ -921,7 +921,7 @@ EXP ',' EXP  {
 		else if(isalpha($1[0]))
 		sprintf(buff,"addi %s,%s,%d","$a0","$zero",$1[0]);
 		else
-		sprintf(buff,"addi %s,%s,%s","$a0","$zero",$1);
+		sprintf(buff,"add %s,%s,%s","$a0","$zero",$1);
 		fprintf(datafile, "\t%s\n",buff);
 
 		//a1
@@ -930,7 +930,7 @@ EXP ',' EXP  {
 			else if(isalpha($3[0]))
 			sprintf(buff,"addi %s,%s,%d","$a1","$zero",$3[0]);
 			else
-			sprintf(buff,"addi %s,%s,%s","$a1","$zero",$3);
+			sprintf(buff,"add %s,%s,%s","$a1","$zero",$3);
 			fprintf(datafile, "\t%s\n",buff);
 
 
@@ -959,7 +959,7 @@ EXP  {
 		else if(isalpha($1[0]))
 		sprintf(buff,"addi %s,%s,%d","$a0","$zero",$1[0]);
 		else
-		sprintf(buff,"addi %s,%s,%s","$a0","$zero",$1);
+		sprintf(buff,"add %s,%s,%s","$a0","$zero",$1);
 		fprintf(datafile, "\t%s\n",buff);
 
 
