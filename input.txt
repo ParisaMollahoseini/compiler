@@ -3,7 +3,8 @@ void func1(int a)
 {
     int b = 2$
     int c = 3$
-
+    if(b == c)
+    {
     if(3 == 2)
       {
       c = 9$
@@ -16,7 +17,7 @@ void func1(int a)
     {
      b = c$
     }
-
+}
 
 
 }
