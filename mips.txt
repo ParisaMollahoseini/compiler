@@ -12,6 +12,7 @@ func1:
 	addi $t1, $zero , 3 
 	addi $t2, $zero, 98
 	sub $t3,$t2,$t0
+<<<<<<< HEAD
 	addi $t2, $zero, 1
 	move $v0, $t2
 	lw $t0, 0($sp)
@@ -39,3 +40,6 @@ me:
 	jal func1
 	addi $t2, $zero , 6 
 	addi $s0,$zero,1
+=======
+	beq $t3,$zero,else0
+>>>>>>> 7c9ca849e75c0ca4687cca2e4170f73c8fbc949a

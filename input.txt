@@ -5,7 +5,7 @@ int func1(int a)
     int c = 3$
     if ('b' == b)
     {
-
+      int c = 10$
     }
     return 1$
 
@@ -14,6 +14,12 @@ int func1(int a)
 int me()
 {
 int a1 = 2$
+<<<<<<< HEAD
 a1 = func1(12) $
 a1 = 6 $
 }
+=======
+a1 = func1(a1)$
+
+}
+>>>>>>> 7c9ca849e75c0ca4687cca2e4170f73c8fbc949a
